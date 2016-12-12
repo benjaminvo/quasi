@@ -1,0 +1,137 @@
+@import '~styles/vars';
+@import '~styles/animations';
+@import '~styles/breakpoints';
+
+$positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clean .padding/.margin (all sides) option
+
+@each $position in $positions {
+	.padding#{$position}-8-1 { padding#{$position}: $scale-8-1; }
+	.padding#{$position}-7-1 { padding#{$position}: $scale-7-1; }
+	.padding#{$position}-6-1 { padding#{$position}: $scale-6-1; }
+	.padding#{$position}-5-1 { padding#{$position}: $scale-5-1; }
+	.padding#{$position}-4-1 { padding#{$position}: $scale-4-1; }
+	.padding#{$position}-3-1 { padding#{$position}: $scale-3-1; }
+	.padding#{$position}-2-1 { padding#{$position}: $scale-2-1; }
+	.padding#{$position} 	   { padding#{$position}: $scale; }
+	.padding#{$position}-1-2 { padding#{$position}: $scale-1-2; }
+	.padding#{$position}-1-3 { padding#{$position}: $scale-1-3; }
+	.padding#{$position}-1-4 { padding#{$position}: $scale-1-4; }
+	.padding#{$position}-1-5 { padding#{$position}: $scale-1-5; }
+	.padding#{$position}-1-6 { padding#{$position}: $scale-1-6; }
+	.padding#{$position}-1-7 { padding#{$position}: $scale-1-7; }
+	.padding#{$position}-1-8 { padding#{$position}: $scale-1-8; }}
+.padding-none              { padding: 0 !important; }
+
+@each $position in $positions {
+	.margin#{$position}-8-1 { margin#{$position}: $scale-8-1; }
+	.margin#{$position}-7-1 { margin#{$position}: $scale-7-1; }
+	.margin#{$position}-6-1 { margin#{$position}: $scale-6-1; }
+	.margin#{$position}-5-1 { margin#{$position}: $scale-5-1; }
+	.margin#{$position}-4-1 { margin#{$position}: $scale-4-1; }
+	.margin#{$position}-3-1 { margin#{$position}: $scale-3-1; }
+	.margin#{$position}-2-1 { margin#{$position}: $scale-2-1; }
+	.margin#{$position} 		{ margin#{$position}: $scale; }
+	.margin#{$position}-1-2 { margin#{$position}: $scale-1-2; }
+	.margin#{$position}-1-3 { margin#{$position}: $scale-1-3; }
+	.margin#{$position}-1-4 { margin#{$position}: $scale-1-4; }
+	.margin#{$position}-1-5 { margin#{$position}: $scale-1-5; }
+	.margin#{$position}-1-6 { margin#{$position}: $scale-1-6; }
+	.margin#{$position}-1-7 { margin#{$position}: $scale-1-7; }
+	.margin#{$position}-1-8 { margin#{$position}: $scale-1-8; }}
+.margin-none              { margin: 0 !important; }
+
+.font {
+	&Size {
+		&-display { font-size: $fontSize-display;
+			@include breakpoint( 'tablet' ) { font-size: $fontSize-title; }
+			@include breakpoint( 'mobileMedium' ) { font-size: $fontSize-xxlarge; }}
+		&-title 	{ font-size: $fontSize-title;
+			@include breakpoint( 'mobileMedium' ) { font-size: $fontSize-xxlarge; } }
+		&-xxlarge { font-size: $fontSize-xxlarge; }
+		&-xlarge 	{ font-size: $fontSize-xlarge; }
+		&-large 	{ font-size: $fontSize-large; }
+		&-base 		{ font-size: $fontSize-base; }
+		&-small 	{ font-size: $fontSize-small; }
+		&-xsmall 	{ font-size: $fontSize-xsmall; }}
+	&Weight {
+		&-thin 		{ font-weight: 100; }
+		&-normal 	{ font-weight: 400; }
+		&-bold 		{ font-weight: 600; }}
+	&Family {
+		&-logo 		{ font-family: $fontFamily-logo !important; }
+		&-display { font-family: $fontFamily-display !important; }
+		&-headline{ font-family: $fontFamily-headline !important; }
+		&-body 		{ font-family: $fontFamily-body !important; }
+		&-system 	{ font-family: $fontFamily-system !important; }}
+}
+
+.text {
+	&Transform {
+		&-uppercase { text-transform: uppercase; }}
+	&Align {
+		&-center { text-align: center; }}
+}
+
+.color 					{
+	&-brandFirst 	{ color: $color-brandFirst; }
+	&-brandSecond { color: $color-brandSecond; }
+	&-brandDark 	{ color: $color-brandDark; }
+	&-brandLight  { color: $color-brandLight; }
+}
+
+.backgroundColor 	{
+	&-brandDark 		{	background-color: $color-brandDark; }
+	&-brandLight 		{ background-color: $color-brandLight; }
+	&-white 				{ background-color: #fff; }
+}
+
+.height 	{
+	&-full 	{ height: 100vh; }}
+
+.minHeight {
+	&-full 	{ min-height: 100vh; }}
+
+.position 	 {
+	&-absolute { position: absolute; }
+	&-relative { position: relative; }}
+
+.hidden { opacity: 0 !important; }
+.shown { opacity: 1 !important; }
+.hide { display: none !important;
+	&-mobile { @include breakpoint( 'mobile' ) { display: none !important; } } }
+.show { display: block !important; }
+
+.float {
+	&-right { float: right; }
+	&-left { float: left; }}
+
+.display {
+	&-flex { display: flex; }}
+
+// Flex
+.justifyContent {
+	&-center 	{ justify-content: center; }
+	&-flexStart { justify-content: flex-start; }
+	&-flexEnd { justify-content: flex-end; }}
+
+.alignItems {
+	&-center 		{ align-items: center; }
+	&-flexStart { align-items: flex-start; }
+	&-flexEnd 	{ align-items: flex-end; }}
+
+.flexDirection {
+	&-row 		 { flex-direction: row; }
+	&-column 	 { flex-direction: column;
+		&-mobile { @include breakpoint( 'mobile' ) { flex-direction: column; } }
+	}
+}
+
+.flipHorizontal { transform: scaleX(-1); }
+.flipVertical 	{ transform: scaleY(-1); }
+
+// Animation
+.fadeIn 					{ animation: fadeIn 1.2s $animationBezier forwards; }
+.fadeOut 					{ animation: fadeOut 1.2s $animationBezier forwards; }
+.slideIn 					{ animation: slideIn 1.2s $animationBezier forwards; }
+.transition 			{	transition: all 0.6s $animationBezier !important; }
+.rotateUpsideDown { transform: rotate( 360deg ) !important; }
