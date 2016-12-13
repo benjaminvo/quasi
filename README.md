@@ -1,6 +1,6 @@
-# wishes
+# quasi
 
-> A Vue.js project
+> A thesis project about academic motivation
 
 ## Build Setup
 
