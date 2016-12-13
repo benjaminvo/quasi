@@ -1,15 +1,45 @@
 <template>
   <grid-block columns="12" noPadding>
-    <ul class="header span-12">
-      <router-link :to="{ name: 'texts' }" tag="li" active-class="active" exact>Tekster</router-link>
-    </ul>
+    <div class="header span-12">
+      <ul class="header-links span-6">
+        <router-link
+          :to="{ name: 'texts' }"
+          tag="li"
+          active-class="active"
+          exact>
+          Tekster
+        </router-link>
+        <router-link
+          :to="{ name: 'read' }"
+          tag="li"
+          active-class="active"
+          exact>
+          Læs
+        </router-link>
+      </ul>
+      <div class="header-logout span-6">
+        <p>Hej {{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }}</p>
+        <button v-on:click="logout()">Log ud</button>
+      </div>
+    </div>
   </grid-block>
 </template>
 
 <script>
   import GridBlock from 'components/GridBlock'
+  import firebase from 'firebase'
   export default {
-    components: { 'grid-block': GridBlock }
+    components: { 'grid-block': GridBlock },
+    props: { currentUser: { type: Object } },
+    methods: {
+      logout() {
+        firebase.auth().signOut().then( () => {
+          window.location.href = '/auth.html'
+        }, function(error) {
+          console.log(error)
+        })
+      }
+    }
   }
 </script>
 
@@ -17,7 +47,12 @@
   @import '~styles/vars';
   .header {
     width: 100%;
-    padding: 0;
+    display: flex;
+    justify-content: space-between;
+
+    &-logout {
+      & p { display: inline-block; margin: $scale-1-2; }
+    }
 
     li {
       font-family: $fontFamily-headline;

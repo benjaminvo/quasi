@@ -1,3 +1,4 @@
+@import '~styles/reset';
 @import '~styles/vars';
 @import '~styles/breakpoints';
 @import '~styles/helpers';
@@ -24,7 +25,6 @@ h6 {
 
 h1 {
   font-size: $fontSize-title;
-  letter-spacing: 2px;
   line-height: 1.2;
 
   @include breakpoint( 'tablet' ) { font-size: $fontSize-xxlarge; }
@@ -38,7 +38,7 @@ h4 { font-size: $fontSize-large; }
 h5 { font-size: $fontSize-base; }
 h6 { font-size: $fontSize-small; }
 
-p {
+p, li {
   font-family: $fontFamily-body;
   font-size: $fontSize-base;
   line-height: 1.4;
