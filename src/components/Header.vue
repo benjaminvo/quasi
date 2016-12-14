@@ -1,21 +1,30 @@
 <template>
-  <grid-block columns="12" noPadding>
-    <div class="header span-12">
-      <ul class="header-links span-6">
-        <router-link
-          :to="{ name: 'dashboard' }"
-          tag="li"
-          active-class="active"
-          exact>
-          Tekster
-        </router-link>
-      </ul>
-      <div class="header-logout span-6">
-        <p>Hej {{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }}</p>
-        <button v-on:click="logout()">Log ud</button>
+  <header>
+    <grid-block columns="12" noPadding>
+      <div class="header span-12">
+        <ul class="header-links span-6">
+          <router-link
+            :to="{ name: 'dashboard' }"
+            tag="li"
+            active-class="active"
+            exact>
+            Tekster
+          </router-link>
+          <router-link
+            :to="{ name: 'article' }"
+            tag="li"
+            active-class="active"
+            exact>
+            Læs
+          </router-link>
+        </ul>
+        <div class="header-logout span-6">
+          <p>Hej {{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }}</p>
+          <button v-on:click="logout()">Log ud</button>
+        </div>
       </div>
-    </div>
-  </grid-block>
+    </grid-block>
+  </header>
 </template>
 
 <script>
@@ -37,7 +46,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '~styles/vars';
+  @import '~styles/global';
   .header {
     width: 100%;
     display: flex;
