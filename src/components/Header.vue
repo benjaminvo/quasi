@@ -10,7 +10,7 @@
           Tekster
         </router-link>
         <router-link
-          :to="{ name: 'read' }"
+          :to="{ name: 'article' }"
           tag="li"
           active-class="active"
           exact>

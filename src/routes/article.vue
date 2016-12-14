@@ -1,7 +1,7 @@
 <template>
   <grid-block columns="12" noPadding>
     <h1>Læs</h1>
-  </read-block>
+  </grid-block>
 </template>
 
 <script>
