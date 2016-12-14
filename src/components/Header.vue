@@ -44,7 +44,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '~styles/vars';
+  @import '~styles/global';
   .header {
     width: 100%;
     display: flex;
