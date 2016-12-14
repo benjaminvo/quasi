@@ -1,7 +1,7 @@
 <template>
   <grid-block columns="12" noPadding>
     <h1 class="span-12 fontFamily-body">Dine tekster</h1>
-    <ul class="articleList margin-top-3-1 span-12">
+    <ul class="articleList margin-top-3-1 span-12 list-unstyled">
       <p v-if="articles.length === 0" class="articleList_loading">Tekster på vej... hvis du har nogle!</p>
       <li v-for="(article, index) in articles" :id="article.id" v-bind:class="{'backgroundColor-success': articleFinished}">
         <p>{{article.title + ', ' + article.author}}</p>
@@ -75,7 +75,6 @@
   @import '~styles/global';
 
   .articleList {
-    list-style: none;
 
     &_loading {
       font-size: $fontSize-large;

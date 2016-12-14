@@ -26,7 +26,7 @@
         <!-- Article details -->
         <div class="backgroundColor-brandLight padding-2-1 margin-bottom-2-1">
           <h5 class="padding-bottom">Article details</h5>
-          <ul class="list">
+          <ul class="list-unstyled">
             <li class="padding-bottom">12 pages (19-31)</li>
             <li class="padding-bottom">Cited by 906</li>
             <li class="padding-bottom">Educational Psychologist</li>
@@ -37,7 +37,7 @@
         <!-- Article structure -->
         <div class="padding-2-1">
           <h5 class="padding-bottom">Table of contents</h5>
-          <ul class="list">
+          <ul class="list-unstyled">
             <li class="padding-bottom">Introduction: bringing the power debates together</li>
             <li class="padding-bottom">The first dimension of power</li>
             <li class="padding-bottom">The second dimension of power</li>
