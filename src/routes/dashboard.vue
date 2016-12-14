@@ -84,7 +84,7 @@
     }
 
     li {
-      padding: $scale;
+      padding: $scale-2-1;
       border: 1px solid $color-brandLight;
       border-width: 0px 1px 1px 1px;
       display: flex;
