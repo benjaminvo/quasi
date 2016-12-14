@@ -42,13 +42,13 @@ $xl: 80em;
 //    #grid calculations
 //-------------------------------------------------------
 
-// calculate grid width
-$grid-width: ($columns * $column-width) + (($columns) * $gutter-width);
-
 // percentage function
 @function percentage($size, $width) {
     @return $size / $width * 100%;
 }
+
+// calculate grid width
+$grid-width: ($columns * $column-width) + (($columns) * $gutter-width);
 
 // calculate column width
 @function column($value) {
