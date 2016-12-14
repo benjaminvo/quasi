@@ -1,6 +1,6 @@
 /* ----- Scale ----- */
 
-$scale: 16px;
+$scale: 8px;
 
 $scale-8-1: $scale * 8;
 $scale-7-1: $scale * 7;
@@ -76,7 +76,7 @@ $color-brandLight-lighter-3: lighten( $color-brandLight, 30% );
 
 $fontFamily-logo: 'Avenir', Helvetica, Arial, Verdana, sans-serif;
 $fontFamily-display: 'Avenir', Helvetica, Arial, Verdana, sans-serif;
-$fontFamily-headline: 'Avenir', Helvetica, Arial, Verdana, sans-serif;
+$fontFamily-headline: 'EB Garamond 08','Avenir', Helvetica, Arial, Verdana, sans-serif;
 $fontFamily-system: 'Avenir', Helvetica, Arial, Verdana, sans-serif;
 $fontFamily-body: 'Avenir', Helvetica, Arial, Verdana, sans-serif;
 
@@ -86,7 +86,7 @@ $fontSize-display: 140px;
 $fontSize-display-tablet: 80px;
 $fontSize-display-mobile: 60px;
 
-$fontSize-title: 48px;
+$fontSize-title: 42px;
 $fontSize-subtitle: 28px;
 $fontSize-body-copy: 18px;
 
