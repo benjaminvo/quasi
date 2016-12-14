@@ -3,18 +3,11 @@
     <div class="header span-12">
       <ul class="header-links span-6">
         <router-link
-          :to="{ name: 'texts' }"
+          :to="{ name: 'dashboard' }"
           tag="li"
           active-class="active"
           exact>
           Tekster
-        </router-link>
-        <router-link
-          :to="{ name: 'article' }"
-          tag="li"
-          active-class="active"
-          exact>
-          Læs
         </router-link>
       </ul>
       <div class="header-logout span-6">

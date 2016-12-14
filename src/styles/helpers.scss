@@ -77,12 +77,14 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 	&-brandSecond { color: $color-brandSecond; }
 	&-brandDark 	{ color: $color-brandDark; }
 	&-brandLight  { color: $color-brandLight; }
+	&-success 		{ color: $color-success-text; }
 }
 
 .backgroundColor 	{
 	&-brandDark 		{	background-color: $color-brandDark; }
 	&-brandLight 		{ background-color: $color-brandLight; }
 	&-white 				{ background-color: #fff; }
+	&-success 			{ background-color: $color-success-bg; }
 }
 
 .height 	{
