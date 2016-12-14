@@ -4,7 +4,6 @@
 @import '~styles/grid';
 @import '~styles/breakpoints';
 @import '~styles/animations';
-@import '~styles/helpers';
 
 h1, h2, h3, h4, h5, h6 {
   font-family: $fontFamily-headline;
@@ -17,8 +16,6 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: $fontFamily-logo;
-  letter-spacing: 1px;
   line-height: 1.4; }
 
 h5,
@@ -61,3 +58,5 @@ input:focus,
 input:active {
 	outline: none;
 }
+
+@import '~styles/helpers';
