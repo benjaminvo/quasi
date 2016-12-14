@@ -125,6 +125,9 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 .flipHorizontal { transform: scaleX(-1); }
 .flipVertical 	{ transform: scaleY(-1); }
 
+// Lists
+.list { list-style-type: none; }
+
 // Animation
 .fadeIn 					{ animation: fadeIn 1.2s $animationBezier forwards; }
 .fadeOut 					{ animation: fadeOut 1.2s $animationBezier forwards; }
