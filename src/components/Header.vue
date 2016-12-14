@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="margin-bottom-4-1">
     <grid-block columns="12" noPadding>
       <div class="header span-12">
         <ul class="header-links span-6">
@@ -57,7 +57,6 @@
     }
 
     li {
-      font-family: $fontFamily-headline;
       display: inline-block;
       color: $color-brandDark !important;
       padding: $scale-1-2 $scale;
