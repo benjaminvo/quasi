@@ -4,7 +4,7 @@
       <div class="header span-12">
         <ul class="header-links span-6">
           <router-link
-            :to="{ name: 'texts' }"
+            :to="{ name: 'dashboard' }"
             tag="li"
             active-class="active"
             exact>
