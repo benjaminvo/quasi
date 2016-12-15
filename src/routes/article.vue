@@ -7,14 +7,14 @@
         <router-link
           :to="{ name: 'dashboard' }"
           tag="a"
-          class="textTransform-uppercase"
-          exact>Dashboard</router-link> / Haugaard (2012)
+          class="textTransform-uppercase">Dashboard</router-link> / Haugaard (2012)
       </div>
     </div>
 
     <!-- Article title -->
     <div class="flex padding-bottom-4-1">
-      <h1 class="col col-xs-12 col-md-10 fontWeight-normal">Intrinsic Versus Extrinsic Goal Contents in Self- Determination Theory: Another Look at the Quality of Academic Motivation</h1>
+      <!-- <h1 class="col col-xs-12 col-md-10 fontWeight-normal">Intrinsic Versus Extrinsic Goal Contents in Self- Determination Theory: Another Look at the Quality of Academic Motivation</h1> -->
+      <h1 class="col col-xs-12 col-md-10 fontWeight-normal">{{ article.title }}</h1>
     </div>
 
     <!-- Article information -->
@@ -66,9 +66,39 @@
 
 <script>
   //import GridBlock from 'components/GridBlock'
-  //export default {
-  //  components: { 'grid-block': GridBlock }
-  //}
+  export default {
+  //components: { 'grid-block': GridBlock }
+    props: {
+      currentUser: { type: Object },
+      databaseRef: { type: Object },
+    },
+    data() {
+      return {
+        article: {}
+      }
+    },
+    created() {
+      this.setArticle()
+    },
+    watch: {
+      '$route': 'setProject'
+    },
+    methods: {
+      setArticle() {
+        const activeArticleId = this.$route.params.articleId
+        this.databaseRef.ref('articles/').on('value', (snapshot) => {
+          let articleObj = {}
+          const data = snapshot.val()
+          for (let article in data) {
+            if (article === activeArticleId) {
+              articleObj = data[article]
+            }
+          }
+          this.article = articleObj
+        })
+      }
+    }
+  }
 </script>
 
 <style lang="scss">
