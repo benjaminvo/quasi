@@ -1,7 +1,7 @@
 <template>
-  <grid-block columns="12" noPadding>
+  <grid-block columns="12">
     <h1 class="span-12 fontFamily-body">Dine tekster</h1>
-    <ul class="articleList margin-top-3-1 span-12 list-unstyled">
+    <ul class="articleList span-12">
       <p v-if="articles.length === 0" class="articleList_loading">Tekster på vej... hvis du har nogle!</p>
       <li
         v-for="(article, index) in articles"
