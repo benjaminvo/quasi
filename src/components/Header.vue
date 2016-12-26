@@ -1,22 +1,9 @@
 <template>
-  <header class="margin-bottom-4-1">
+  <header class="header">
     <grid-block columns="12" noPadding>
-      <div class="header span-12">
+      <div class="header_inner span-12">
         <ul class="header-links span-6">
-          <router-link
-            :to="{ name: 'dashboard' }"
-            tag="li"
-            active-class="active"
-            exact>
-            Tekster
-          </router-link>
-          <router-link
-            :to="{ name: 'article' }"
-            tag="li"
-            active-class="active"
-            exact>
-            Læs
-          </router-link>
+          <router-link :to="{ name: 'dashboard' }" tag="li" exact>Dashboard</router-link>
         </ul>
         <div class="header-logout span-6">
           <p>Hej {{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }}</p>
@@ -49,8 +36,14 @@
   @import '~styles/global';
   .header {
     width: 100%;
-    display: flex;
-    justify-content: space-between;
+    background: $color-brandLight;
+
+    &_inner {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 0;
+    }
 
     &-logout {
       & p { display: inline-block; margin: $scale-1-2; }
@@ -59,8 +52,11 @@
     li {
       display: inline-block;
       color: $color-brandDark !important;
-      padding: $scale-1-2 $scale;
+      padding: $scale-1-2 0;
       text-decoration: none !important;
+      margin-right: $scale;
+      border-bottom: 3px solid transparent;
+      padding-bottom: $scale-2-1;
 
       &:hover {
         cursor: pointer;

@@ -28,9 +28,11 @@
     padding: $scale-3-1 0;
     margin: 0 auto;
 
-    &-noPadding { padding: 0; }
+    &-noPadding { padding: 0;
+      @include breakpoint( 'tablet' )          { padding: 0 $scale-2-1 !important; }
+    }
 
-    & > * { padding: $scale; }
+    & > * { padding: $scale-2-1; }
 
     // Content-widths
     @include breakpoint( 'desktop' )         { width: $contentWidth-desktop; }

@@ -9,6 +9,7 @@ Vue.use(VueRouter)
 
 const router = new VueRouter({
   routes,
+  linkActiveClass: 'active',
   mode: 'history' // Remember to set up the server to ALWAYS serve the index.html file when this history-mode is on (to avoid hashes in the url)
 })
 
