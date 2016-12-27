@@ -14,7 +14,7 @@
           <div class="arrow arrow-right"></div>
         </div>
         <div class="header-logout span-6">
-          <p>{{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }}</p>
+          <p>{{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }},</p>
           <button v-on:click="logout()">Log ud</button>
         </div>
       </div>
@@ -42,6 +42,25 @@
 
 <style lang="scss" scoped>
   @import '~styles/global';
+
+  .headerLink {
+    display: inline-block;
+    color: $color-brandDark !important;
+    padding: $scale-1-2 0;
+    text-decoration: none !important;
+    margin-right: $scale;
+    border-bottom: 3px solid transparent;
+    padding-bottom: $scale-3-1;
+    margin-top: $scale-3-1;
+    text-transform: none;
+    background-color: transparent;
+
+    &:hover {
+      cursor: pointer;
+      border-bottom: 3px solid $color-brandLight-darker-1;
+    }
+  }
+
   .header {
     width: 100%;
     background: $color-brandLight;
@@ -57,22 +76,14 @@
 
     &-logout {
       & p { display: inline-block; margin: $scale-1-2; }
+      & button {
+        @extend .headerLink;
+        text-transform: lowercase;
+      }
     }
 
     li {
-      display: inline-block;
-      color: $color-brandDark !important;
-      padding: $scale-1-2 0;
-      text-decoration: none !important;
-      margin-right: $scale;
-      border-bottom: 3px solid transparent;
-      padding-bottom: $scale-3-1;
-      margin-top: $scale-3-1;
-
-      &:hover {
-        cursor: pointer;
-        border-bottom: 3px solid $color-brandLight-darker-1;
-      }
+      @extend .headerLink;
 
       &.active {
         transition: all $animationSpeed $animationBezier;

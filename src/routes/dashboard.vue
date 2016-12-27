@@ -1,26 +1,38 @@
 <template>
-  <grid-block columns="12">
-    <h1 class="span-12 fontFamily-body">Dine tekster</h1>
-    <ul class="articleList span-12">
-      <p v-if="articles.length === 0" class="articleList_loading">Tekster på vej... hvis du har nogle!</p>
-      <li
-        v-for="(article, index) in articles"
-        :id="article.id"
-        v-bind:class="{finished: article.finishedBy}">
-        <router-link tag="p" :to="{ name: 'article', params: { articleId: article.id } }">{{article.title + ' af ' + article.author}}</router-link>
-        <p class="articleFinishedToggle" @click="toggleArticleFinished">
-          <span v-if="article.finishedBy" class="color-success">Læst</span>
-          <span v-else>Ikke læst</span>
-        </p>
-      </li>
-    </ul>
-  </grid-block>
+  <div>
+    <grid-block columns="12">
+      <h1 class="span-12 fontFamily-body">Dine tekster</h1>
+      <ul class="articleList span-12">
+        <p v-if="articles.length === 0" class="articleList_loading">Tekster på vej... hvis du har nogle!</p>
+        <li
+          v-for="(article, index) in articles"
+          :id="article.id"
+          v-bind:class="{finished: article.finishedBy}">
+          <router-link tag="p" :to="{ name: 'article', params: { articleId: article.id } }">{{article.title + ' af ' + article.author}}</router-link>
+          <p class="articleFinishedToggle" @click="toggleArticleFinished">
+            <span v-if="article.finishedBy" class="color-success">Læst</span>
+            <span v-else>Ikke læst</span>
+          </p>
+        </li>
+      </ul>
+    </grid-block>
+    <modal
+      v-if="modalVisible"
+      v-on:close="modalVisible = false"
+      :currentUser="currentUser"
+      :databaseRef="databaseRef"
+      :clickedArticleId="clickedArticleId" />
+  </div>
 </template>
 
 <script>
   import GridBlock from 'components/GridBlock'
+  import Modal from 'components/Modal'
   export default {
-    components: { 'grid-block': GridBlock },
+    components: {
+      'grid-block': GridBlock,
+      'modal': Modal
+    },
     props: {
       currentUser: { type: Object },
       databaseRef: { type: Object },
@@ -28,11 +40,12 @@
     data() {
       return {
         articles: [],
+        modalVisible: false,
+        clickedArticleId: null
       }
     },
     created() {
       this.fetchArticles()
-      console.log(this.articles);
     },
     methods: {
       fetchArticles() {
@@ -48,23 +61,24 @@
         })
       },
       toggleArticleFinished(e) {
-        const articleFinishedByPath = 'articles/' + e.currentTarget.parentNode.id + '/finishedBy/';
-        const articleFinishedPath = 'users/' + this.currentUser.uid + '/articles/' + e.currentTarget.parentNode.id + '/finished';
-
+        this.clickedArticleId = e.currentTarget.parentNode.id
+        const articleFinishedByPath = 'articles/' + this.clickedArticleId + '/finishedBy/'
+        const articleFinishedPath = 'users/' + this.currentUser.uid + '/articles/' + this.clickedArticleId + '/finished'
         this.databaseRef.ref(articleFinishedPath).once('value', (snapshot) => {
           const data = snapshot.val()
           let update = {}
           if (data === true) {
-            update[articleFinishedPath] = false;
+            update[articleFinishedPath] = false
             this.databaseRef.ref().update(update)
             this.databaseRef.ref(articleFinishedByPath + this.currentUser.uid).remove()
           }
-          else if (data === false || data === null ) {
-            update[articleFinishedPath] = true;
+          else if (data === false || data === null) {
+            update[articleFinishedPath] = true
             this.databaseRef.ref().update(update)
             const finishedByUserObj = {}
             finishedByUserObj[this.currentUser.uid] = true
             this.databaseRef.ref(articleFinishedByPath).set(finishedByUserObj)
+            this.modalVisible = true
           }
         })
       }
