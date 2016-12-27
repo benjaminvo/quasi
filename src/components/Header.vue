@@ -5,8 +5,16 @@
         <ul class="header-links span-6">
           <router-link :to="{ name: 'dashboard' }" tag="li" exact>Dashboard</router-link>
         </ul>
+        <div class="header_period">
+          <div class="arrow arrow-left"></div>
+          <div class="header_period_inner">
+            <h4 class="header_period_week">Uge 6</h4>
+            <p class="header_period_dates">6-10 feb</p>
+          </div>
+          <div class="arrow arrow-right"></div>
+        </div>
         <div class="header-logout span-6">
-          <p>Hej {{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }}</p>
+          <p>{{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }}</p>
           <button v-on:click="logout()">Log ud</button>
         </div>
       </div>
@@ -42,7 +50,9 @@
       width: 100%;
       display: flex;
       justify-content: space-between;
+      padding-top: 0;
       padding-bottom: 0;
+      align-items: center;
     }
 
     &-logout {
@@ -56,7 +66,8 @@
       text-decoration: none !important;
       margin-right: $scale;
       border-bottom: 3px solid transparent;
-      padding-bottom: $scale-2-1;
+      padding-bottom: $scale-3-1;
+      margin-top: $scale-3-1;
 
       &:hover {
         cursor: pointer;
@@ -69,5 +80,34 @@
         font-weight: bold;
       }
     }
+
+    &_period {
+      display: flex;
+      align-items: center;
+
+      &_inner {
+        text-align: center;
+        margin: 0 $scale-2-1;
+      }
+
+      &_week {}
+
+      &_dates {
+        font-size: $fontSize-xxsmall;
+        color: $color-brandDark-lighter-3;
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  .arrow {
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    display: inline-block;
+
+    &-right { border-left: 5px solid $color-brandDark; }
+    &-left { border-right: 5px solid $color-brandDark; }
   }
 </style>
