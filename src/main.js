@@ -16,7 +16,6 @@ const router = new VueRouter({
 // Check if route requires authentication
 router.beforeEach( (to, from, next) => {
   if (to.meta.auth && !authenticated) {
-    console.log('meta');
     next({ path: 'auth.html' })
   } else {
     next()
