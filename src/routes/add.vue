@@ -283,7 +283,7 @@
     background-color: $color-brandLight;
     padding-bottom: $scale-4-1;
 
-    h1, h2, h3, h4, h5, h6, p, li { font-family: $fontFamily-system; }
+    h1, h2, h3, h4, h5, h6, p, li { font-family: $fontFamily-sans; }
     h1, h2, h3, h4, h5, h6 { font-weight: bold; }
 
     button { padding: $scale-1-2 $scale; }
