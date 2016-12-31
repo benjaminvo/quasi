@@ -4,10 +4,7 @@
 
       <!-- Breadcrumb -->
       <div class="span-12 padding-bottom-2-1 fontFamily-body fontSize-base">
-        <router-link
-          :to="{ name: 'dashboard' }"
-          tag="a"
-          class="textTransform-uppercase">Dashboard</router-link> / {{ article.title }} ({{ article.year }})
+        <router-link :to="{ name: 'dashboard' }" tag="a">Dashboard</router-link> / {{ article.title }} ({{ article.year }})
       </div>
 
       <!-- Article title -->

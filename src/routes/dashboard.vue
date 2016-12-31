@@ -1,70 +1,117 @@
 <template>
-  <grid-block columns="12">
-    <h1 class="span-12 fontFamily-body">Dine tekster</h1>
-    <ul class="articleList span-12">
-      <p v-if="articles.length === 0" class="articleList_loading">Tekster på vej... hvis du har nogle!</p>
-      <li
-        v-for="(article, index) in articles"
-        :id="article.id"
-        v-bind:class="{finished: article.finishedBy}">
-        <router-link tag="p" :to="{ name: 'article', params: { articleId: article.id } }">{{article.title + ' af ' + article.author}}</router-link>
-        <p class="articleFinishedToggle" @click="toggleArticleFinished">
-          <span v-if="article.finishedBy" class="color-success">Læst</span>
-          <span v-else>Ikke læst</span>
-        </p>
-      </li>
-    </ul>
-  </grid-block>
+  <div>
+
+    <grid-block columns="12">
+      <h1 class="span-12 fontFamily-body">Dit overblik</h1>
+    </grid-block>
+
+    <day-block
+      :currentUser="currentUser"
+      v-on:toggleArticleFinished="toggleArticleFinished"
+      v-for="(dayBlock, key, index) in dayBlocks"
+      :day="key"
+      :courses="dayBlock.courses" />
+
+    <modal
+      v-if="modalVisible"
+      v-on:close="modalVisible = false"
+      :currentUser="currentUser"
+      :databaseRef="databaseRef"
+      :clickedArticleId="clickedArticleId" />
+
+  </div>
 </template>
 
 <script>
   import GridBlock from 'components/GridBlock'
+  import DayBlock from 'components/DayBlock'
+  import Modal from 'components/Modal'
   export default {
-    components: { 'grid-block': GridBlock },
+    components: {
+      'grid-block': GridBlock,
+      'day-block': DayBlock,
+      'modal': Modal
+    },
     props: {
       currentUser: { type: Object },
       databaseRef: { type: Object },
     },
     data() {
       return {
-        articles: [],
+        modalVisible: false,
+        clickedArticleId: null,
+        dayBlocks: {}
       }
     },
     created() {
-      this.fetchArticles()
-      console.log(this.articles);
+      this.fetchRelevantArticlesPerCourse()
     },
     methods: {
-      fetchArticles() {
-        this.databaseRef.ref('articles/').on('value', (snapshot) => {
-          let articlesArray = []
-          const data = snapshot.val()
-          for (let article in data) {
-            const articleObj = data[article]
-            articleObj.id = article // Add the article id, to the article object that is added to this.articles
-            articlesArray.push(articleObj)
+      fetchRelevantArticlesPerCourse() {
+
+        let dayBlocks = {
+          Mandag: { courses: [] },
+          Tirsdag: { courses: [] },
+          Onsdag: { courses: [] },
+          Torsdag: { courses: [] },
+          Fredag: { courses: [] }
+        }
+
+        // Checking if user has got the couse and adding a course object with name of course + articles if so
+        this.databaseRef.ref('courses/').once('value', (snapshot) => {
+          const courses = snapshot.val()
+          for (let course in courses) { // For each course
+            const courseHasGotStudents = courses[course].students // If there is students
+            if (courseHasGotStudents) {
+              if (courses[course].students[this.currentUser.uid]) { // If this user is assigned to course
+                const courseObj = {
+                  course: courses[course].name,
+                  articles: courses[course].articles
+                }
+                switch(courses[course].weekday) { // Add courseObj to dayBlocks object based on the day of the course
+                  case 'Monday': { dayBlocks.Mandag.courses.push(courseObj); break; }
+                  case 'Tuesday': { dayBlocks.Tirsdag.courses.push(courseObj); break; }
+                  case 'Wednesday': { dayBlocks.Onsdag.courses.push(courseObj); break; }
+                  case 'Thursday': { dayBlocks.Torsdag.courses.push(courseObj); break; }
+                  case 'Friday': { dayBlocks.Fredag.courses.push(courseObj); break; }
+                }
+              }
+            }
           }
-          this.articles = articlesArray
         })
+
+        // Swapping the article id placeholder out with actual article object in dayBlocks object created above
+        this.databaseRef.ref('articles/').on('value', (snapshot) => {
+          const articleObjs = snapshot.val()
+          for (let dayBlock in dayBlocks) { // Loop through the newly created dayBlocks object
+            for (let i = 0; i < dayBlocks[dayBlock].courses.length; i++) { // For length of the courses array under each day in dayBlocks
+              for (let article in dayBlocks[dayBlock].courses[i].articles) { // And each articleId in each articles array in each course
+                for (let articleObj in articleObjs) { // The articleObj fetched from database to compare with the articleId
+                  if (articleObj == article) { // If objectObj and articleId in the dayBlocks object matches
+                    dayBlocks[dayBlock].courses[i].articles[article] = articleObjs[articleObj] // Set the id to holde the full article object (instead of just 'true')
+                  }
+                }
+              }
+            }
+          }
+        })
+
+        this.dayBlocks = dayBlocks;
+
       },
       toggleArticleFinished(e) {
-        const articleFinishedByPath = 'articles/' + e.currentTarget.parentNode.id + '/finishedBy/';
-        const articleFinishedPath = 'users/' + this.currentUser.uid + '/articles/' + e.currentTarget.parentNode.id + '/finished';
-
+        this.clickedArticleId = e.currentTarget.parentNode.id
+        const articleFinishedByPath = 'articles/' + this.clickedArticleId + '/finishedBy/'
+        const articleFinishedPath = 'users/' + this.currentUser.uid + '/articles/' + this.clickedArticleId + '/finished'
         this.databaseRef.ref(articleFinishedPath).once('value', (snapshot) => {
           const data = snapshot.val()
-          let update = {}
-          if (data === true) {
-            update[articleFinishedPath] = false;
-            this.databaseRef.ref().update(update)
-            this.databaseRef.ref(articleFinishedByPath + this.currentUser.uid).remove()
-          }
-          else if (data === false || data === null ) {
-            update[articleFinishedPath] = true;
-            this.databaseRef.ref().update(update)
-            const finishedByUserObj = {}
-            finishedByUserObj[this.currentUser.uid] = true
-            this.databaseRef.ref(articleFinishedByPath).set(finishedByUserObj)
+          if (data === false || data === null) {
+            this.databaseRef.ref(articleFinishedPath).set(true)
+            this.databaseRef.ref(articleFinishedByPath + '/' + this.currentUser.uid).set(true)
+            this.modalVisible = true
+          } else if (data === true) {
+            this.databaseRef.ref(articleFinishedPath).set(false)
+            this.databaseRef.ref(articleFinishedByPath + '/' + this.currentUser.uid).set(false)
           }
         })
       }
@@ -73,40 +120,4 @@
 </script>
 
 <style lang="scss">
-  @import '~styles/global';
-
-  .articleList {
-
-    &_loading {
-      font-size: $fontSize-large;
-      color: $color-brandLight-darker-1;
-      margin-top: $scale-4-1;
-      text-align: center;
-    }
-
-    li {
-      padding: $scale-2-1;
-      display: flex;
-      justify-content: space-between;
-      cursor: pointer;
-      background-color: lighten($color-brandLight, 5%);
-
-      &:hover { background-color: lighten($color-brandLight, 4%); }
-
-      &.finished { background-color: $color-success-bg;
-        &:hover { background: darken($color-success-bg, 2%); }
-      }
-    }
-  }
-
-  .articleFinishedToggle {
-    text-transform: uppercase;
-    font-size: $fontSize-small;
-    letter-spacing: 0.5px;
-
-    &:hover {
-      cursor: pointer;
-      text-decoration: underline;
-    }
-  }
 </style>

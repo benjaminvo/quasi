@@ -44,7 +44,9 @@ p, li {
   font-size: $fontSize-base;
   line-height: 1.5; }
 
-input {
+input, button {
+  font-family: $fontFamily-body;
+  font-size: $fontSize-base;
   padding: $scale-1-2;
   border: none;
 
@@ -54,9 +56,26 @@ input {
   &:-moz-placeholder { color: $color-brandLight; } /* Firefox 18- */
 }
 
+button {
+  padding: $scale-2-1;
+  color: $color-brandLight;
+  text-transform: uppercase;
+}
+
 input:focus,
-input:active {
+input:active,
+button:focus,
+button:active {
 	outline: none;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #fff;
+  margin: 0;
+  padding: 0;
 }
 
 @import '~styles/helpers';
