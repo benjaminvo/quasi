@@ -40,13 +40,28 @@
       return {
         modalVisible: false,
         clickedArticleId: null,
-        dayBlocks: {}
+        dayBlocks: {},
+        userFullName: this.currentUser.displayName,
+        userFirstName: this.currentUser.displayName.split(' ')[0],
+        userLastName: this.currentUser.displayName.substr(this.currentUser.displayName.indexOf(' ') + 1)
       }
     },
     created() {
       this.fetchRelevantArticlesPerCourse()
+      this.setUserNameOnDatabase()
     },
     methods: {
+      setUserNameOnDatabase() {
+        this.databaseRef.ref('users/').once('value', (snapshot) => {
+          const users = snapshot.val()
+          for (let user in users) {
+            if (user === this.currentUser.uid) {
+              this.databaseRef.ref('users/' + user + '/firstName').set(this.userFirstName)
+              this.databaseRef.ref('users/' + user + '/lastName').set(this.userLastName)
+            }
+          }
+        })
+      },
       fetchRelevantArticlesPerCourse() {
 
         let dayBlocks = {
@@ -58,7 +73,7 @@
         }
 
         // Checking if user has got the couse and adding a course object with name of course + articles if so
-        this.databaseRef.ref('courses/').once('value', (snapshot) => {
+        this.databaseRef.ref('courses/').on('value', (snapshot) => {
           const courses = snapshot.val()
           for (let course in courses) { // For each course
             const courseHasGotStudents = courses[course].students // If there is students

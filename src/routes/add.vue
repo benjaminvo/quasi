@@ -37,6 +37,7 @@
         <h1>Users</h1>
         <ul class="list-unstyled">
           <li v-for="(user, index) in users">
+            <b>{{ user.firstName }} {{ user.lastName }}</b>,
             <span>{{ user.id }}</span>,
             Status of articles: <b v-for="(article, index) in user.articles">{{ article.finished }} </b>
           </li>
