@@ -5,7 +5,7 @@
 
     <grid-block columns="12">
       <div class="span-12">
-        <h1>Courses</h1>
+        <h1 class="margin-bottom">Courses</h1>
         <ul class="list-unstyled">
           <li v-for="(course, index) in courses">
             <b>{{ course.name }}</b>,
@@ -34,12 +34,11 @@
 
     <grid-block columns="12">
       <div class="span-12">
-        <h1>Users</h1>
+        <h1 class="margin-bottom">Users</h1>
         <ul class="list-unstyled">
           <li v-for="(user, index) in users">
             <b>{{ user.firstName }} {{ user.lastName }}</b>,
-            <span>{{ user.id }}</span>,
-            Status of articles: <b v-for="(article, index) in user.articles">{{ article.finished }} </b>
+            <span>{{ user.id }}</span>
           </li>
         </ul>
 
@@ -62,7 +61,7 @@
 
     <grid-block columns="12">
       <div class="span-12">
-        <h1>Articles</h1>
+        <h1 class="margin-bottom">Articles</h1>
         <ul class="list-unstyled border-bottom" v-for="(article, index) in articles">
           <li>
             <b>{{ article.title }}</b>, {{ article.id }}, {{ article.author }} ({{ article.year }})
