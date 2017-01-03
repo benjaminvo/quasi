@@ -2,8 +2,7 @@
   <div class="dayBlock">
     <grid-block columns="12" noPadding>
       <div class="span-12">
-        <h2 class="margin-bottom">{{ day }}</h2>
-        <h5 v-if="courses.length === 0">Ingen kurser - hurra!</h5>
+        <h5 class="margin-bottom">{{ day }} <span class="dayBlock_emptyText" v-if="courses.length === 0">Ingen kurser - hurra!</span></h5>
         <article-list
           v-for="(course, index) in courses"
           :currentUser="currentUser"
@@ -41,7 +40,12 @@
 
   .dayBlock {
     width: 100%;
-    background: lighten($color-brandLight, 4%);
-    margin-bottom: 2px;
+    background: $color-brandLight;
+    border-bottom: 1px solid $color-brandLight-darker-1;
+    padding: $scale-2-1 0;
+
+    &_emptyText {
+      color: $color-brandDark-lighter-3;
+    }
   }
 </style>

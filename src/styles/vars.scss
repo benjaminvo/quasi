@@ -21,7 +21,7 @@ $scale-1-8: $scale / 8;
 /* ----- Colors ----- */
 
 // ----- First
-$color-brandFirst: #00A7E1;
+$color-brandFirst: #2962FF;
 
 // Main darker
 $color-brandFirst-darker-3: darken( $color-brandFirst, 30% );
@@ -47,7 +47,7 @@ $color-brandSecond-lighter-2: lighten( $color-brandSecond, 20% );
 $color-brandSecond-lighter-3: lighten( $color-brandSecond, 30% );
 
 // ----- Dark
-$color-brandDark: #111;
+$color-brandDark: #273339;
 
 // Main darker
 $color-brandDark-darker-3: darken( $color-brandDark, 30% );
@@ -60,17 +60,17 @@ $color-brandDark-lighter-2: lighten( $color-brandDark, 20% );
 $color-brandDark-lighter-3: lighten( $color-brandDark, 30% );
 
 // ----- Light
-$color-brandLight: #eee;
+$color-brandLight: #ebeff0;
 
 // Complementary darker
-$color-brandLight-darker-3: darken( $color-brandLight, 30% );
-$color-brandLight-darker-2: darken( $color-brandLight, 20% );
-$color-brandLight-darker-1: darken( $color-brandLight, 10% );
+$color-brandLight-darker-3: darken( $color-brandLight, 15% );
+$color-brandLight-darker-2: darken( $color-brandLight, 10% );
+$color-brandLight-darker-1: darken( $color-brandLight, 5% );
 
 // Complementary lighter
-$color-brandLight-lighter-1: lighten( $color-brandLight, 10% );
-$color-brandLight-lighter-2: lighten( $color-brandLight, 20% );
-$color-brandLight-lighter-3: lighten( $color-brandLight, 30% );
+$color-brandLight-lighter-1: lighten( $color-brandLight, 5% );
+$color-brandLight-lighter-2: lighten( $color-brandLight, 10% );
+$color-brandLight-lighter-3: lighten( $color-brandLight, 15% );
 
 // ----- Success
 $color-success-text: #3c763d;
@@ -119,7 +119,7 @@ $contentWidth-extraWidescreen: 1152px; // 48px up tp 1200px
 
 /* ----- Border-radius ----- */
 
-$borderRadius: 2px;
+$borderRadius: 8px;
 
 /* ----- Animation ----- */
 

@@ -1,6 +1,6 @@
 <template>
   <ul class="articleList span-12 margin-bottom-2-1">
-    <h5 class="margin-bottom">{{ courseName }}</h5>
+    <h2 class="margin-bottom">{{ courseName }}</h2>
     <article-list-item
       :currentUser="currentUser"
       v-for="(article, key, index) in articles"
@@ -8,7 +8,9 @@
       :articleId="key"
       :finished="article.finishedBy ? article.finishedBy[currentUser.uid] : null"
       :title="article.title"
-      :author="article.author" />
+      :author="article.author"
+      :pageNum="article.pageTo - article.pageFrom"
+      :year="article.year" />
   </ul>
 </template>
 
@@ -37,6 +39,8 @@
   @import '~styles/global';
 
   .articleList {
+    list-style: none;
+
     &_loading {
       font-size: $fontSize-large;
       color: $color-brandLight-darker-1;
