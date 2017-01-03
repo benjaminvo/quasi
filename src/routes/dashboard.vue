@@ -2,7 +2,7 @@
   <div>
 
     <grid-block columns="12">
-      <h1 class="span-12 fontFamily-body">Dit overblik</h1>
+      <h1 class="span-12">This week features <span class="color-brandFirst">{{ numOfArticles }} articles</span> {{ articleDuplicates ? `(${articleDuplicates} in multiple courses)` : null }} with a total of <span class="color-brandFirst">{{ totalPages }} pages</span>. Enjoy!</h1>
     </grid-block>
 
     <day-block
@@ -41,14 +41,38 @@
         modalVisible: false,
         clickedArticleId: null,
         dayBlocks: {},
+        uniqueArticles: [],
+        articleDuplicates: 0,
+        totalPages: 0,
         userFullName: this.currentUser.displayName,
         userFirstName: this.currentUser.displayName.split(' ')[0],
         userLastName: this.currentUser.displayName.substr(this.currentUser.displayName.indexOf(' ') + 1)
       }
     },
+    computed: {
+      numOfArticles() {
+        const articleIds = []
+        const allArticleIds = []
+        for (let day in this.dayBlocks) {
+          for (let i = 0; i < this.dayBlocks[day].courses.length; i++) {
+            for (let article in this.dayBlocks[day].courses[i].articles) {
+              allArticleIds.push(article)
+              if (!articleIds.includes(article)) {
+                articleIds.push(article)
+              }
+            }
+          }
+        }
+        this.articleDuplicates = allArticleIds.length - articleIds.length
+        return articleIds.length
+      }
+    },
     created() {
       this.fetchRelevantArticlesPerCourse()
       this.setUserNameOnDatabase()
+    },
+    watch: {
+      uniqueArticles: 'getTotalPages'
     },
     methods: {
       setUserNameOnDatabase() {
@@ -104,6 +128,9 @@
                 for (let articleObj in articleObjs) { // The articleObj fetched from database to compare with the articleId
                   if (articleObj == article) { // If objectObj and articleId in the dayBlocks object matches
                     dayBlocks[dayBlock].courses[i].articles[article] = articleObjs[articleObj] // Set the id to holde the full article object (instead of just 'true')
+                    if (!this.uniqueArticles.includes(articleObjs[articleObj])) {
+                      this.uniqueArticles.push(articleObjs[articleObj]) // Push all unique articles to array for eg. fetching their num of pages
+                    }
                   }
                 }
               }
@@ -112,7 +139,16 @@
         })
 
         this.dayBlocks = dayBlocks;
-
+      },
+      getTotalPages() {
+        if ( this.totalPages === 0 ) {
+          let totalPages = 0
+          for (let i = 0; i < this.uniqueArticles.length; i++) {
+            const articlePageNum = this.uniqueArticles[i].pageTo - this.uniqueArticles[i].pageFrom
+            totalPages = totalPages + articlePageNum
+          }
+          this.totalPages = totalPages
+        }
       },
       toggleArticleFinished(e) {
         this.clickedArticleId = e.currentTarget.parentNode.id

@@ -5,10 +5,6 @@
 @import '~styles/breakpoints';
 @import '~styles/animations';
 
-* {
-  font-family: $fontFamily-sans;
-}
-
 h1, h2, h3, h4, h5, h6 {
   //font-family: $fontFamily-headline;
   font-weight: normal;
@@ -30,7 +26,7 @@ h4 {
 
 h5,
 h6 {
-  //font-family: $fontFamily-system;
+  font-family: $fontFamily-sans;
   font-weight: 600; }
 
 h1 {
@@ -49,12 +45,12 @@ h5 { font-size: $fontSize-base; }
 h6 { font-size: $fontSize-small; }
 
 p, li {
-  //font-family: $fontFamily-body;
+  font-family: $fontFamily-sans;
   font-size: $fontSize-base;
   line-height: 1.5; }
 
 input, button {
-  //font-family: $fontFamily-body;
+  font-family: $fontFamily-sans;
   font-size: $fontSize-base;
   padding: $scale-1-2;
   border: none;
