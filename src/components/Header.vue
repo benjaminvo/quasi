@@ -9,7 +9,7 @@
           </div>
           <h6 class="textAlign-center margin-left-4-1 margin-right-4-1">
             <span>Week 6, 2017</span>
-            <span class="header_period_date margin-top">Feb 6 - Feb 10</span>
+            <span class="header_period_date margin-top">Feb 6 – Feb 10</span>
           </h6>
           <div class="arrowWrap">
             <div class="arrow arrow-right"></div>
