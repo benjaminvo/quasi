@@ -1,5 +1,5 @@
 <template>
-  <ul class="articleList span-12 margin-bottom-2-1">
+  <ul class="articleList span-12">
     <h2 class="margin-bottom-3-1">{{ courseName }}</h2>
     <article-list-item
       :currentUser="currentUser"
