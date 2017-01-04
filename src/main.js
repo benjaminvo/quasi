@@ -4,6 +4,7 @@ import { routes } from './routes'
 import firebase from 'firebase'
 import { fireInit } from './auth/fireInit'
 import Header from 'components/Header'
+import Footer from 'components/Footer'
 
 Vue.use(VueRouter)
 
@@ -44,9 +45,11 @@ function fireStatus(loggedIn, user) {
         '<div v-if="authenticated">' +
           '<app-header :currentUser="currentUser" :authenticated="authenticated"></app-header>' +
           '<router-view :databaseRef="database" :currentUser="currentUser" :authenticated="authenticated"></router-view>' + // <- nested outlet
+          '<app-footer></app-footer>' +
         '</div>',
         components: {
-          'app-header': Header
+          'app-header': Header,
+          'app-footer': Footer
         },
       // // WARNING! THIS CREATED INFINITE LOOP OF THE USER ID AS A VALUE TO INFINITELY MANU KEYS INSTEAD OF ONE SINGLE KEY.
       // // ASK USERS TO FINISH THEIR PROFILE AS FIRST THING WHEN LOGGING IN AND CREATE THE USER THERE INSTEAD.
