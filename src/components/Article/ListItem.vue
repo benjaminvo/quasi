@@ -41,7 +41,7 @@
     background-color: white;
     border-radius: $borderRadius;
     margin-top: $scale-2-1;
-    box-shadow: 0px 1px 2px 0px rgba($color-brandDark, 0.1);
+    box-shadow: $cardShadow;
     display: flex;
     align-items: center;
 

@@ -6,8 +6,8 @@
         <input class="modal_input" v-model="wish" type="text" placeholder="Skrive ønske til din underviser (maks. 140 tegn)" maxlength="140">
         <input class="modal_input" v-model="tip" type="text" placeholder="Give tip til en fremtidig læser (maks. 140 tegn)" maxlength="140">
         <p class="modal_text">Alt er anonymt</p>
-        <button class="button" @click="close">Nej tak</button>
         <button class="button modal_submit" type="submit">Send</button>
+        <a class="modal_dismiss" @click="close">Nej tak</a>
       </form>
     </div>
   </div>
@@ -82,15 +82,23 @@
     position: fixed;
     top: 0;
     left: 0;
-    background: rgba($color-brandDark, 0.9);
+    background: rgba(white, 0.97);
     display: flex;
     justify-content: center;
     align-items: center;
 
+    opacity: 0;
+    animation: fadeIn 200ms $animationBezier forwards;
+
     &_inner {
       position: relative;
-      max-width: 800px;
-      background: $color-brandLight;
+      max-width: 600px;
+      margin-top: -10%;
+      transform: scale(0);
+
+      animation: fadeIn 100ms $animationBezier, scaleUp 300ms ease-out;
+      animation-delay: 100ms;
+      animation-fill-mode: forwards;
     }
 
     &_close {
@@ -102,17 +110,14 @@
     &_headline {
       width: 100%;
       text-align: center;
-      margin-top: $scale-2-1;
-      margin-bottom: $scale;
+      margin-bottom: $scale-2-1;
     }
 
     &_input {
-      width: 100%;
+      min-width: 100%;
       padding: $scale-2-1;
 
-      &:first-child {
-        margin-bottom: $scale-1-2;
-      }
+      &:first-child { margin-bottom: $scale; }
     }
 
     &_text {
@@ -122,18 +127,19 @@
     }
 
     .button {
-      width: 50%;
-      display: inline-block;
-      float: left;
+      display: block;
+      margin: 0 auto;
       margin-top: $scale-2-1;
     }
 
-    &_dismiss {
-      color: $color-brandDark;
-    }
+    &_submit { background-color: $color-brandFirst; }
 
-    &_submit {
-      background-color: $color-brandFirst;
+    &_dismiss {
+      width: 80px; // Hardcoded to enable centering of element through "margin: 0 auto"
+      text-align: center;
+      display: block;
+      margin: 0 auto;
+      margin-top: $scale-2-1;
     }
   }
 

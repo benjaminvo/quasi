@@ -93,14 +93,14 @@ $fontSize-display: 140px;
 $fontSize-display-tablet: 80px;
 $fontSize-display-mobile: 60px;
 
-$fontSize-title: 42px;
+$fontSize-title: 36px;
 $fontSize-subtitle: 28px;
 $fontSize-body-copy: 18px;
 
-$fontSize-xxxlarge: 60px;
-$fontSize-xxlarge: 32px;
-$fontSize-xlarge: 26px;
-$fontSize-large: 20px;
+$fontSize-xxxlarge: 36px;
+$fontSize-xxlarge: 24px;
+$fontSize-xlarge: 18px;
+$fontSize-large: 16px;
 $fontSize-base: 14px;
 $fontSize-small: 12px;
 $fontSize-xsmall: 11px;
@@ -120,6 +120,10 @@ $contentWidth-extraWidescreen: 1152px; // 48px up tp 1200px
 /* ----- Border-radius ----- */
 
 $borderRadius: 8px;
+
+/* ----- Card-shadow ----- */
+
+$cardShadow: 0px 1px 2px 0px rgba($color-brandDark, 0.1);
 
 /* ----- Animation ----- */
 

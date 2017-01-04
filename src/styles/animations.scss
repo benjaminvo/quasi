@@ -12,3 +12,14 @@
 	0% 		{ transform: translateX(-100vw); }
 	100% 	{ transform: translateX(0vw); }
 }
+
+@keyframes scaleUp {
+	0%   { transform: scale(0.8); }
+	100% { transform: scale(1); }
+}
+
+@keyframes elasticScaleUp {
+	0%   { transform: scale(0.8); }
+	80%  { transform: scale(1.1); }
+	100% { transform: scale(1); }
+}

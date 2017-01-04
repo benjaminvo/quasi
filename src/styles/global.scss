@@ -25,8 +25,8 @@ h6 {
   font-family: $fontFamily-sans; }
 
 h1 {
-  font-size: $fontSize-title;
-  line-height: 1.2;
+  font-size: $fontSize-xxxlarge;
+  line-height: 1.5;
 
   @include breakpoint( 'tablet' ) { font-size: $fontSize-xxlarge; }
   @include breakpoint( 'mobileMedium' ) { font-size: $fontSize-xlarge; }}
@@ -39,27 +39,39 @@ h4 { font-size: $fontSize-large; }
 h5 { font-size: $fontSize-base; }
 h6 { font-size: $fontSize-small; }
 
-p, li {
+p, li, a {
   font-family: $fontFamily-sans;
   font-size: $fontSize-base;
   line-height: 1.5; }
+
+a {
+  color: $color-brandFirst;
+  cursor: pointer;
+
+  &:hover { opacity: 0.5; }
+}
 
 input, button {
   font-family: $fontFamily-sans;
   font-size: $fontSize-base;
   padding: $scale-1-2;
   border: none;
+  background-color: $color-brandLight;
+  border-radius: $borderRadius / 2;
 
-  &::-webkit-input-placeholder { color: $color-brandLight; } /* Chrome/Opera/Safari */
-  &::-moz-placeholder { color: $color-brandLight; } /* Firefox 19+ */
-  &:-ms-input-placeholder { color: $color-brandLight; }  /* IE 10+ */
-  &:-moz-placeholder { color: $color-brandLight; } /* Firefox 18- */
+  &::-webkit-input-placeholder { color: $color-brandLight-darker-3; } /* Chrome/Opera/Safari */
+  &::-moz-placeholder { color: $color-brandLight-darker-3; } /* Firefox 19+ */
+  &:-ms-input-placeholder { color: $color-brandLight-darker-3; }  /* IE 10+ */
+  &:-moz-placeholder { color: $color-brandLight-darker-3; } /* Firefox 18- */
 }
 
 button {
-  padding: $scale-2-1;
+  padding: $scale $scale-2-1;
   color: $color-brandLight;
   text-transform: uppercase;
+  cursor: pointer;
+
+  &:hover { opacity: 0.9; }
 }
 
 input:focus,
