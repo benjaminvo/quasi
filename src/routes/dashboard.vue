@@ -2,7 +2,7 @@
   <div>
 
     <grid-block columns="12">
-      <h1 class="span-18 offset-2">This week features {{ numOfArticles }} {{ articleDuplicates ? 'unique' : null }} articles</span> with a total of <span style="background:#ebeff0; border-radius:2px; padding:0px 8px;">{{ totalPages }} pages</span>. Enjoy!</h1>
+      <h1 class="span-8 offset-2">This week features {{ numOfArticles }} {{ articleDuplicates ? 'unique' : null }} articles</span> with a total of <span style="background:#ebeff0; border-radius:2px; padding:0px 8px;">{{ totalPages }} pages</span>. Enjoy!</h1>
     </grid-block>
 
     <day-block
