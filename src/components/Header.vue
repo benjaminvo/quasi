@@ -7,17 +7,17 @@
           <div class="arrowWrap">
             <div class="arrow arrow-left"></div>
           </div>
-          <h6 class="header_period_inner">
+          <h6 class="textAlign-center margin-left-4-1 margin-right-4-1">
             <span>Uge 6, 2017</span>
-            <span class="header_period_inner_date">6 feb - 10 feb</span>
+            <span class="header_period_date margin-top">6 feb - 10 feb</span>
           </h6>
           <div class="arrowWrap">
             <div class="arrow arrow-right"></div>
           </div>
         </div>
-        <div class="header-logout">
-          <p>{{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }},</p>
-          <a v-on:click="logout()">Log ud</a>
+        <h6>
+          {{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }},
+          <a class="h6" v-on:click="logout()">Log ud</a>
         </div>
       </div>
     </grid-block>
@@ -45,13 +45,6 @@
 <style lang="scss" scoped>
   @import '~styles/global';
 
-  .headerLink {
-    display: inline-block;
-    text-transform: uppercase;
-    font-size: $fontSize-small;
-    font-weight: 600;
-  }
-
   .header {
     width: 100%;
     height: 96px;
@@ -65,28 +58,13 @@
       align-items: center;
     }
 
-    &-logout {
-      & * { @extend .headerLink; }
-    }
-
-    li {
-      @extend .headerLink;
-      &.active { font-weight: bold; }
-    }
-
     &_period {
       display: flex;
       align-items: center;
 
-      &_inner {
-        text-align: center;
-        margin: 0 $scale-4-1;
-
-        &_date {
-          display: block;
-          color: $color-brandDark-lighter-3;
-          margin-top: $scale-1-2;
-        }
+      &_date {
+        display: block;
+        color: $color-brandDark-lighter-3;
       }
     }
   }
