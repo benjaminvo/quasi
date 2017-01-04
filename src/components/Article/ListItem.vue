@@ -43,11 +43,9 @@
 
   .articleListItem {
     padding: $scale-3-1;
-    padding-top: $scale-3-1 - 4px;
     cursor: pointer;
     background-color: white;
     border-radius: $borderRadius;
-    margin-top: $scale-2-1;
     box-shadow: $cardShadow;
     display: flex;
     align-items: center;
@@ -55,7 +53,11 @@
     width: calc(100% + (#{$scale-3-1}*2)); // 100% + 48px
     margin-left: -#{$scale-3-1}; // 24px
 
-    &_title { display: block; }
+
+    &_title {
+      display: block;
+      margin-bottom: $scale;
+    }
 
     &_info { flex: 1; }
 
@@ -63,6 +65,10 @@
       display: flex;
       justify-content: space-between;
       color: $color-brandDark-lighter-3;
+
+      p {
+        line-height: 1.25;
+      }
     }
   }
 
