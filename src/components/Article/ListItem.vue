@@ -54,6 +54,10 @@
     margin-left: -#{$scale-3-1}; // -24px
     margin-bottom: $scale-3-1;
 
+    &:last-child {
+      margin-bottom: 0;
+    }
+
     &_title {
       display: block;
       margin-bottom: $scale;
