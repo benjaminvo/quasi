@@ -2,7 +2,7 @@
   <header class="header">
     <grid-block columns="12" noPadding>
       <div class="header_inner span-12">
-        <h2>Quasi</h2>
+        <h2 class="color-brandFirst">Quasi</h2>
         <div class="header_period">
           <div class="arrowWrap">
             <div class="arrow arrow-left"></div>
