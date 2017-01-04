@@ -3,17 +3,17 @@
     <div class="modal_inner">
       <div class="modal_header">
         <toggle-checkmark finished class="margin-bottom-2-1" />
-        <h1 class="margin-bottom">Godt arbejde!</h1>
-        <p>Send et ønske til din underviser eller tip en af dine medstuderende om noget i {{ article.title }}</p>
+        <h1 class="margin-bottom">Congrats!</h1>
+        <p>Ask your lecturer or tip one of your fellow students about something in {{ article.title }}</p>
       </div>
 
       <form v-on:submit.prevent="handleSubmit">
-        <input class="modal_form_input" v-model="wish" type="text" placeholder="Ønske" maxlength="140">
+        <input class="modal_form_input" v-model="wish" type="text" placeholder="Ask" maxlength="140">
         <input class="modal_form_input" v-model="tip" type="text" placeholder="Tip" maxlength="140">
         <div class="modal_form_footer">
-          <p class="modal_form_footer_text">Maks. 140 tegn. Alt er anonymt.</p>
+          <p class="modal_form_footer_text">Max. 140 chars. Everything is anonymous.</p>
           <div class="modal_form_footer_actions">
-            <a @click="close">Nej tak</a>
+            <a @click="close">No thanks</a>
             <button class="button submit" type="submit">Send</button>
           </div>
         </div>

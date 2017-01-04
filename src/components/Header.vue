@@ -8,7 +8,7 @@
             <div class="arrow arrow-left"></div>
           </div>
           <h6 class="header_period_inner">
-            <span>Uge 6, 2017</span>
+            <span>Week 6, 2017</span>
             <span class="header_period_inner_date">6 feb - 10 feb</span>
           </h6>
           <div class="arrowWrap">
@@ -17,7 +17,7 @@
         </div>
         <div class="header-logout">
           <p>{{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }},</p>
-          <a v-on:click="logout()">Log ud</a>
+          <a v-on:click="logout()">Log out</a>
         </div>
       </div>
     </grid-block>
