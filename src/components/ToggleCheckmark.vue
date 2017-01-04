@@ -4,7 +4,7 @@
     @click="toggleArticleFinished"
     v-bind:class="{finished: finished}">
 
-    <img v-if="finished" src="~assets/checkmark-o.svg" class="toggleCheckmark_checkmark" alt="checkmark">
+    <img v-if="finished" src="~assets/checkmark.svg" class="toggleCheckmark_checkmark" alt="checkmark">
   </div>
 </template>
 
