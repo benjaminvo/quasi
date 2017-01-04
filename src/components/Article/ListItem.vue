@@ -1,6 +1,10 @@
 <template>
   <li class="articleListItem" :id="articleId">
-    <div class="articleListItem_finishedToggle" @click="toggleArticleFinished" v-bind:class="{finished: finished}"></div>
+
+    <toggle-checkmark
+      :toggleArticleFinished="toggleArticleFinished"
+      :finished="finished" />
+
     <div class="articleListItem_info">
       <router-link class="articleListItem_title" tag="h4" :to="{ name: 'article', params: { articleId: articleId } }">{{title}}</router-link>
       <div class="articleListItem_meta">
@@ -8,11 +12,14 @@
         <p>{{ pageNum }} pages</p>
       </div>
     </div>
+
   </li>
 </template>
 
 <script>
+  import ToggleCheckmark from 'components/ToggleCheckmark'
   export default {
+    components: { 'toggle-checkmark': ToggleCheckmark },
     props: {
       currentUser: { type: Object },
       articleId: { type: String },
@@ -55,29 +62,6 @@
       display: flex;
       justify-content: space-between;
       color: $color-brandDark-lighter-3;
-    }
-
-    &_finishedToggle {
-      display: block;
-      min-width: 32px;
-      min-height: 32px;
-      margin-right: $scale-2-1;
-      border: 1px solid $color-brandLight-darker-1;
-      border-radius: 100%;
-      background-color: $color-brandLight-lighter-1;
-
-      &:hover {
-        background-color: darken($color-brandLight-lighter-1, 2%);
-        cursor: pointer;
-        text-decoration: underline;
-      }
-
-      &.finished {
-        background-color: $color-brandFirst;
-        border: none;
-
-        &:hover { background-color: darken($color-brandFirst, 2%); }
-      }
     }
   }
 

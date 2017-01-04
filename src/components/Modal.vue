@@ -88,16 +88,16 @@
     align-items: center;
 
     opacity: 0;
-    animation: fadeIn 200ms $animationBezier forwards;
+    animation: fadeIn 200ms 200ms $animationBezier forwards;
 
     &_inner {
       position: relative;
       max-width: 600px;
       margin-top: -10%;
-      transform: scale(0);
 
-      animation: fadeIn 100ms $animationBezier, scaleUp 300ms ease-out;
-      animation-delay: 100ms;
+      transform: scale(0);
+      opacity: 0;
+      animation: fadeIn 100ms 200ms $animationBezier, scaleUp 300ms 400ms ease-out;
       animation-fill-mode: forwards;
     }
 

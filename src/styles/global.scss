@@ -70,6 +70,7 @@ button {
   color: $color-brandLight;
   text-transform: uppercase;
   cursor: pointer;
+  font-weight: 500;
 
   &:hover { opacity: 0.9; }
 }
