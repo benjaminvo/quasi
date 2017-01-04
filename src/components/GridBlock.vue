@@ -32,7 +32,7 @@
       @include breakpoint( 'tablet' )          { padding: 0 $scale-2-1 !important; }
     }
 
-    & > * { padding: $scale-2-1; }
+    & > * { padding: 0 $scale-2-1; }
 
     // Content-widths
     @include breakpoint( 'desktop' )         { width: $contentWidth-desktop; }
