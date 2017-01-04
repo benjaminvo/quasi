@@ -26,7 +26,7 @@
     align-items: center;
     width: 32px;
     height: 32px;
-    margin-right: $scale-3-1;
+    //margin-right: $scale-3-1;
     border: 1px solid $color-brandLight-darker-1;
     border-radius: 100%;
     background-color: $color-brandLight-lighter-1;

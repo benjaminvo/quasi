@@ -3,7 +3,8 @@
 
     <toggle-checkmark
       :toggleArticleFinished="toggleArticleFinished"
-      :finished="finished" />
+      :finished="finished"
+      class="margin-right-3-1" />
 
     <div class="articleListItem_info">
       <router-link class="articleListItem_title" tag="h4" :to="{ name: 'article', params: { articleId: articleId } }">{{title}}</router-link>
