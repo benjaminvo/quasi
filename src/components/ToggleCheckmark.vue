@@ -1,7 +1,7 @@
 <template>
   <div
     class="toggleCheckmark"
-    @click="toggleArticleFinished"
+    @click.stop="toggleArticleFinished"
     v-bind:class="{finished: finished}">
 
     <img v-if="finished" src="~assets/checkmark.svg" class="toggleCheckmark_checkmark" alt="checkmark">
@@ -26,7 +26,6 @@
     align-items: center;
     width: 32px;
     height: 32px;
-    //margin-right: $scale-3-1;
     border: 1px solid $color-brandLight-darker-1;
     border-radius: 100%;
     background-color: $color-brandLight-lighter-1;
