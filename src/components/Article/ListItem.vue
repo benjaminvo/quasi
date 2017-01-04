@@ -1,20 +1,24 @@
 <template>
-  <li class="articleListItem" :id="articleId">
+  <router-link
+    tag="li"
+    :to="{ name: 'article', params: { articleId: articleId } }"
+    :id="articleId"
+    class="articleListItem">
 
     <toggle-checkmark
       :toggleArticleFinished="toggleArticleFinished"
       :finished="finished"
-      class="margin-right-3-1" />
+      class="margin-right-3-1 articleListItem_toggle" />
 
     <div class="articleListItem_info">
-      <router-link class="articleListItem_title" tag="h4" :to="{ name: 'article', params: { articleId: articleId } }">{{title}}</router-link>
+      <h4 class="articleListItem_title">{{title}}</h4>
       <div class="articleListItem_meta">
         <p>{{ author }} ({{ year }})</p>
         <p>{{ pageNum }} pages</p>
       </div>
     </div>
 
-  </li>
+  </router-link>
 </template>
 
 <script>
@@ -55,16 +59,14 @@
     margin-left: -#{$scale-3-1}; // -24px
     margin-bottom: $scale-3-1;
 
-    &:last-child {
-      margin-bottom: 0;
-    }
+    &:last-child { margin-bottom: 0; }
+
+    &_info { flex: 1; }
 
     &_title {
       display: block;
       margin-bottom: $scale;
     }
-
-    &_info { flex: 1; }
 
     &_meta {
       display: flex;

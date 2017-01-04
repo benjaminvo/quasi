@@ -89,11 +89,11 @@
       fetchRelevantArticlesPerCourse() {
 
         let dayBlocks = {
-          Mandag: { courses: [] },
-          Tirsdag: { courses: [] },
-          Onsdag: { courses: [] },
-          Torsdag: { courses: [] },
-          Fredag: { courses: [] }
+          Monday: { courses: [] },
+          Tuesday: { courses: [] },
+          Wednesday: { courses: [] },
+          Thursday: { courses: [] },
+          Friday: { courses: [] }
         }
 
         // Checking if user has got the couse and adding a course object with name of course + articles if so
@@ -108,11 +108,11 @@
                   articles: courses[course].articles
                 }
                 switch(courses[course].weekday) { // Add courseObj to dayBlocks object based on the day of the course
-                  case 'Monday': { dayBlocks.Mandag.courses.push(courseObj); break; }
-                  case 'Tuesday': { dayBlocks.Tirsdag.courses.push(courseObj); break; }
-                  case 'Wednesday': { dayBlocks.Onsdag.courses.push(courseObj); break; }
-                  case 'Thursday': { dayBlocks.Torsdag.courses.push(courseObj); break; }
-                  case 'Friday': { dayBlocks.Fredag.courses.push(courseObj); break; }
+                  case 'Monday': { dayBlocks.Monday.courses.push(courseObj); break; }
+                  case 'Tuesday': { dayBlocks.Tuesday.courses.push(courseObj); break; }
+                  case 'Wednesday': { dayBlocks.Wednesday.courses.push(courseObj); break; }
+                  case 'Thursday': { dayBlocks.Thursday.courses.push(courseObj); break; }
+                  case 'Friday': { dayBlocks.Friday.courses.push(courseObj); break; }
                 }
               }
             }

@@ -8,8 +8,8 @@
             <div class="arrow arrow-left"></div>
           </div>
           <h6 class="textAlign-center margin-left-4-1 margin-right-4-1">
-            <span>Uge 6, 2017</span>
-            <span class="header_period_date margin-top">6 feb - 10 feb</span>
+            <span>Week 6, 2017</span>
+            <span class="header_period_date margin-top">Feb 6 - Feb 10</span>
           </h6>
           <div class="arrowWrap">
             <div class="arrow arrow-right"></div>
@@ -17,8 +17,8 @@
         </div>
         <h6>
           {{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }},
-          <a class="h6" v-on:click="logout()">Log ud</a>
-        </div>
+          <a class="h6" v-on:click="logout()">Sign out</a>
+        </h6>
       </div>
     </grid-block>
   </header>

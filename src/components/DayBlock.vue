@@ -2,7 +2,7 @@
   <div class="dayBlock">
     <grid-block columns="12" noPadding>
       <div class="span-2">
-        <h5 class="margin-bottom">{{ day }} <span class="dayBlock_emptyText" v-if="courses.length === 0">Ingen kurser - hurra!</span></h5>
+        <h5 class="margin-bottom">{{ day }} <span class="dayBlock_emptyText" v-if="courses.length === 0">No courses - hurray!</span></h5>
       </div>
       <div class="span-8">
         <article-list
