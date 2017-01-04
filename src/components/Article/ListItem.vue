@@ -51,8 +51,8 @@
     align-items: center;
     justify-content: space-between;
     width: calc(100% + (#{$scale-3-1}*2)); // 100% + 48px
-    margin-left: -#{$scale-3-1}; // 24px
-
+    margin-left: -#{$scale-3-1}; // -24px
+    margin-bottom: $scale-3-1;
 
     &_title {
       display: block;
