@@ -63,6 +63,7 @@ p, li, a {
 a {
   color: $color-brandFirst;
   cursor: pointer;
+  text-decoration: none;
 
   &:hover { opacity: 0.5; }
 }
