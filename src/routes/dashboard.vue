@@ -2,7 +2,7 @@
   <div>
 
     <grid-block columns="12">
-      <h1 class="span-12">This week features <span class="color-brandFirst">{{ numOfArticles }} articles</span> {{ articleDuplicates ? `(${articleDuplicates} in multiple courses)` : null }} with a total of <span class="color-brandFirst">{{ totalPages }} pages</span>. Enjoy!</h1>
+      <h1 class="span-10">This week features <span class="color-brandFirst">{{ numOfArticles }} articles</span> {{ articleDuplicates ? `(${articleDuplicates} in multiple courses)` : null }} with a total of <span class="color-brandFirst">{{ totalPages }} pages</span>. Enjoy!</h1>
     </grid-block>
 
     <day-block
@@ -34,7 +34,7 @@
     },
     props: {
       currentUser: { type: Object },
-      databaseRef: { type: Object },
+      databaseRef: { type: Object }
     },
     data() {
       return {

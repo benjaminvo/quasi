@@ -51,12 +51,11 @@
     box-shadow: $cardShadow;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 
     &_title { display: block; }
 
-    &_info {
-      width: 100%;
-    }
+    &_info { flex: 1; }
 
     &_meta {
       display: flex;
