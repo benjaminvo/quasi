@@ -37,7 +37,7 @@ h2 {
 h3 { font-size: $fontSize-xlarge; }
 h4 { font-size: $fontSize-large; }
 h5 { font-size: $fontSize-base; }
-h6 { font-size: $fontSize-small; }
+h6 { font-size: $fontSize-small; text-transform: uppercase;}
 
 p, li, a {
   font-family: $fontFamily-sans;

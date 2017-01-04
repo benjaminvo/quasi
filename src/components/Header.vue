@@ -2,20 +2,22 @@
   <header class="header">
     <grid-block columns="12" noPadding>
       <div class="header_inner span-12">
-        <ul class="header-links span-6">
-          <router-link :to="{ name: 'dashboard' }" tag="li" exact>Dashboard</router-link>
-        </ul>
+        <h2>Quasi</h2>
         <div class="header_period">
-          <div class="arrow arrow-left"></div>
-          <div class="header_period_inner">
-            <h4 class="header_period_week">Uge 6</h4>
-            <p class="header_period_dates">6-10 feb</p>
+          <div class="arrowWrap">
+            <div class="arrow arrow-left"></div>
           </div>
-          <div class="arrow arrow-right"></div>
+          <h6 class="header_period_inner">
+            <span>Uge 6, 2017</span>
+            <span class="header_period_inner_date">6 feb - 10 feb</span>
+          </h6>
+          <div class="arrowWrap">
+            <div class="arrow arrow-right"></div>
+          </div>
         </div>
-        <div class="header-logout span-6">
+        <div class="header-logout">
           <p>{{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }},</p>
-          <button v-on:click="logout()">Log ud</button>
+          <a v-on:click="logout()">Log ud</a>
         </div>
       </div>
     </grid-block>
@@ -45,51 +47,31 @@
 
   .headerLink {
     display: inline-block;
-    color: $color-brandDark !important;
-    padding: $scale-1-2 0;
-    text-decoration: none !important;
-    margin-right: $scale;
-    border-bottom: 3px solid transparent;
-    padding-bottom: $scale-3-1;
-    margin-top: $scale-3-1;
-    text-transform: none;
-    background-color: transparent;
-
-    &:hover {
-      cursor: pointer;
-      border-bottom: 3px solid $color-brandLight-darker-1;
-    }
+    text-transform: uppercase;
+    font-size: $fontSize-small;
+    font-weight: 600;
   }
 
   .header {
     width: 100%;
-    background: $color-brandLight;
+    height: 96px;
+    display: flex;
+    align-items: center;
 
     &_inner {
       width: 100%;
       display: flex;
       justify-content: space-between;
-      padding-top: 0;
-      padding-bottom: 0;
       align-items: center;
     }
 
     &-logout {
-      & p { display: inline-block; margin: $scale-1-2; }
-      & button {
-        @extend .headerLink;
-        text-transform: lowercase;
-      }
+      & * { @extend .headerLink; }
     }
 
     li {
       @extend .headerLink;
-
-      &.active {
-        transition: all $animationSpeed $animationBezier;
-        border-bottom: 3px solid $color-brandDark;
-        font-weight: bold;
-      }
+      &.active { font-weight: bold; }
     }
 
     &_period {
@@ -98,27 +80,36 @@
 
       &_inner {
         text-align: center;
-        margin: 0 $scale-2-1;
-      }
+        margin: 0 $scale-4-1;
 
-      &_week {}
-
-      &_dates {
-        font-size: $fontSize-xxsmall;
-        color: $color-brandDark-lighter-3;
-        text-transform: uppercase;
+        &_date {
+          display: block;
+          color: $color-brandDark-lighter-3;
+          margin-top: $scale-1-2;
+        }
       }
     }
+  }
+
+  .arrowWrap {
+    width: 32px;
+    height: 32px;
+    background: $color-brandLight;
+    padding: $scale;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .arrow {
     width: 0;
     height: 0;
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
     display: inline-block;
 
-    &-right { border-left: 5px solid $color-brandDark; }
-    &-left { border-right: 5px solid $color-brandDark; }
+    &-right { margin-left: 2px; border-left: 7px solid $color-brandDark-lighter-3; }
+    &-left { margin-right: 2px; border-right: 7px solid $color-brandDark-lighter-3; }
   }
 </style>
