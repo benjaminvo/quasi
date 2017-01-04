@@ -6,33 +6,34 @@
 @import '~styles/animations';
 
 h1, h2, h3, h4, h5, h6 {
-  //font-family: $fontFamily-headline;
   font-weight: bold;
   color: $color-brandDark;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+// Headings font family
 h1,
 h2,
 h3,
-h4 {
-  line-height: 1.4;
-  font-family: $fontFamily-serif; }
-
+h4 { font-family: $fontFamily-serif; }
 h5,
-h6 {
-  font-family: $fontFamily-sans; }
+h6 { font-family: $fontFamily-sans; }
 
-h1 {
-  font-size: $fontSize-xxxlarge;
-  line-height: 1.5;
+// Headings line height
+h1 { line-height: 1.5; }
+h2 { line-height: 1.2; }
+h3 { line-height: 1.33; }
+h4,
+h5,
+h6 { line-height: 1.2; }
+
+// Headings font size
+h1 { font-size: $fontSize-xxxlarge;
 
   @include breakpoint( 'tablet' ) { font-size: $fontSize-xxlarge; }
   @include breakpoint( 'mobileMedium' ) { font-size: $fontSize-xlarge; }}
-
-h2 {
-  font-size: $fontSize-xxlarge;
+h2 { font-size: $fontSize-xxlarge;
   @include breakpoint( 'mobile' ) { font-size: $fontSize-xlarge; }}
 h3 { font-size: $fontSize-xlarge; }
 h4 { font-size: $fontSize-large; }
