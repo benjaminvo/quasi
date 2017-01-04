@@ -1,39 +1,6 @@
 @font-face {
-	font-family: 'Meta Pro';
-	src: url('~assets/fonts/MetaPro-Book.woff2') format('woff2'),
-		url('~assets/fonts/MetaPro-Book.woff') format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'Meta Pro';
-	src: url('~assets/fonts/MetaPro-BookItalic.woff2') format('woff2'),
-		url('~assets/fonts/MetaPro-BookItalic.woff') format('woff');
-	font-weight: normal;
-	font-style: italic;
-}
-
-@font-face {
-	font-family: 'Meta Pro';
-	src: url('~assets/fonts/MetaPro-Medium.woff2') format('woff2'),
-		url('~assets/fonts/MetaPro-Medium.woff') format('woff');
+	font-family: 'Copernicus';
+	src: url('~assets/fonts/Copernicus-Bold.woff') format('woff');
 	font-weight: 600;
 	font-style: normal;
-}
-
-@font-face {
-	font-family: 'EB Garamond 08';
-	src: url('~assets/fonts/EBGaramond08-Regular.woff2') format('woff2'),
-		url('~assets/fonts/EBGaramond08-Regular.woff') format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'EB Garamond 08';
-	src: url('~assets/fonts/EBGaramond08-Italic.woff2') format('woff2'),
-		url('~assets/fonts/EBGaramond08-Italic.woff') format('woff');
-	font-weight: normal;
-	font-style: italic;
 }

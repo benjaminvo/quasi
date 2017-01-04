@@ -7,7 +7,7 @@
 
 h1, h2, h3, h4, h5, h6 {
   //font-family: $fontFamily-headline;
-  font-weight: normal;
+  font-weight: 600;
   color: $color-brandDark;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -22,8 +22,7 @@ h4 {
 
 h5,
 h6 {
-  font-family: $fontFamily-sans;
-  font-weight: 600; }
+  font-family: $fontFamily-sans; }
 
 h1 {
   font-size: $fontSize-title;
