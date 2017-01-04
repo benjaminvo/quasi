@@ -12,33 +12,49 @@ h1, h2, h3, h4, h5, h6 {
   -moz-osx-font-smoothing: grayscale;
 }
 
-// Headings font family
-h1,
-h2,
-h3,
-h4 { font-family: $fontFamily-serif; }
-h5,
-h6 { font-family: $fontFamily-sans; }
-
-// Headings line height
-h1 { line-height: 1.5; }
-h2 { line-height: 1.2; }
-h3 { line-height: 1.33; }
-h4,
-h5,
-h6 { line-height: 1.2; }
-
-// Headings font size
-h1 { font-size: $fontSize-xxxlarge;
+h1, .h1 {
+  font-family: $fontFamily-serif;
+  font-size: $fontSize-xxxlarge;
+  line-height: 1.5;
 
   @include breakpoint( 'tablet' ) { font-size: $fontSize-xxlarge; }
-  @include breakpoint( 'mobileMedium' ) { font-size: $fontSize-xlarge; }}
-h2 { font-size: $fontSize-xxlarge;
-  @include breakpoint( 'mobile' ) { font-size: $fontSize-xlarge; }}
-h3 { font-size: $fontSize-xlarge; }
-h4 { font-size: $fontSize-large; }
-h5 { font-size: $fontSize-base; }
-h6 { font-size: $fontSize-small; text-transform: uppercase;}
+  @include breakpoint( 'mobileMedium' ) { font-size: $fontSize-xlarge; }
+}
+
+h2, .h2 {
+  font-family: $fontFamily-serif;
+  font-size: $fontSize-xxlarge;
+  line-height: 1.2;
+
+  @include breakpoint( 'mobile' ) { font-size: $fontSize-xlarge; }
+}
+
+h3, .h3 {
+  font-family: $fontFamily-serif;
+  font-size: $fontSize-xlarge;
+  line-height: 1.33;
+}
+
+h4, .h4 {
+  font-family: $fontFamily-serif;
+  font-size: $fontSize-large;
+  line-height: 1.2;
+}
+
+h5, .h5 {
+  font-family: $fontFamily-sans;
+  font-size: $fontSize-base;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+h6, .h6 {
+  font-family: $fontFamily-sans;
+  font-size: $fontSize-small;
+  font-weight: 600;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
 
 p, li, a {
   font-family: $fontFamily-sans;
