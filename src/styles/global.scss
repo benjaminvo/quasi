@@ -59,10 +59,16 @@ input, button {
   background-color: $color-brandLight;
   border-radius: $borderRadius / 2;
 
+
   &::-webkit-input-placeholder { color: $color-brandLight-darker-3; } /* Chrome/Opera/Safari */
   &::-moz-placeholder { color: $color-brandLight-darker-3; } /* Firefox 19+ */
   &:-ms-input-placeholder { color: $color-brandLight-darker-3; }  /* IE 10+ */
   &:-moz-placeholder { color: $color-brandLight-darker-3; } /* Firefox 18- */
+}
+
+input:focus {
+  background-color: white;
+  transition: all 300ms $animationBezier;
 }
 
 button {
@@ -73,6 +79,8 @@ button {
   font-weight: 500;
 
   &:hover { opacity: 0.9; }
+
+  &.submit { background-color: $color-brandFirst; }
 }
 
 input:focus,

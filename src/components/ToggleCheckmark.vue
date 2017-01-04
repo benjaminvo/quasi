@@ -24,8 +24,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-width: 32px;
-    min-height: 32px;
+    width: 32px;
+    height: 32px;
     margin-right: $scale-2-1;
     border: 1px solid $color-brandLight-darker-1;
     border-radius: 100%;

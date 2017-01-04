@@ -1,34 +1,52 @@
 <template>
   <div class="modal">
     <div class="modal_inner">
-      <h1 class="modal_headline">Nu kan du...</h1>
+      <div class="modal_header">
+        <toggle-checkmark finished class="margin-bottom-2-1" />
+        <h1 class="margin-bottom">Godt arbejde!</h1>
+        <p>Send et ønske til din underviser eller tip en af dine medstuderende om noget i {{ article.title }}</p>
+      </div>
+
       <form v-on:submit.prevent="handleSubmit">
-        <input class="modal_input" v-model="wish" type="text" placeholder="Skrive ønske til din underviser (maks. 140 tegn)" maxlength="140">
-        <input class="modal_input" v-model="tip" type="text" placeholder="Give tip til en fremtidig læser (maks. 140 tegn)" maxlength="140">
-        <p class="modal_text">Alt er anonymt</p>
-        <button class="button modal_submit" type="submit">Send</button>
-        <a class="modal_dismiss" @click="close">Nej tak</a>
+        <input class="modal_form_input" v-model="wish" type="text" placeholder="Ønske" maxlength="140">
+        <input class="modal_form_input" v-model="tip" type="text" placeholder="Tip" maxlength="140">
+        <div class="modal_form_footer">
+          <p class="modal_form_footer_text">Maks. 140 tegn. Alt er anonymt.</p>
+          <div class="modal_form_footer_actions">
+            <a @click="close">Nej tak</a>
+            <button class="button submit" type="submit">Send</button>
+          </div>
+        </div>
       </form>
     </div>
   </div>
 </template>
 
 <script>
+  import ToggleCheckmark from 'components/ToggleCheckmark'
   export default {
+    components: { 'toggle-checkmark': ToggleCheckmark },
     props: {
       currentUser: { type: Object },
       databaseRef: { type: Object },
-      clickedArticleId: { type: String }
+      clickedArticleId: { type: String },
     },
     data() {
       return {
+        article: {},
         wish: null,
         tip: null
       }
     },
+    created() {
+      this.getArticleData()
+    },
     methods: {
       close() {
         this.$emit('close')
+      },
+      getArticleData() {
+        this.databaseRef.ref('articles/' + this.clickedArticleId).once('value', (snapshot) => { this.article = snapshot.val() })
       },
       handleSubmit() {
         const articleReaderWishesPath = 'articles/' + this.clickedArticleId + '/readerWishes/'
@@ -94,6 +112,7 @@
       position: relative;
       max-width: 600px;
       margin-top: -10%;
+      padding: $scale-2-1;
 
       transform: scale(0);
       opacity: 0;
@@ -107,39 +126,42 @@
       top: $scale;
     }
 
-    &_headline {
-      width: 100%;
-      text-align: center;
-      margin-bottom: $scale-2-1;
+    &_header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin-bottom: $scale-3-1;
+
+      p {
+        max-width: 80%;
+        text-align: center;
+      }
     }
 
-    &_input {
-      min-width: 100%;
-      padding: $scale-2-1;
+    &_form {
 
-      &:first-child { margin-bottom: $scale; }
-    }
+      &_input {
+        min-width: 100%;
+        padding: $scale-2-1;
 
-    &_text {
-      text-align: center;
-      margin-top: $scale-2-1;
-      color: $color-brandLight-darker-2;
-    }
+        &:first-child { margin-bottom: $scale; }
+      }
 
-    .button {
-      display: block;
-      margin: 0 auto;
-      margin-top: $scale-2-1;
-    }
+      &_footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: $scale-2-1;
 
-    &_submit { background-color: $color-brandFirst; }
+        &_text { color: $color-brandLight-darker-2; }
 
-    &_dismiss {
-      width: 80px; // Hardcoded to enable centering of element through "margin: 0 auto"
-      text-align: center;
-      display: block;
-      margin: 0 auto;
-      margin-top: $scale-2-1;
+        &_actions {
+          .button {
+            display: inline-block;
+            margin-left: $scale-2-1; }
+        }
+      }
     }
   }
 
