@@ -56,13 +56,15 @@
       <!-- Right column -->
       <div class="article_meta span-9">
 
-        <!-- Reading guide -->
         <h5 class="padding-bottom-2-1">Reading guide</h5>
         <p class="padding-bottom-4-1">{{ article.readingGuide }}</p>
 
-        <!-- Abstract -->
+        <h5 class="padding-bottom-2-1">Keywords</h5>
+        <p class="padding-bottom-4-1">{{ article.keywords }}</p>
+
         <h5 class="padding-bottom-2-1">Abstract</h5>
         <p class="padding-bottom-4-1">{{ article.abstract }}</p>
+
       </div>
 
     </grid-block>
@@ -108,7 +110,7 @@
     methods: {
       setArticle() {
         const activeArticleId = this.$route.params.articleId
-        this.databaseRef.ref('articles/').on('value', (snapshot) => {
+        this.databaseRef.ref('articles/').once('value', (snapshot) => {
           let articleObj = {}
           const data = snapshot.val()
           for (let article in data) {

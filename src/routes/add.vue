@@ -14,7 +14,7 @@
           </li>
         </ul>
 
-        <h4 class="margin-top-4-1">Add course</h4>
+        <h4 class="subtitle">Add course</h4>
         <form v-on:submit.prevent="addCourse">
           <input class="margin-right-2-1" v-model="course.name" type="text" placeholder="Name">
           <label for="weekday">Weekday:</label>
@@ -42,7 +42,7 @@
           </li>
         </ul>
 
-        <h4 class="margin-top-3-1">Assign user to course</h4>
+        <h4 class="subtitle">Assign user to course</h4>
         <form v-on:submit.prevent="assignUserToCourse">
           <label for="user">User ID:</label>
           <select class="margin-right-2-1" name="user" v-model="assignUserToCourse.userId">
@@ -69,17 +69,21 @@
           </li>
         </ul>
 
-        <h4 class="margin-top-3-1">Add article</h4>
+        <h4 class="subtitle">Add article</h4>
         <form v-on:submit.prevent="addArticle">
-          <input class="margin-right-2-1" v-model="article.title" type="text" placeholder="Title">
-          <input class="margin-right-2-1" v-model="article.author" type="text" placeholder="Author">
-          <input class="margin-right-2-1" v-model="article.year" type="text" placeholder="Year">
-          <input class="margin-right-2-1" v-model="article.pageFrom" type="text" placeholder="Page from">
-          <input class="margin-right-2-1" v-model="article.pageTo" type="text" placeholder="Page to">
+          <input v-model="article.title" type="text" placeholder="Title">
+          <input v-model="article.author" type="text" placeholder="Author">
+          <input v-model="article.year" type="text" placeholder="Year">
+          <input v-model="article.journal" type="text" placeholder="Journal">
+          <input v-model="article.publisher" type="text" placeholder="Publisher">
+          <input v-model="article.keywords" type="text" placeholder="Keywords (Ex: Cognition, psychology, ...)">
+          <input v-model="article.pageFrom" type="text" placeholder="Page from">
+          <input v-model="article.pageTo" type="text" placeholder="Page to">
+          <textarea v-model="article.abstract" placeholder="Abstract"></textarea>
           <button type="submit">Add article</button>
         </form>
 
-        <h4 class="margin-top-3-1">Assign article to course</h4>
+        <h4 class="subtitle">Assign article to course</h4>
         <form v-on:submit.prevent="assignArticleToCourse">
           <label for="article">Article ID:</label>
           <select class="margin-right-2-1" name="article" v-model="assignArticleToCourse.articleId">
@@ -119,8 +123,12 @@
           title: null,
           author: null,
           year: null,
+          journal: null,
+          publisher: null,
+          keywords: null,
           pageFrom: null,
-          pageTo: null
+          pageTo: null,
+          abstract: null
         },
         assignUserToCourse: {
           userId: null,
@@ -218,14 +226,22 @@
             title: this.article.title,
             author: this.article.author,
             year: this.article.year,
+            journal: this.article.journal,
+            publisher: this.article.publisher,
+            keywords: this.article.keywords,
             pageFrom: this.article.pageFrom,
-            pageTo: this.article.pageTo
+            pageTo: this.article.pageTo,
+            abstract: this.article.abstract
           })
           this.article.title = ''
           this.article.author = ''
           this.article.year = ''
+          this.article.journal = ''
+          this.article.publisher = ''
+          this.article.keywords = ''
           this.article.pageFrom = ''
           this.article.pageTo = ''
+          this.article.abstract = ''
         }
       },
       deleteArticle(id) {
@@ -286,8 +302,12 @@
     h1, h2, h3, h4, h5, h6, p, li { font-family: $fontFamily-sans; }
     h1, h2, h3, h4, h5, h6 { font-weight: bold; }
 
-    button { padding: $scale-1-2 $scale; }
+    input, textarea { background: white; display: block; margin-bottom: $scale; width: 100%; }
+
+    button { background: $color-brandFirst; padding: $scale-1-2 $scale; }
   }
+
+  .subtitle { margin: $scale-3-1 0 $scale; }
 
   .delete {
     color: red;

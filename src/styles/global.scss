@@ -68,7 +68,7 @@ a, .a {
   &:hover { opacity: 0.5; }
 }
 
-input, button {
+input, textarea, button {
   font-family: $fontFamily-sans;
   font-size: $fontSize-base;
   padding: $scale-1-2;
