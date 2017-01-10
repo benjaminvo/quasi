@@ -27,6 +27,7 @@
   import DayBlock from 'components/DayBlock'
   import Modal from 'components/Modal'
   export default {
+    name: 'Dashboard',
     components: {
       'grid-block': GridBlock,
       'day-block': DayBlock,

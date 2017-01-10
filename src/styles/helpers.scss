@@ -72,7 +72,13 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 	&-brandFirst 	{ color: $color-brandFirst; }
 	&-brandSecond { color: $color-brandSecond; }
 	&-brandDark 	{ color: $color-brandDark; }
-	&-brandLight  { color: $color-brandLight; }
+	&-brandLight  { color: $color-brandLight;
+		&-darker {
+			&-1 { color: $color-brandLight-darker-1; }
+			&-2 { color: $color-brandLight-darker-2; }
+			&-3 { color: $color-brandLight-darker-3; }
+		}
+	}
 	&-success 		{ color: $color-success-text; }
 }
 

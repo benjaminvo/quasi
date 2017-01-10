@@ -11,6 +11,9 @@
       <!-- Article title -->
       <div class="span-12 padding-bottom-4-1">
         <h1>{{ article.title }}</h1>
+        <p class="color-brandLight-darker-3">Read for course(s)
+          <span v-for="course in this.articleCourses">{{ course.name }} on {{ course.weekday }}</span>
+        </p>
       </div>
 
       <!-- Article information -->
@@ -63,14 +66,17 @@
 <script>
   import GridBlock from 'components/GridBlock'
   export default {
-  components: { 'grid-block': GridBlock },
+    name: 'Article',
+    components: { 'grid-block': GridBlock },
     props: {
       currentUser: { type: Object },
       databaseRef: { type: Object },
     },
     data() {
       return {
-        article: {}
+        article: {},
+        articleCourseIds: [],
+        articleCourses: []
       }
     },
     computed: {
@@ -79,13 +85,15 @@
       }
     },
     mounted() {
+
       this.setArticle()
     },
     beforeDestroy() {
       this.databaseRef.ref('articles/').off()
     },
     watch: {
-      '$route': 'setArticle'
+      '$route': 'setArticle',
+      'articleCourseIds': 'fetchCourses'
     },
     methods: {
       setArticle() {
@@ -96,9 +104,25 @@
           for (let article in data) {
             if (article === activeArticleId) {
               articleObj = data[article]
+              for (let course in articleObj.courses) {
+                this.articleCourseIds.push(course) // Get ids of courses that the article is part of
+              }
+
             }
           }
           this.article = articleObj
+        })
+      },
+      fetchCourses() {
+        this.databaseRef.ref('courses/').on('value', (snapshot) => {
+          const courses = snapshot.val()
+          for (let course in courses) {
+            for (let i = 0; i < this.articleCourseIds.length; i++) {
+              if (course === this.articleCourseIds[i]) {
+                this.articleCourses.push(courses[course])
+              }
+            }
+          }
         })
       }
     }
