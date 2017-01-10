@@ -78,11 +78,14 @@
         return parseInt(this.article.pageTo, 10) - parseInt(this.article.pageFrom, 10)
       }
     },
-    created() {
+    mounted() {
       this.setArticle()
     },
+    beforeDestroy() {
+      this.databaseRef.ref('articles/').off()
+    },
     watch: {
-      '$route': 'setProject'
+      '$route': 'setArticle'
     },
     methods: {
       setArticle() {

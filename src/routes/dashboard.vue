@@ -41,6 +41,7 @@
         modalVisible: false,
         clickedArticleId: null,
         dayBlocks: {},
+        coursesFetched: false,
         uniqueArticles: [],
         articleDuplicates: 0,
         totalPages: 0,
@@ -67,12 +68,18 @@
         return articleIds.length
       }
     },
-    created() {
-      this.fetchRelevantArticlesPerCourse()
+    mounted() {
+      this.fetchCoursesAndCreateDayblocks()
       this.setUserNameOnDatabase()
     },
+    beforeDestroy() {
+      this.databaseRef.ref('users/').off()
+      this.databaseRef.ref('courses/').off()
+      this.databaseRef.ref('articles/').off()
+    },
     watch: {
-      uniqueArticles: 'getTotalPages'
+      uniqueArticles: 'getTotalPages',
+      coursesFetched: 'fetchRelevantArticlesPerCourse'
     },
     methods: {
       setUserNameOnDatabase() {
@@ -86,7 +93,7 @@
           }
         })
       },
-      fetchRelevantArticlesPerCourse() {
+      fetchCoursesAndCreateDayblocks() {
 
         let dayBlocks = {
           Monday: { courses: [] },
@@ -97,7 +104,7 @@
         }
 
         // Checking if user has got the couse and adding a course object with name of course + articles if so
-        this.databaseRef.ref('courses/').on('value', (snapshot) => {
+        this.databaseRef.ref('courses/').once('value', (snapshot) => {
           const courses = snapshot.val()
           for (let course in courses) { // For each course
             const courseHasGotStudents = courses[course].students // If there is students
@@ -119,15 +126,19 @@
           }
         })
 
+        this.dayBlocks = dayBlocks
+        this.coursesFetched = true
+      },
+      fetchRelevantArticlesPerCourse() {
         // Swapping the article id placeholder out with actual article object in dayBlocks object created above
-        this.databaseRef.ref('articles/').on('value', (snapshot) => {
+        this.databaseRef.ref('articles/').once('value', (snapshot) => {
           const articleObjs = snapshot.val()
-          for (let dayBlock in dayBlocks) { // Loop through the newly created dayBlocks object
-            for (let i = 0; i < dayBlocks[dayBlock].courses.length; i++) { // For length of the courses array under each day in dayBlocks
-              for (let article in dayBlocks[dayBlock].courses[i].articles) { // And each articleId in each articles array in each course
+          for (let dayBlock in this.dayBlocks) { // Loop through the newly created this.dayBlocks object
+            for (let i = 0; i < this.dayBlocks[dayBlock].courses.length; i++) { // For length of the courses array under each day in this.dayBlocks
+              for (let article in this.dayBlocks[dayBlock].courses[i].articles) { // And each articleId in each articles array in each course
                 for (let articleObj in articleObjs) { // The articleObj fetched from database to compare with the articleId
-                  if (articleObj == article) { // If objectObj and articleId in the dayBlocks object matches
-                    dayBlocks[dayBlock].courses[i].articles[article] = articleObjs[articleObj] // Set the id to holde the full article object (instead of just 'true')
+                  if (articleObj == article) { // If objectObj and articleId in the this.dayBlocks object matches
+                    this.dayBlocks[dayBlock].courses[i].articles[article] = articleObjs[articleObj] // Set the id to holde the full article object (instead of just 'true')
                     if (!this.uniqueArticles.includes(articleObjs[articleObj])) {
                       this.uniqueArticles.push(articleObjs[articleObj]) // Push all unique articles to array for eg. fetching their num of pages
                     }
@@ -137,8 +148,6 @@
             }
           }
         })
-
-        this.dayBlocks = dayBlocks;
       },
       getTotalPages() {
         if ( this.totalPages === 0 ) {
