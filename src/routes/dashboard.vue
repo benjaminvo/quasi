@@ -174,6 +174,7 @@
             this.databaseRef.ref(articleFinishedByPath + '/' + this.currentUser.uid).set(false)
           }
         })
+        this.fetchRelevantArticlesPerCourse()
       }
     }
   }
