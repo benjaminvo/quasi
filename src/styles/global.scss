@@ -60,7 +60,7 @@ p, li, a {
   font-size: $fontSize-base;
   line-height: 1.5; }
 
-a {
+a, .a {
   color: $color-brandFirst;
   cursor: pointer;
   text-decoration: none;

@@ -3,9 +3,10 @@
     <grid-block columns="12">
 
       <!-- Breadcrumb -->
-      <div class="span-12 padding-bottom-2-1 fontFamily-body fontSize-base">
-        <router-link :to="{ name: 'dashboard' }" tag="a">Dashboard</router-link> / {{ article.title }} ({{ article.year }})
-      </div>
+      <ul class="article_breadcrumb span-12 padding-bottom-2-1 fontFamily-body fontSize-base list-unstyled">
+        <router-link :to="{ name: 'dashboard' }" tag="li" class="a">Dashboard</router-link>
+        <li>/ {{ article.title }} ({{ article.year }})</li>
+      </ul>
 
       <!-- Article title -->
       <div class="span-12 padding-bottom-4-1">
@@ -44,7 +45,7 @@
       </div>
 
       <!-- Right column -->
-      <div class="article-meta span-9">
+      <div class="article_meta span-9">
 
         <!-- Reading guide -->
         <h5 class="padding-bottom-2-1">Reading guide</h5>
@@ -104,7 +105,17 @@
 <style lang="scss">
   @import '~styles/global';
 
-  .article-meta {
-    height: 100px;
+  .article {
+
+    &_breadcrumb {
+      & li {
+        display: inline-block;
+      }
+    }
+
+    &_meta {
+      height: 100px;
+    }
+
   }
 </style>
