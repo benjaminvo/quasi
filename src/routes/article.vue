@@ -10,7 +10,13 @@
 
       <!-- Article title -->
       <div class="span-12 padding-bottom-4-1">
-        <h1>{{ article.title }}</h1>
+        <div class="display-flex alignItems-center">
+          <h1 class="margin-right-2-1">{{ article.title }}</h1>
+          <toggle-checkmark
+            finished
+            disabled
+            v-if="article.finishedBy ? article.finishedBy[currentUser.uid] : null" />
+        </div>
         <p class="color-brandLight-darker-3">Read for course(s)
           <span v-for="course in this.articleCourses">{{ course.name }} on {{ course.weekday }}</span>
         </p>
@@ -65,9 +71,13 @@
 
 <script>
   import GridBlock from 'components/GridBlock'
+  import ToggleCheckmark from 'components/ToggleCheckmark'
   export default {
     name: 'Article',
-    components: { 'grid-block': GridBlock },
+    components: {
+      'grid-block': GridBlock,
+      'toggle-checkmark': ToggleCheckmark
+    },
     props: {
       currentUser: { type: Object },
       databaseRef: { type: Object },
@@ -114,7 +124,7 @@
         })
       },
       fetchCourses() {
-        this.databaseRef.ref('courses/').on('value', (snapshot) => {
+        this.databaseRef.ref('courses/').once('value', (snapshot) => {
           const courses = snapshot.val()
           for (let course in courses) {
             for (let i = 0; i < this.articleCourseIds.length; i++) {

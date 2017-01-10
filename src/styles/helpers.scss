@@ -110,7 +110,8 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 	&-left { float: left; }}
 
 .display {
-	&-flex { display: flex; }}
+	&-flex { display: flex; }
+	&-inlineBlock { display: inline-block; }}
 
 // Flex
 .justifyContent {

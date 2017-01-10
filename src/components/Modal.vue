@@ -2,7 +2,7 @@
   <div class="modal">
     <div class="modal_inner">
       <div class="modal_header">
-        <toggle-checkmark finished class="margin-bottom-2-1" />
+        <toggle-checkmark finished disabled class="margin-bottom-2-1" />
         <h1 class="margin-bottom">Congrats!</h1>
         <p>Ask your lecturer or tip one of your fellow students about something in {{ article.title }}</p>
       </div>
