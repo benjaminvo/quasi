@@ -23,38 +23,51 @@ $scale-1-8: $scale / 8;
 // ----- First
 $color-brandFirst: #2962FF;
 
-// Main darker
-$color-brandFirst-darker-3: darken( $color-brandFirst, 30% );
-$color-brandFirst-darker-2: darken( $color-brandFirst, 20% );
-$color-brandFirst-darker-1: darken( $color-brandFirst, 10% );
+$color-brandFirst-lighter-6: mix(white, $color-brandFirst, 98% );
+$color-brandFirst-lighter-5: mix(white, $color-brandFirst, 88% );
+$color-brandFirst-lighter-4: mix(white, $color-brandFirst, 70% );
+$color-brandFirst-lighter-3: mix(white, $color-brandFirst, 50% );
+$color-brandFirst-lighter-2: mix(white, $color-brandFirst, 30% );
+$color-brandFirst-lighter-1: mix(white, $color-brandFirst, 15% );
 
-// Main lighter
-$color-brandFirst-lighter-1: lighten( $color-brandFirst, 10% );
-$color-brandFirst-lighter-2: lighten( $color-brandFirst, 20% );
-$color-brandFirst-lighter-3: lighten( $color-brandFirst, 30% );
+$color-brandFirst-darker-1: mix(black, $color-brandFirst, 11% );
+$color-brandFirst-darker-2: mix(black, $color-brandFirst, 28% );
+$color-brandFirst-darker-3: mix(black, $color-brandFirst, 43% );
+$color-brandFirst-darker-4: mix(black, $color-brandFirst, 59% );
 
 // ----- Second
 $color-brandSecond: #FF9E96;
 
-// Complementary darker
 $color-brandSecond-darker-3: darken( $color-brandSecond, 30% );
 $color-brandSecond-darker-2: darken( $color-brandSecond, 20% );
 $color-brandSecond-darker-1: darken( $color-brandSecond, 10% );
 
-// Complementary lighter
 $color-brandSecond-lighter-1: lighten( $color-brandSecond, 10% );
 $color-brandSecond-lighter-2: lighten( $color-brandSecond, 20% );
 $color-brandSecond-lighter-3: lighten( $color-brandSecond, 30% );
 
+// ----- Grey
+$color-brandGrey: #607d8b;
+
+$color-brandGrey-lighter-6: mix(white, $color-brandGrey, 98% );
+$color-brandGrey-lighter-5: mix(white, $color-brandGrey, 88% );
+$color-brandGrey-lighter-4: mix(white, $color-brandGrey, 70% );
+$color-brandGrey-lighter-3: mix(white, $color-brandGrey, 50% );
+$color-brandGrey-lighter-2: mix(white, $color-brandGrey, 30% );
+$color-brandGrey-lighter-1: mix(white, $color-brandGrey, 15% );
+
+$color-brandGrey-darker-1: mix(black, $color-brandGrey, 11% );
+$color-brandGrey-darker-2: mix(black, $color-brandGrey, 28% );
+$color-brandGrey-darker-3: mix(black, $color-brandGrey, 43% );
+$color-brandGrey-darker-4: mix(black, $color-brandGrey, 59% );
+
 // ----- Dark
 $color-brandDark: #273339;
 
-// Main darker
 $color-brandDark-darker-3: darken( $color-brandDark, 30% );
 $color-brandDark-darker-2: darken( $color-brandDark, 20% );
 $color-brandDark-darker-1: darken( $color-brandDark, 10% );
 
-// Main lighter
 $color-brandDark-lighter-1: lighten( $color-brandDark, 10% );
 $color-brandDark-lighter-2: lighten( $color-brandDark, 20% );
 $color-brandDark-lighter-3: lighten( $color-brandDark, 30% );
@@ -62,15 +75,16 @@ $color-brandDark-lighter-3: lighten( $color-brandDark, 30% );
 // ----- Light
 $color-brandLight: #ebeff0;
 
-// Complementary darker
 $color-brandLight-darker-3: darken( $color-brandLight, 15% );
 $color-brandLight-darker-2: darken( $color-brandLight, 10% );
 $color-brandLight-darker-1: darken( $color-brandLight, 5% );
 
-// Complementary lighter
 $color-brandLight-lighter-1: lighten( $color-brandLight, 5% );
 $color-brandLight-lighter-2: lighten( $color-brandLight, 10% );
 $color-brandLight-lighter-3: lighten( $color-brandLight, 15% );
+
+// ----- Text
+$color-text: $color-brandGrey-darker-4;
 
 // ----- Success
 $color-success-text: #3c763d;

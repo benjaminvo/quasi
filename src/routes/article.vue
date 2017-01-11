@@ -39,7 +39,7 @@
         </div>
 
         <!-- Article structure -->
-        <div class="padding-2-1">
+        <div>
           <h5 class="padding-bottom">Table of contents</h5>
           <ul class="list-unstyled">
             <li class="padding-bottom">Introduction: bringing the power debates together</li>
@@ -56,7 +56,7 @@
       <!-- Right column -->
       <div class="article_meta span-9">
 
-        <h5 class="padding-bottom-2-1">Reading guide</h5>
+        <h5 class="padding-bottom-2-1">Teacher notes</h5>
         <p class="padding-bottom-4-1">{{ article.readingGuide }}</p>
 
         <h5 class="padding-bottom-2-1">Keywords</h5>
@@ -68,6 +68,33 @@
       </div>
 
     </grid-block>
+
+    <div class="backgroundColor-brandLight">
+      <grid-block columns="12">
+        <div class="span-12">
+
+          <h3>Reader notes</h3>
+          <ul class="list-unstyled">
+            <li v-for="(tip, key, index) in article.readerTips" :id="key" class="margin-top-3-1">
+              {{ tip.tip }}
+              <div class="display-flex alignItems-center margin-top">
+                <button class="toggle margin-right" v-bind:class="{ active: tip.thankedBy && tip.thankedBy[currentUser.uid] ? tip.thankedBy[currentUser.uid] : null }">
+                  <div
+                    v-if="tip.thankedBy && tip.thankedBy[currentUser.uid] ? tip.thankedBy[currentUser.uid] : null"
+                    @click="decrementThanks">
+                    <span v-html="tip.thankedBy && tip.thankedBy[currentUser.uid] ? tip.thankedBy[currentUser.uid].emoji : null" class="emoji"></span> Thanks!
+                  </div>
+                  <span v-else @click="incrementThanks">Say thanks!</span>
+                </button>
+                <p class="color-brandGrey-lighter-2">{{ tip.thanksCount }} have thanked for this</p>
+              </div>
+            </li>
+          </ul>
+
+        </div>
+      </grid-block>
+    </div>
+
   </div>
 </template>
 
@@ -88,7 +115,8 @@
       return {
         article: {},
         articleCourseIds: [],
-        articleCourses: []
+        articleCourses: [],
+        emojis: ['&#128077;', '&#128076;', '&#128074;', '&#128591;', '&#9994;', '&#128406;']
       }
     },
     computed: {
@@ -97,20 +125,19 @@
       }
     },
     mounted() {
-
       this.setArticle()
+      this.fetchCourses()
     },
     beforeDestroy() {
       this.databaseRef.ref('articles/').off()
     },
     watch: {
       '$route': 'setArticle',
-      'articleCourseIds': 'fetchCourses'
     },
     methods: {
       setArticle() {
         const activeArticleId = this.$route.params.articleId
-        this.databaseRef.ref('articles/').once('value', (snapshot) => {
+        this.databaseRef.ref('articles/').on('value', (snapshot) => {
           let articleObj = {}
           const data = snapshot.val()
           for (let article in data) {
@@ -136,6 +163,35 @@
             }
           }
         })
+      },
+      incrementThanks(e) {
+        const tipRef = this.databaseRef.ref('articles/' + this.$route.params.articleId + '/readerTips/' + e.target.parentNode.parentNode.parentNode.id)
+        const thankedByUserRef = tipRef.child('thankedBy/' + this.currentUser.uid)
+        const thankedByUserEmojiRef = thankedByUserRef.child('emoji')
+        const thanksCountRef = tipRef.child('thanksCount')
+
+        thankedByUserRef.set(true)
+
+        const randomNumber = Math.floor(Math.random() * this.emojis.length)
+        const randomEmoji = this.emojis[randomNumber]
+        thankedByUserEmojiRef.set(randomEmoji)
+
+        let thanksCountCurrentValue = null
+        thanksCountRef.on('value', (snapshot) => { thanksCountCurrentValue = snapshot.val() })
+        const thanksCountNewValue = thanksCountCurrentValue ? thanksCountCurrentValue + 1 : 1
+        thanksCountRef.set(thanksCountNewValue)
+      },
+      decrementThanks(e) {
+        const tipRef = this.databaseRef.ref('articles/' + this.$route.params.articleId + '/readerTips/' + e.target.parentNode.parentNode.parentNode.id)
+        const thankedByUserRef = tipRef.child('thankedBy/' + this.currentUser.uid)
+        const thanksCountRef = tipRef.child('thanksCount')
+
+        thankedByUserRef.set(false)
+
+        let thanksCountCurrentValue = null
+        thanksCountRef.on('value', (snapshot) => { thanksCountCurrentValue = snapshot.val() })
+        const thanksCountNewValue = thanksCountCurrentValue - 1
+        thanksCountRef.set(thanksCountNewValue)
       }
     }
   }
@@ -157,4 +213,5 @@
     }
 
   }
+
 </style>

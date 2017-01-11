@@ -17,6 +17,10 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 	.padding#{$position}-1-7 { padding#{$position}: $scale-1-7 !important; }
 	.padding#{$position}-1-8 { padding#{$position}: $scale-1-8 !important; }}
 .padding-none              { padding: 0 !important; }
+.padding-none              {
+	&-top 		{ padding-top: 0 !important; }
+	&-bottom 	{ padding-bottom: 0 !important; }
+}
 
 @each $position in $positions {
 	.margin#{$position}-8-1 { margin#{$position}: $scale-8-1 !important; }
@@ -63,7 +67,8 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 
 .text {
 	&Transform {
-		&-uppercase { text-transform: uppercase; }}
+		&-uppercase { text-transform: uppercase; }
+		&-none 			{ text-transform: none; }}
 	&Align {
 		&-center { text-align: center; }}
 }
@@ -71,6 +76,13 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 .color 					{
 	&-brandFirst 	{ color: $color-brandFirst; }
 	&-brandSecond { color: $color-brandSecond; }
+	&-brandGrey 	{ color: $color-brandGrey;
+		&-lighter {
+			&-1 { color: $color-brandGrey-lighter-1; }
+			&-2 { color: $color-brandGrey-lighter-2; }
+			&-3 { color: $color-brandGrey-lighter-3; }
+		}
+	}
 	&-brandDark 	{ color: $color-brandDark; }
 	&-brandLight  { color: $color-brandLight;
 		&-darker {
@@ -83,6 +95,8 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 }
 
 .backgroundColor 	{
+	&-brandFirst 	  { background-color: $color-brandFirst; }
+	&-brandSecond   { background-color: $color-brandSecond; }
 	&-brandDark 		{	background-color: $color-brandDark; }
 	&-brandLight 		{ background-color: $color-brandLight; }
 	&-white 				{ background-color: #fff; }
