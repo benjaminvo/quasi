@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="position-relative">
+    <div id="particles"></div>
 
     <grid-block columns="12">
       <h1 class="span-8 offset-2 margin-bottom-4-1">This week features {{ numOfArticles }} {{ articleDuplicates ? 'unique' : null }} articles with a total of {{ totalPages }} pages. Enjoy!</h1>
@@ -23,6 +24,7 @@
 </template>
 
 <script>
+  import Particles from 'particles.js'
   import GridBlock from 'components/GridBlock'
   import DayBlock from 'components/DayBlock'
   import Modal from 'components/Modal'
@@ -72,6 +74,7 @@
     mounted() {
       this.fetchCoursesAndCreateDayblocks()
       this.setUserNameOnDatabase()
+      this.particlesInit()
     },
     beforeDestroy() {
       this.databaseRef.ref('users/').off()
@@ -176,10 +179,68 @@
           }
         })
         this.fetchRelevantArticlesPerCourse()
+      },
+      particlesInit() {
+        particlesJS("particles", {
+          "particles": {
+            "number": {
+              "value": 60
+            },
+            "shape": {
+              "type": "circle"
+            },
+            "size": {
+              "value": 6,
+              "random": true
+            },
+            "line_linked": {
+              "enable": false
+            },
+            "color": {
+              "value": "#2962FF"
+            },
+            "opacity": {
+              "value": 1,
+              "random": true,
+              "anim": {
+                "enable": false,
+                "opacity_min": 0.2
+              }
+            },
+            "move": {
+              "enable": true,
+              "speed": .5,
+              "direction": "bottom",
+              "straight": false
+            }
+          },
+          "interactivity": {
+            "detect_on": "canvas",
+            "events": {
+              "onhover": {
+                "enable": false
+              }
+            },
+            "modes": {
+              "push": {
+                "particles_nb": 12
+              }
+            }
+          }
+        })
       }
     }
   }
 </script>
 
 <style lang="scss">
+
+#particles {
+  height: 100vh;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -96px;
+  z-index: -1;
+}
 </style>
