@@ -17,8 +17,10 @@
             disabled
             v-if="article.finishedBy ? article.finishedBy[currentUser.uid] : null" />
         </div>
-        <p class="color-brandLight-darker-3">Read for course(s)
-          <span v-for="course in this.articleCourses">{{ course.name }} on {{ course.weekday }}</span>
+        <p class="color-brandLight-darker-3">{{ 'Read for course' + (this.articleCourses.length > 1 ? 's' : '') }}
+          <span v-for="(course, index) in this.articleCourses">
+            {{ course.name }} on
+            {{ course.weekday + (articleCourses.length > 1 && articleCourses.length !== index + 1 ? ', ' : '') }}</span>
         </p>
       </div>
 
@@ -71,9 +73,9 @@
 
     <div class="backgroundColor-brandLight">
       <grid-block columns="12">
-        <div class="span-12">
+        <div class="span-12 offset-3">
 
-          <h3>Reader notes</h3>
+          <h2>Reader notes</h2>
           <ul class="list-unstyled">
             <li v-for="(tip, key, index) in article.readerTips" :id="key" class="margin-top-3-1">
               {{ tip.tip }}
