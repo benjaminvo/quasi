@@ -25,7 +25,7 @@
   .gridBlock {
     display: flex;
     flex-wrap: wrap;
-    padding: $scale-3-1 0;
+    padding: $scale-6-1 0;
     margin: 0 auto;
 
     &-noPadding { padding: 0;
