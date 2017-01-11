@@ -1,6 +1,7 @@
 <template>
   <div class="position-relative">
-    <div id="particles"></div>
+
+    <div v-bind:class="{ shown: allRead }" id="particles"></div>
 
     <grid-block columns="12">
       <h1 class="span-8 offset-2 margin-bottom-4-1">This week features {{ numOfArticles }} {{ articleDuplicates ? 'unique' : null }} articles with a total of {{ totalPages }} pages. Enjoy!</h1>
@@ -69,6 +70,21 @@
         }
         this.articleDuplicates = allArticleIds.length - articleIds.length
         return articleIds.length
+      },
+      allRead() {
+        let allRead = false
+        this.databaseRef.ref('users/' + this.currentUser.uid + '/articles').on('value', (snapshot) => {
+          const articles = snapshot.val()
+          for (let article in articles) {
+            if ( articles[article].finished === false ) { // If just one is found that is not finished, set allRead to false
+              allRead = false
+              return
+            } else {
+              allRead = true
+            }
+          }
+        })
+        return allRead
       }
     },
     mounted() {
@@ -242,5 +258,8 @@
   right: 0;
   top: -96px;
   z-index: -1;
+  opacity: 0;
+  transition: opacity 400ms ease;
 }
+
 </style>
