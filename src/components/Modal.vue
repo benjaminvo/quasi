@@ -3,7 +3,7 @@
     <div class="modal_inner">
       <div class="modal_header">
         <toggle-checkmark finished disabled class="margin-bottom-2-1" />
-        <h1 class="margin-bottom">Congrats!</h1>
+        <h1 class="margin-bottom">Good job!</h1>
         <p>Ask your lecturer or tip one of your fellow students about something in {{ article.title }}</p>
       </div>
 
@@ -11,10 +11,10 @@
         <input class="modal_form_input" v-model="wish" type="text" placeholder="Ask" maxlength="140">
         <input class="modal_form_input" v-model="tip" type="text" placeholder="Tip" maxlength="140">
         <div class="modal_form_footer">
-          <p class="modal_form_footer_text">Max. 140 chars. Everything is anonymous.</p>
+          <p class="modal_form_footer_text">Everything is anonymous</p>
           <div class="modal_form_footer_actions">
             <a @click="close">No thanks</a>
-            <button class="button submit" type="submit">Send</button>
+            <button class="button submit" type="submit">Go</button>
           </div>
         </div>
       </form>
