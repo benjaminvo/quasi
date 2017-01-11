@@ -58,11 +58,11 @@
     width: calc(100% + (#{$scale-3-1}*2)); // 100% + 48px
     margin-left: -#{$scale-3-1}; // -24px
     margin-bottom: $scale-3-1;
-    transition: all 400ms $animationBezier;
+    transition: all 200ms ease;
 
     &:hover {
-      transform: translate3d(0,-2px,0);
-      box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.08); }
+      transform: translateY(-1px);
+      box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.12); }
 
     // &:active {
     //   transition-duration: 100ms;
