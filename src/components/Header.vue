@@ -2,7 +2,7 @@
   <header class="header">
     <grid-block columns="12" noPadding>
       <div class="header_inner span-12">
-        <router-link tag="a" class="h2" :to="{ name: 'dashboard' }">Quasi</router-link>
+        <router-link tag="a" class="h2 fontWeight-bold" :to="{ name: 'dashboard' }">Quasi</router-link>
 
         <div class="header_period">
           <div class="arrowWrap">
