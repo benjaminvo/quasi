@@ -77,13 +77,11 @@
 
           <h2>Reader notes</h2>
           <ul class="list-unstyled">
-            <li v-for="(tip, key, index) in article.readerTips" :id="key" class="margin-top-3-1">
+            <li v-for="(tip, index) in readerTipsByThankCount" :id="tip.id" class="margin-top-3-1">
               {{ tip.tip }}
               <div class="display-flex alignItems-center margin-top">
                 <button class="toggle margin-right" v-bind:class="{ active: tip.thankedBy && tip.thankedBy[currentUser.uid] ? tip.thankedBy[currentUser.uid] : null }">
-                  <div
-                    v-if="tip.thankedBy && tip.thankedBy[currentUser.uid] ? tip.thankedBy[currentUser.uid] : null"
-                    @click="decrementThanks">
+                  <div v-if="tip.thankedBy && tip.thankedBy[currentUser.uid] ? tip.thankedBy[currentUser.uid] : null" @click="decrementThanks">
                     <span v-html="tip.thankedBy && tip.thankedBy[currentUser.uid] ? tip.thankedBy[currentUser.uid].emoji : null" class="emoji"></span> Thanks!
                   </div>
                   <span v-else @click="incrementThanks">Say thanks!</span>
@@ -128,6 +126,14 @@
     computed: {
       pagesTotal() {
         return parseInt(this.article.pageTo, 10) - parseInt(this.article.pageFrom, 10)
+      },
+      readerTipsByThankCount() {
+        let readerTips = []
+        for (let tip in this.article.readerTips) {
+          this.article.readerTips[tip].id = tip
+          readerTips.push(this.article.readerTips[tip])
+        }
+        return readerTips.sort( (a,b) => { return b.thanksCount - a.thanksCount })
       }
     },
     mounted() {
