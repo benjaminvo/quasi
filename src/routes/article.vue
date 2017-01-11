@@ -82,7 +82,7 @@
               <div class="display-flex alignItems-center margin-top">
                 <button class="toggle margin-right" v-bind:class="{ active: tip.thankedBy && tip.thankedBy[currentUser.uid] ? tip.thankedBy[currentUser.uid] : null }">
                   <div v-if="tip.thankedBy && tip.thankedBy[currentUser.uid] ? tip.thankedBy[currentUser.uid] : null" @click="decrementThanks">
-                    <span v-html="tip.thankedBy && tip.thankedBy[currentUser.uid] ? tip.thankedBy[currentUser.uid].emoji : null" class="emoji"></span> Thanks!
+                    <span v-html="tip.thankedBy && tip.thankedBy[currentUser.uid] ? tip.thankedBy[currentUser.uid].emoji : null" class="emoji margin-right-1-3"></span> Thanks!
                   </div>
                   <span v-else @click="incrementThanks">Say thanks!</span>
                 </button>
