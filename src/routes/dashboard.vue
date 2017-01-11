@@ -4,7 +4,9 @@
     <div v-bind:class="{ shown: allRead }" id="particles"></div>
 
     <grid-block columns="12">
-      <h1 class="span-8 offset-2 margin-bottom-4-1">This week features {{ numOfArticles }} {{ articleDuplicates ? 'unique' : null }} articles with a total of {{ totalPages }} pages. Enjoy!</h1>
+      <h1 class="span-8 offset-2 margin-bottom-4-1">
+        This week features {{ numOfArticles }} {{ articleDuplicates ? 'unique' : null }} {{ 'article' + (numOfArticles > 1 ? 's' : '') }} with a total of {{ totalPages }} pages. Enjoy!
+      </h1>
     </grid-block>
 
     <day-block
