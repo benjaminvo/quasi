@@ -73,7 +73,7 @@
 
     <div class="backgroundColor-brandLight">
       <grid-block columns="12">
-        <div class="span-12 offset-3">
+        <div class="span-6 offset-3">
 
           <h2>Reader notes</h2>
           <ul class="list-unstyled">
@@ -94,6 +94,11 @@
               </div>
             </li>
           </ul>
+
+          <form v-on:submit.prevent="handleTipSubmit" class="display-flex margin-top-6-1">
+            <input class="padding-2-1 margin-right backgroundColor-white width-full" v-model="tip" type="text" placeholder="Tip" maxlength="140">
+            <button class="button submit" type="submit">Go</button>
+          </form>
 
         </div>
       </grid-block>
@@ -120,7 +125,8 @@
         article: {},
         articleCourseIds: [],
         articleCourses: [],
-        emojis: ['&#128077;', '&#128076;', '&#128074;', '&#128591;', '&#9994;', '&#128406;']
+        emojis: ['&#128077;', '&#128076;', '&#128074;', '&#128591;', '&#9994;', '&#128406;'],
+        tip: null
       }
     },
     computed: {
@@ -206,6 +212,23 @@
           const thanksCountNewValue = thanksCountCurrentValue - 1
           thanksCountRef.set(thanksCountNewValue)
         })
+      },
+      handleTipSubmit() {
+        const articleReaderTipsPath = 'articles/' + this.$route.params.articleId + '/readerTips/'
+        const userTipsPath = 'users/' + this.currentUser.uid + '/tips/'
+
+        // Set tip on Firebase
+        if (this.tip) {
+          this.databaseRef.ref(articleReaderTipsPath).push({
+            author: this.currentUser.uid,
+            tip: this.tip
+          }).then((snapshot) => {
+            const newTipId = snapshot.key
+            this.databaseRef.ref(userTipsPath + '/' + newTipId).set(true)
+          })
+        }
+
+        this.tip = ''
       }
     }
   }

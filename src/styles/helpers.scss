@@ -103,11 +103,14 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 	&-success 			{ background-color: $color-success-bg; }
 }
 
+.width		{
+	&-full  { width: 100% }}
+
 .height 	{
 	&-full 	{ height: 100vh; }}
 
 .minHeight {
-	&-full 	{ min-height: 100vh; }}
+	&-full 	 { min-height: 100vh; }}
 
 .position 	 {
 	&-absolute { position: absolute; }
