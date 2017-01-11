@@ -24,6 +24,10 @@
 <style lang="scss" scoped>
   @import '~styles/global';
 
+  .footer {
+    border-top: 1px solid #dce3e5;
+  }
+
   .copyright {
     color: $color-brandDark-lighter-3;
   }

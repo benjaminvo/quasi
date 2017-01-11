@@ -56,7 +56,7 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 	&Weight {
 		&-thin 		{ font-weight: 100; }
 		&-normal 	{ font-weight: 400; }
-		&-bold 		{ font-weight: 600; }}
+		&-bold 		{ font-weight: 700; }}
 	&Family {
 		&-logo 		{ font-family: $fontFamily-logo !important; }
 		&-display { font-family: $fontFamily-display !important; }
