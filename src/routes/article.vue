@@ -86,7 +86,11 @@
                   </div>
                   <span v-else @click="incrementThanks">Say thanks!</span>
                 </button>
-                <p class="color-brandGrey-lighter-2">{{ tip.thanksCount }} have thanked for this</p>
+                <p class="color-brandGrey-lighter-2">
+                  {{ tip.thanksCount === 0 || tip.thanksCount === 1 && tip.thankedBy[currentUser.uid] ? 'Like no one else' : null }}
+                  {{ tip.thanksCount > 0 && !tip.thankedBy[currentUser.uid] ? 'Like ' + tip.thanksCount + ' other' + (tip.thanksCount > 1 ? 's' : '') : null }}
+                  {{ tip.thanksCount > 1 && tip.thankedBy[currentUser.uid] ? 'Said you and ' + (tip.thanksCount - 1) + ' other' + (tip.thanksCount > 2 ? 's' : '') : null }}
+                </p>
               </div>
             </li>
           </ul>
