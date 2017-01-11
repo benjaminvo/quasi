@@ -176,10 +176,11 @@
         const randomEmoji = this.emojis[randomNumber]
         thankedByUserEmojiRef.set(randomEmoji)
 
-        let thanksCountCurrentValue = null
-        thanksCountRef.on('value', (snapshot) => { thanksCountCurrentValue = snapshot.val() })
-        const thanksCountNewValue = thanksCountCurrentValue ? thanksCountCurrentValue + 1 : 1
-        thanksCountRef.set(thanksCountNewValue)
+        thanksCountRef.once('value', (snapshot) => {
+          const thanksCountCurrentValue = snapshot.val()
+          const thanksCountNewValue = thanksCountCurrentValue ? thanksCountCurrentValue + 1 : 1
+          thanksCountRef.set(thanksCountNewValue)
+        })
       },
       decrementThanks(e) {
         const tipRef = this.databaseRef.ref('articles/' + this.$route.params.articleId + '/readerTips/' + e.target.parentNode.parentNode.parentNode.id)
@@ -188,10 +189,11 @@
 
         thankedByUserRef.set(false)
 
-        let thanksCountCurrentValue = null
-        thanksCountRef.on('value', (snapshot) => { thanksCountCurrentValue = snapshot.val() })
-        const thanksCountNewValue = thanksCountCurrentValue - 1
-        thanksCountRef.set(thanksCountNewValue)
+        thanksCountRef.once('value', (snapshot) => {
+          const thanksCountCurrentValue = snapshot.val()
+          const thanksCountNewValue = thanksCountCurrentValue - 1
+          thanksCountRef.set(thanksCountNewValue)
+        })
       }
     }
   }
