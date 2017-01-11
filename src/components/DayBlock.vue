@@ -44,7 +44,7 @@
   .dayBlock {
     width: 100%;
     background: $color-brandLight;
-    border-bottom: 1px solid $color-brandLight-darker-1;
+    border-top: 1px solid $color-brandLight-darker-1;
     padding: $scale-5-1 0;
 
     &_emptyText { color: $color-brandLight-darker-2; }
