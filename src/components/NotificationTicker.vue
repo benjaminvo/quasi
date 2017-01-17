@@ -3,20 +3,20 @@
     <grid-block columns="12" noPadding>
 
       <!-- <div class="span-2 color-brandLight-darker-3 margin-top margin-bottom">
-        <p>Time</p>
+        <p>Recent activity</p>
       </div> -->
 
       <div class="display-flex justifyContent-spaceBetween offset-2 span-10 padding-top">
 
-        <ul class="notificationTicker_list color-brandLight-darker-3 list-unstyled padding-bottom" :class="{ hideGradient: notificationTickerExpanded || notifications.length < 3 }">
-          <li v-if="notifications.length === 0">No recent happenings...</li>
+        <ul class="notificationTicker_list color-brandLight-darker-3 list-unstyled padding-bottom" :class="{ hideGradient: notificationTickerExpanded || notifications.length < 2 }">
+          <li class="margin-bottom-1-3" v-if="notifications.length === 0">No recent happenings...</li>
           <li class="margin-bottom-1-3" v-else v-for="notification in notifications">{{ notification }}</li>
         </ul>
         <div
           class="h6 a"
           style="z-index: 1;"
           @click="notificationTickerExpanded = !notificationTickerExpanded"
-          v-if="notifications.length > 3">
+          v-if="notifications.length > 2">
           {{ this.notificationTickerExpanded ? 'Close' : 'Expand' }}
         </div>
 
@@ -57,7 +57,7 @@
     mounted() {
       const notificationsInterval = setInterval( () => {
         this.deliverNotification()
-      }, 12000)
+      }, 8000)
     },
     beforeDestroy() {
       clearInterval(notificationsInterval)
@@ -92,13 +92,12 @@
     border-top: 1px solid $color-brandLight;
     position: relative;
     height: 62px;
-    // max-height: 70px;
     overflow: hidden;
-    transition: height 400ms cubic-bezier(0.6, -0.28, 0.735, 0.045);
+    transition: all 600ms cubic-bezier(0.6, -0.28, 0.735, 0.045);
 
     &-expanded {
       height: 298px;
-      transition: height 1000ms cubic-bezier(0.23, 1, 0.32, 1);
+      transition: all 1000ms cubic-bezier(0.23, 1, 0.32, 1);
     }
 
     &_list {
