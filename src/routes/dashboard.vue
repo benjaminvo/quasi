@@ -4,9 +4,7 @@
     <div v-bind:class="{ shown: allRead }" id="particles"></div>
 
     <grid-block columns="12">
-      <h1 class="span-8 offset-2 margin-bottom-4-1">
-        This week features {{ numOfArticles }} {{ articleDuplicates ? 'unique' : null }} {{ 'article' + (numOfArticles > 1 ? 's' : '') }} with a total of {{ totalPages }} pages. Enjoy!
-      </h1>
+      <h1 class="span-8 offset-2 margin-bottom-4-1" v-html="this.renderMotivationMessage()" />
     </grid-block>
 
     <notification-ticker :databaseRef="databaseRef" :articles="articles" />
@@ -78,21 +76,17 @@
         this.articleDuplicates = allArticleIds.length - articleIds.length
         return articleIds.length
       },
-      allRead() {
-        let allRead = false
+      numOfReadArticles() {
+        let numOfReadArticles = 0
         this.databaseRef.ref('users/' + this.currentUser.uid + '/articles').on('value', (snapshot) => {
           const articles = snapshot.val()
           for (let article in articles) {
-            if ( articles[article].finished === false ) { // If just one is found that is not finished, set allRead to false
-              allRead = false
-              return
-            } else {
-              allRead = true
-            }
+            if ( articles[article].finished === true ) numOfReadArticles += 1
           }
         })
-        return allRead
-      }
+        return numOfReadArticles
+      },
+      allRead() { return this.numOfArticles - this.numOfReadArticles === 0 }
     },
     mounted() {
       this.fetchCoursesAndCreateDayblocks()
@@ -119,6 +113,20 @@
             }
           }
         })
+      },
+      renderMotivationMessage() {
+        const initialMessage = `This week features ${ this.numOfArticles } ${ this.articleDuplicates ? 'unique' : '' } article${(this.numOfArticles > 1) ? 's' : '' } with a total of ${ this.totalPages } pages. Enjoy!`
+
+        switch(this.numOfArticles - this.numOfReadArticles) {
+          case 0:
+            return "You've finished! &#127881;"
+            break
+          case 1:
+            return '1 to go!'
+            break
+          default:
+            return initialMessage
+        }
       },
       fetchCoursesAndCreateDayblocks() {
 

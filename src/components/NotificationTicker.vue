@@ -44,7 +44,8 @@
           'A reaction was added to'
         ],
         notifications: [],
-        notificationTickerExpanded: null
+        notificationTickerExpanded: null,
+        notificationsInterval: null
       }
     },
     computed: {
@@ -55,12 +56,12 @@
       }
     },
     mounted() {
-      const notificationsInterval = setInterval( () => {
+      this.notificationsInterval = setInterval( () => {
         this.deliverNotification()
-      }, 8000)
+      }, 12000)
     },
     beforeDestroy() {
-      clearInterval(notificationsInterval)
+      clearInterval(this.notificationsInterval)
     },
     watch: {
       articleTitles: 'deliverNotification'

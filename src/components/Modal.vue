@@ -104,6 +104,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1001;
 
     opacity: 0;
     animation: fadeIn 200ms 200ms $animationBezier forwards;
