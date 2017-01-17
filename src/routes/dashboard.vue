@@ -9,6 +9,8 @@
       </h1>
     </grid-block>
 
+    <notification-ticker :databaseRef="databaseRef" :articles="articles" />
+
     <day-block
       :currentUser="currentUser"
       :toggleArticleFinished="toggleArticleFinished"
@@ -31,12 +33,14 @@
   import GridBlock from 'components/GridBlock'
   import DayBlock from 'components/DayBlock'
   import Modal from 'components/Modal'
+  import NotificationTicker from 'components/NotificationTicker'
   export default {
     name: 'Dashboard',
     components: {
       'grid-block': GridBlock,
       'day-block': DayBlock,
-      'modal': Modal
+      'modal': Modal,
+      'notification-ticker': NotificationTicker
     },
     props: {
       currentUser: { type: Object },
@@ -46,6 +50,7 @@
       return {
         modalVisible: false,
         clickedArticleId: null,
+        articles: {},
         dayBlocks: {},
         coursesFetched: false,
         uniqueArticles: [],
@@ -155,6 +160,7 @@
         // Swapping the article id placeholder out with actual article object in dayBlocks object created above
         this.databaseRef.ref('articles/').once('value', (snapshot) => {
           const articleObjs = snapshot.val()
+          this.articles = articleObjs
           for (let dayBlock in this.dayBlocks) { // Loop through the newly created this.dayBlocks object
             for (let i = 0; i < this.dayBlocks[dayBlock].courses.length; i++) { // For length of the courses array under each day in this.dayBlocks
               for (let article in this.dayBlocks[dayBlock].courses[i].articles) { // And each articleId in each articles array in each course

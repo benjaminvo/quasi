@@ -74,7 +74,13 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 }
 
 .color 					{
-	&-brandFirst 	{ color: $color-brandFirst; }
+	&-brandFirst 	{ color: $color-brandFirst;
+		&-darker {
+			&-1 { color: $color-brandFirst-darker-1; }
+			&-2 { color: $color-brandFirst-darker-2; }
+			&-3 { color: $color-brandFirst-darker-3; }
+		}
+	}
 	&-brandSecond { color: $color-brandSecond; }
 	&-brandGrey 	{ color: $color-brandGrey;
 		&-lighter {
@@ -145,12 +151,13 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 .flexDirection {
 	&-row 		 { flex-direction: row; }
 	&-column 	 { flex-direction: column;
-		&-mobile { @include breakpoint( 'mobile' ) { flex-direction: column; } }
-	}
-}
+		&-mobile { @include breakpoint( 'mobile' ) { flex-direction: column; }}}}
 
 .flipHorizontal { transform: scaleX(-1); }
 .flipVertical 	{ transform: scaleY(-1); }
+
+.overflow {
+	&-hidden { overflow: hidden; }}
 
 // Lists
 .list-unstyled { list-style-type: none; }
