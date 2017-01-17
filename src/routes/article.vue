@@ -75,9 +75,13 @@
       <grid-block columns="12">
         <div class="span-6 offset-3">
 
-          <h2>Reader notes</h2>
+          <div class="display-flex justifyContent-spaceBetween alignItems-flexEnd">
+            <h2>Reader notes</h2>
+            <p @click="sortReaderTips" class="a">Sort by most thanked</p>
+          </div>
+
           <ul class="list-unstyled">
-            <li v-for="(tip, index) in readerTipsByThankCount" :id="tip.id" class="margin-top-3-1">
+            <li v-for="(tip, index) in readerTips" :id="tip.id" class="margin-top-3-1">
               {{ tip.tip }}
               <div class="display-flex alignItems-center margin-top">
                 <button class="toggle margin-right" v-bind:class="{ active: tip.thankedBy && tip.thankedBy[currentUser.uid] ? tip.thankedBy[currentUser.uid] : null }">
@@ -125,6 +129,7 @@
         article: {},
         articleCourseIds: [],
         articleCourses: [],
+        readerTips: [],
         emojis: ['&#128077;', '&#128076;', '&#128074;', '&#128591;', '&#9994;', '&#128406;'],
         tip: null
       }
@@ -132,14 +137,6 @@
     computed: {
       pagesTotal() {
         return parseInt(this.article.pageTo, 10) - parseInt(this.article.pageFrom, 10)
-      },
-      readerTipsByThankCount() {
-        let readerTips = []
-        for (let tip in this.article.readerTips) {
-          this.article.readerTips[tip].id = tip
-          readerTips.push(this.article.readerTips[tip])
-        }
-        return readerTips.sort( (a,b) => { return b.thanksCount - a.thanksCount })
       }
     },
     mounted() {
@@ -150,9 +147,17 @@
       this.databaseRef.ref('articles/').off()
     },
     watch: {
-      '$route': 'setArticle',
+      '$route': 'setArticle'
     },
     methods: {
+      setReaderTips() {
+        let readerTips = []
+        for (let tip in this.article.readerTips) {
+          this.article.readerTips[tip].id = tip
+          readerTips.push(this.article.readerTips[tip])
+        }
+        this.readerTips = readerTips
+      },
       setArticle() {
         const activeArticleId = this.$route.params.articleId
         this.databaseRef.ref('articles/').on('value', (snapshot) => {
@@ -164,10 +169,10 @@
               for (let course in articleObj.courses) {
                 this.articleCourseIds.push(course) // Get ids of courses that the article is part of
               }
-
             }
           }
           this.article = articleObj
+          this.setReaderTips()
         })
       },
       fetchCourses() {
@@ -229,6 +234,14 @@
         }
 
         this.tip = ''
+      },
+      sortReaderTips() {
+        console.log('tes');
+        console.log(this.readerTips, 'THIS');
+        let sortedTips = []
+        sortedTips = this.readerTips.sort( (a,b) => { return b.thanksCount - a.thanksCount } )
+        this.readerTips = sortedTips
+        console.log(sortedTips);
       }
     }
   }

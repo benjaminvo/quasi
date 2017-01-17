@@ -134,7 +134,8 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 .justifyContent {
 	&-center 	{ justify-content: center; }
 	&-flexStart { justify-content: flex-start; }
-	&-flexEnd { justify-content: flex-end; }}
+	&-flexEnd { justify-content: flex-end; }
+	&-spaceBetween { justify-content: space-between;; }}
 
 .alignItems {
 	&-center 		{ align-items: center; }
