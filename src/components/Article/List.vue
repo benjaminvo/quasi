@@ -4,7 +4,7 @@
     <article-list-item
       :currentUser="currentUser"
       v-for="(article, key, index) in articles"
-      v-on:toggleArticleFinished="toggleArticleFinished"
+      :toggleArticleFinished="toggleArticleFinished"
       :articleId="key"
       :finished="article.finishedBy ? article.finishedBy[currentUser.uid] : null"
       :title="article.title"
@@ -25,12 +25,8 @@
     props: {
       currentUser: { type: Object },
       articles: { type: Object },
-      courseName: { type: String }
-    },
-    methods: {
-      toggleArticleFinished(e) {
-        this.$emit('toggleArticleFinished', e)
-      }
+      courseName: { type: String },
+      toggleArticleFinished: { type: Function }
     }
   }
 </script>

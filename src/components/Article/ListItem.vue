@@ -32,12 +32,8 @@
       title: { type: String },
       author: { type: String },
       pageNum: { type: Number },
-      year: { type: Number }
-    },
-    methods: {
-      toggleArticleFinished(e) {
-        this.$emit('toggleArticleFinished', e)
-      }
+      year: { type: Number },
+      toggleArticleFinished: { type: Function }
     }
   }
 </script>

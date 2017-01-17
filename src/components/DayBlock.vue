@@ -9,7 +9,7 @@
         <article-list
           v-for="(course, index) in courses"
           :currentUser="currentUser"
-          v-on:toggleArticleFinished="toggleArticleFinished"
+          :toggleArticleFinished="toggleArticleFinished"
           :courseName="course.course"
           :articles="course.articles" />
       </div>
@@ -28,12 +28,8 @@
     props: {
       currentUser: { type: Object },
       day: { type: String },
-      courses: { type: Array }
-    },
-    methods: {
-      toggleArticleFinished(e) {
-        this.$emit('toggleArticleFinished', e)
-      }
+      courses: { type: Array },
+      toggleArticleFinished: { type: Function }
     }
   }
 </script>

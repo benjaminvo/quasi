@@ -11,7 +11,7 @@
 
     <day-block
       :currentUser="currentUser"
-      v-on:toggleArticleFinished="toggleArticleFinished"
+      :toggleArticleFinished="toggleArticleFinished"
       v-for="(dayBlock, key, index) in dayBlocks"
       :day="key"
       :courses="dayBlock.courses" />
