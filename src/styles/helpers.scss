@@ -162,6 +162,25 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 // Lists
 .list-unstyled { list-style-type: none; }
 
+// Message to show when something is not implemented yet
+.showNoFunctionMessage {
+	&:after {
+		content: 'Not functional yet';
+		position: absolute;
+		top: 80%;
+		text-align: right;
+		background-color: $color-brandDark;
+		color: $color-brandLight;
+		border-radius: 2px;
+		white-space: nowrap;
+		padding: $scale-1-2 $scale;
+		font-family: $fontFamily-sans;
+		font-weight: bold;
+		font-size: 8px;
+		text-transform: uppercase;
+	}
+}
+
 // Animation
 .fadeIn 					{ animation: fadeIn 1.2s $animationBezier forwards; }
 .fadeOut 					{ animation: fadeOut 1.2s $animationBezier forwards; }

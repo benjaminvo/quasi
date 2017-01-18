@@ -5,14 +5,14 @@
         <router-link tag="a" class="h2 fontWeight-bold" :to="{ name: 'dashboard' }">Quasi</router-link>
 
         <div class="header_period">
-          <div class="arrowWrap">
+          <div class="arrowWrap" @click="showNoFunctionMessageThenHide">
             <div class="arrow arrow-left"></div>
           </div>
           <h6 class="textAlign-center margin-left-4-1 margin-right-4-1">
             <span>Week 6, 2017</span>
             <span class="header_period_date margin-top">Feb 6 – Feb 10</span>
           </h6>
-          <div class="arrowWrap">
+          <div class="arrowWrap" @click="showNoFunctionMessageThenHide">
             <div class="arrow arrow-right"></div>
           </div>
         </div>
@@ -28,9 +28,11 @@
 <script>
   import GridBlock from 'components/GridBlock'
   import firebase from 'firebase'
+  import { showNoFunctionMessageThenHide } from 'utils/showNoFunctionMessageThenHide'
   export default {
     components: { 'grid-block': GridBlock },
     props: { currentUser: { type: Object } },
+    mixins: [showNoFunctionMessageThenHide],
     methods: {
       logout() {
         firebase.auth().signOut().then( () => {
@@ -71,6 +73,7 @@
   }
 
   .arrowWrap {
+    position: relative;
     width: 32px;
     height: 32px;
     background: $color-brandLight;
@@ -79,6 +82,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
   }
 
   .arrow {
@@ -88,7 +92,7 @@
     border-bottom: 6px solid transparent;
     display: inline-block;
 
-    &-right { margin-left: 2px; border-left: 7px solid $color-brandDark-lighter-3; }
-    &-left { margin-right: 2px; border-right: 7px solid $color-brandDark-lighter-3; }
+    &-right { margin-left: 2px; border-left: 7px solid $color-brandDark-lighter-3; pointer-events: none; }
+    &-left { margin-right: 2px; border-right: 7px solid $color-brandDark-lighter-3; pointer-events: none; }
   }
 </style>
