@@ -132,6 +132,9 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 	&-right { float: right; }
 	&-left { float: left; }}
 
+.clear {
+	&-both { clear: both; }}
+
 .display {
 	&-flex { display: flex; }
 	&-inlineBlock { display: inline-block; }}

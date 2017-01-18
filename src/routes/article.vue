@@ -75,22 +75,31 @@
       <grid-block columns="12">
         <div class="span-6 offset-3">
 
-          <div class="display-flex justifyContent-spaceBetween alignItems-flexEnd margin-bottom-2-1">
-            <h2>Reader notes</h2>
-            <p @click="sortReaderChallenges" class="a">Sort by most thanked</p>
-          </div>
+          <h2>Reader notes</h2>
 
-          <hr>
+          <hr class="margin-top-6-1 margin-bottom-3-1">
 
           <contribution-block
             :currentUser="currentUser"
             :databaseRef="databaseRef"
+            :contributions="readerChallenges"
             type="challenge"
             title="Challenges"
-            :contributions="readerChallenges"
             articleReaderContributionsPathEndpoint="readerChallenges"
             userContributionsPathEndpoint="challenges"
             inputPlaceholder="What was difficult to understand?" />
+
+          <hr class="margin-top-6-1 margin-bottom-3-1">
+
+          <contribution-block
+            :currentUser="currentUser"
+            :databaseRef="databaseRef"
+            :contributions="readerTakeaways"
+            type="takeaway"
+            title="Takeaways"
+            articleReaderContributionsPathEndpoint="readerTakeaways"
+            userContributionsPathEndpoint="takeaways"
+            inputPlaceholder="What was your key take away?" />
 
         </div>
       </grid-block>
@@ -119,7 +128,8 @@
         article: {},
         articleCourseIds: [],
         articleCourses: [],
-        readerChallenges: []
+        readerChallenges: [],
+        readerTakeaways: []
       }
     },
     computed: {
@@ -146,6 +156,14 @@
         }
         this.readerChallenges = readerChallenges
       },
+      setReaderTakeaways() {
+        let readerTakeaways = []
+        for (let takeaway in this.article.readerTakeaways) {
+          this.article.readerTakeaways[takeaway].id = takeaway
+          readerTakeaways.push(this.article.readerTakeaways[takeaway])
+        }
+        this.readerTakeaways = readerTakeaways
+      },
       setArticle() {
         const activeArticleId = this.$route.params.articleId
         this.databaseRef.ref('articles/').on('value', (snapshot) => {
@@ -161,6 +179,7 @@
           }
           this.article = articleObj
           this.setReaderChallenges()
+          this.setReaderTakeaways()
         })
       },
       fetchCourses() {
@@ -174,14 +193,6 @@
             }
           }
         })
-      },
-      sortReaderChallenges() {
-        console.log('tes');
-        console.log(this.readerChallenges, 'THIS');
-        let sortedChallenges = []
-        sortedChallenges = this.readerChallenges.sort( (a,b) => { return b.thanksCount - a.thanksCount } )
-        this.readerChallenges = sortedChallenges
-        console.log(sortedChallenges);
       }
     }
   }

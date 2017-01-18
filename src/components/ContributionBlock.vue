@@ -1,6 +1,11 @@
 <template>
   <div class="contributionBlock">
-    <h6 class="margin-top">{{ title }}</h6>
+
+    <h3 class="float-left">{{ title }}</h3>
+    <p @click="sortContributions" class="a h6 margin-top-1-2 margin-left display-inlineBlock float-right">Sort by most thanked</p>
+
+    <div class="clear-both"></div>
+
     <ul class="list-unstyled">
       <li v-for="(contribution, index) in contributions" :id="contribution.id" class="margin-top-3-1">
         {{ contribution[type] }}
@@ -20,10 +25,11 @@
       </li>
     </ul>
 
-    <form v-on:submit.prevent="handleContributionSubmit" class="display-flex margin-top-6-1 margin-bottom-4-1">
+    <form v-on:submit.prevent="handleContributionSubmit" class="display-flex margin-top-4-1">
       <input class="padding-2-1 margin-right backgroundColor-white width-full" v-model="contribution" type="text" :placeholder="inputPlaceholder" maxlength="140">
       <button class="button submit" type="submit">Go</button>
     </form>
+
   </div>
 </template>
 
@@ -95,6 +101,11 @@
           const thanksCountNewValue = thanksCountCurrentValue - 1
           thanksCountRef.set(thanksCountNewValue)
         })
+      },
+      sortContributions() {
+        let sortedContributions = []
+        sortedContributions = this.contributions.sort( (a,b) => { return b.thanksCount - a.thanksCount } )
+        this.contributions = sortedContributions
       }
     }
   }
