@@ -81,30 +81,16 @@
           </div>
 
           <hr>
-          <h6 class="margin-top">Challenges</h6>
-          <ul class="list-unstyled">
-            <li v-for="(challenge, index) in readerChallenges" :id="challenge.id" class="margin-top-3-1">
-              {{ challenge.challenge }}
-              <div class="display-flex alignItems-center margin-top">
-                <button class="toggle margin-right" v-bind:class="{ active: challenge.thankedBy && challenge.thankedBy[currentUser.uid] ? challenge.thankedBy[currentUser.uid] : null }">
-                  <div v-if="challenge.thankedBy && challenge.thankedBy[currentUser.uid] ? challenge.thankedBy[currentUser.uid] : null" @click="decrementThanks">
-                    <span v-html="challenge.thankedBy && challenge.thankedBy[currentUser.uid] ? challenge.thankedBy[currentUser.uid].emoji : null" class="emoji margin-right-1-3"></span> Thanks!
-                  </div>
-                  <span v-else @click="incrementThanks">Say thanks!</span>
-                </button>
-                <p class="color-brandGrey-lighter-2">
-                  {{ challenge.thanksCount === 0 || challenge.thanksCount === 1 && challenge.thankedBy[currentUser.uid] ? 'Like no one else' : null }}
-                  {{ challenge.thanksCount > 0 && !challenge.thankedBy[currentUser.uid] ? 'Like ' + challenge.thanksCount + ' other' + (challenge.thanksCount > 1 ? 's' : '') : null }}
-                  {{ challenge.thanksCount > 1 && challenge.thankedBy[currentUser.uid] ? 'Said you and ' + (challenge.thanksCount - 1) + ' other' + (challenge.thanksCount > 2 ? 's' : '') : null }}
-                </p>
-              </div>
-            </li>
-          </ul>
 
-          <form v-on:submit.prevent="handleChallengeSubmit" class="display-flex margin-top-6-1 margin-bottom-4-1">
-            <input class="padding-2-1 margin-right backgroundColor-white width-full" v-model="challenge" type="text" placeholder="Challenge" maxlength="140">
-            <button class="button submit" type="submit">Go</button>
-          </form>
+          <contribution-block
+            :currentUser="currentUser"
+            :databaseRef="databaseRef"
+            type="challenge"
+            title="Challenges"
+            :contributions="readerChallenges"
+            articleReaderContributionsPathEndpoint="readerChallenges"
+            userContributionsPathEndpoint="challenges"
+            inputPlaceholder="What was difficult to understand?" />
 
         </div>
       </grid-block>
@@ -115,11 +101,13 @@
 
 <script>
   import GridBlock from 'components/GridBlock'
+  import ContributionBlock from 'components/ContributionBlock'
   import ToggleCheckmark from 'components/ToggleCheckmark'
   export default {
     name: 'Article',
     components: {
       'grid-block': GridBlock,
+      'contribution-block': ContributionBlock,
       'toggle-checkmark': ToggleCheckmark
     },
     props: {
@@ -131,9 +119,7 @@
         article: {},
         articleCourseIds: [],
         articleCourses: [],
-        readerChallenges: [],
-        emojis: ['&#128077;', '&#128076;', '&#128074;', '&#128591;', '&#9994;', '&#128406;'],
-        challenge: null
+        readerChallenges: []
       }
     },
     computed: {
@@ -188,54 +174,6 @@
             }
           }
         })
-      },
-      incrementThanks(e) {
-        const challengeRef = this.databaseRef.ref('articles/' + this.$route.params.articleId + '/readerChallenges/' + e.target.parentNode.parentNode.parentNode.id)
-        const thankedByUserRef = challengeRef.child('thankedBy/' + this.currentUser.uid)
-        const thankedByUserEmojiRef = thankedByUserRef.child('emoji')
-        const thanksCountRef = challengeRef.child('thanksCount')
-
-        thankedByUserRef.set(true)
-
-        const randomNumber = Math.floor(Math.random() * this.emojis.length)
-        const randomEmoji = this.emojis[randomNumber]
-        thankedByUserEmojiRef.set(randomEmoji)
-
-        thanksCountRef.once('value', (snapshot) => {
-          const thanksCountCurrentValue = snapshot.val()
-          const thanksCountNewValue = thanksCountCurrentValue ? thanksCountCurrentValue + 1 : 1
-          thanksCountRef.set(thanksCountNewValue)
-        })
-      },
-      decrementThanks(e) {
-        const challengeRef = this.databaseRef.ref('articles/' + this.$route.params.articleId + '/readerChallenges/' + e.target.parentNode.parentNode.parentNode.id)
-        const thankedByUserRef = challengeRef.child('thankedBy/' + this.currentUser.uid)
-        const thanksCountRef = challengeRef.child('thanksCount')
-
-        thankedByUserRef.set(false)
-
-        thanksCountRef.once('value', (snapshot) => {
-          const thanksCountCurrentValue = snapshot.val()
-          const thanksCountNewValue = thanksCountCurrentValue - 1
-          thanksCountRef.set(thanksCountNewValue)
-        })
-      },
-      handleChallengeSubmit() {
-        const articleReaderChallengesPath = 'articles/' + this.$route.params.articleId + '/readerChallenges/'
-        const userChallengesPath = 'users/' + this.currentUser.uid + '/challenges/'
-
-        // Set challenge on Firebase
-        if (this.challenge) {
-          this.databaseRef.ref(articleReaderChallengesPath).push({
-            author: this.currentUser.uid,
-            challenge: this.challenge
-          }).then((snapshot) => {
-            const newChallengeId = snapshot.key
-            this.databaseRef.ref(userChallengesPath + '/' + newChallengeId).set(true)
-          })
-        }
-
-        this.challenge = ''
       },
       sortReaderChallenges() {
         console.log('tes');
