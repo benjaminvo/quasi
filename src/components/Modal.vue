@@ -10,11 +10,11 @@
 
         <h6 class="color-brandLight-darker-2 textAlign-center">How was it to read {{ article.title }}?</h6>
         <div class="margin-top-4-1 margin-bottom-6-1 display-flex justifyContent-center">
-          <radio-emoji id="difficulty-1" label="&#128561;" value="1" />
-          <radio-emoji id="difficulty-2" label="&#128534;" value="2" />
-          <radio-emoji id="difficulty-3" label="&#128528;" value="3" />
-          <radio-emoji id="difficulty-4" label="&#128524;" value="4" />
-          <radio-emoji id="difficulty-5" label="&#128526;" value="5" />
+          <input-emoji id="difficulty-1" label="&#128561;" value="1" />
+          <input-emoji id="difficulty-2" label="&#128534;" value="2" />
+          <input-emoji id="difficulty-3" label="&#128528;" value="3" />
+          <input-emoji id="difficulty-4" label="&#128524;" value="4" />
+          <input-emoji id="difficulty-5" label="&#128526;" value="5" />
         </div>
 
         <input class="modal_form_input margin-bottom" v-model="challenge" type="text" placeholder="What was difficult to understand?" maxlength="140">
@@ -34,11 +34,11 @@
 
 <script>
   import ToggleCheckmark from 'components/ToggleCheckmark'
-  import RadioEmoji from 'components/RadioEmoji'
+  import InputEmoji from 'components/InputEmoji'
   export default {
     components: {
       'toggle-checkmark': ToggleCheckmark,
-      'radio-emoji': RadioEmoji
+      'input-emoji': InputEmoji
     },
     props: {
       currentUser: { type: Object },
