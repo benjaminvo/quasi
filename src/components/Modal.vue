@@ -3,13 +3,23 @@
     <div class="modal_inner">
       <div class="modal_header">
         <toggle-checkmark finished disabled class="margin-bottom-2-1" />
-        <h1 class="margin-bottom">Good job!</h1>
-        <p>If you had any trouble with reading {{ article.title }} – this is where you relieve your mind</p>
+        <h1>Good job!</h1>
       </div>
 
       <form v-on:submit.prevent="handleSubmit">
-        <input class="modal_form_input" v-model="challenge" type="text" placeholder="What was difficult to understand?" maxlength="140">
+
+        <h6 class="color-brandLight-darker-2 textAlign-center">How was it to read {{ article.title }}?</h6>
+        <div class="margin-top-4-1 margin-bottom-6-1 display-flex justifyContent-center">
+          <radio-emoji id="difficulty-1" label="&#128561;" value="1" />
+          <radio-emoji id="difficulty-2" label="&#128534;" value="2" />
+          <radio-emoji id="difficulty-3" label="&#128528;" value="3" />
+          <radio-emoji id="difficulty-4" label="&#128524;" value="4" />
+          <radio-emoji id="difficulty-5" label="&#128526;" value="5" />
+        </div>
+
+        <input class="modal_form_input margin-bottom" v-model="challenge" type="text" placeholder="What was difficult to understand?" maxlength="140">
         <input class="modal_form_input" v-model="takeaway" type="text" placeholder="What was your key takeaway?" maxlength="140">
+
         <div class="modal_form_footer">
           <p class="modal_form_footer_text">Everything is anonymous</p>
           <div class="modal_form_footer_actions">
@@ -24,8 +34,12 @@
 
 <script>
   import ToggleCheckmark from 'components/ToggleCheckmark'
+  import RadioEmoji from 'components/RadioEmoji'
   export default {
-    components: { 'toggle-checkmark': ToggleCheckmark },
+    components: {
+      'toggle-checkmark': ToggleCheckmark,
+      'radio-emoji': RadioEmoji
+    },
     props: {
       currentUser: { type: Object },
       databaseRef: { type: Object },
@@ -139,12 +153,12 @@
     }
 
     &_form {
+      display: flex;
+      align-items: center;
 
       &_input {
         min-width: 100%;
         padding: $scale-2-1;
-
-        &:first-child { margin-bottom: $scale; }
       }
 
       &_footer {
