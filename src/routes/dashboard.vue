@@ -86,7 +86,9 @@
         })
         return numOfReadArticles
       },
-      allRead() { return this.numOfArticles - this.numOfReadArticles === 0 }
+      allRead() {
+        if ( this.numOfReadArticles !== 0 ) return this.numOfArticles - this.numOfReadArticles === 0
+      }
     },
     mounted() {
       this.fetchCoursesAndCreateDayblocks()
@@ -117,15 +119,17 @@
       renderMotivationMessage() {
         const initialMessage = `This week features ${ this.numOfArticles } ${ this.articleDuplicates ? 'unique' : '' } article${(this.numOfArticles > 1) ? 's' : '' } with a total of ${ this.totalPages } pages. Enjoy!`
 
-        switch(this.numOfArticles - this.numOfReadArticles) {
-          case 0:
-            return "You've finished! &#127881;"
-            break
-          case 1:
-            return '1 to go!'
-            break
-          default:
-            return initialMessage
+        if ( this.numOfArticles !== 0 ) {
+          switch(this.numOfArticles - this.numOfReadArticles) {
+            case 0:
+              return "You've finished! &#127881;"
+              break
+            case 1:
+              return '1 to go!'
+              break
+            default:
+              return initialMessage
+          }
         }
       },
       fetchCoursesAndCreateDayblocks() {
