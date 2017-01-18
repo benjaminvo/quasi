@@ -4,12 +4,12 @@
       <div class="modal_header">
         <toggle-checkmark finished disabled class="margin-bottom-2-1" />
         <h1 class="margin-bottom">Good job!</h1>
-        <p>Ask your lecturer or tip one of your fellow students about something in {{ article.title }}</p>
+        <p>If you had any trouble with reading {{ article.title }} – this is where you relieve your mind</p>
       </div>
 
       <form v-on:submit.prevent="handleSubmit">
-        <input class="modal_form_input" v-model="wish" type="text" placeholder="Ask" maxlength="140">
-        <input class="modal_form_input" v-model="tip" type="text" placeholder="Tip" maxlength="140">
+        <input class="modal_form_input" v-model="challenge" type="text" placeholder="What was difficult to understand?" maxlength="140">
+        <input class="modal_form_input" v-model="takeaway" type="text" placeholder="What was your key takeaway?" maxlength="140">
         <div class="modal_form_footer">
           <p class="modal_form_footer_text">Everything is anonymous</p>
           <div class="modal_form_footer_actions">
@@ -34,55 +34,53 @@
     data() {
       return {
         article: {},
-        wish: null,
-        tip: null
+        challenge: null,
+        takeaway: null
       }
     },
     created() {
       this.getArticleData()
     },
     methods: {
-      close() {
-        this.$emit('close')
-      },
+      close() { this.$emit('close') },
       getArticleData() {
         this.databaseRef.ref('articles/' + this.clickedArticleId).once('value', (snapshot) => { this.article = snapshot.val() })
       },
       handleSubmit() {
-        const articleReaderWishesPath = 'articles/' + this.clickedArticleId + '/readerWishes/'
-        const articleReaderTipsPath = 'articles/' + this.clickedArticleId + '/readerTips/'
-        const userWishesPath = 'users/' + this.currentUser.uid + '/wishes/'
-        const userTipsPath = 'users/' + this.currentUser.uid + '/tips/'
+        const articleReaderChallengesPath = 'articles/' + this.clickedArticleId + '/readerChallenges/'
+        const articleReaderTakeawaysPath = 'articles/' + this.clickedArticleId + '/readerTakeaways/'
+        const userChallengesPath = 'users/' + this.currentUser.uid + '/challenges/'
+        const userTakeawaysPath = 'users/' + this.currentUser.uid + '/takeaways/'
 
-        // Set wish on Firebase
-        if (this.wish) {
-          this.databaseRef.ref(articleReaderWishesPath)
+        // Set challenge on Firebase
+        if (this.challenge) {
+          this.databaseRef.ref(articleReaderChallengesPath)
           .push({
             author: this.currentUser.uid,
-            wish: this.wish
+            challenge: this.challenge
           })
           .then((snapshot) => {
-            const newWishId = snapshot.key
-            this.databaseRef.ref(userWishesPath + '/' + newWishId).set(true)
+            const newChallengeId = snapshot.key
+            this.databaseRef.ref(userChallengesPath + '/' + newChallengeId).set(true)
           })
         }
 
-        // Set tip on Firebase
-        if (this.tip) {
-          this.databaseRef.ref(articleReaderTipsPath)
+        // Set takeaway on Firebase
+        if (this.takeaway) {
+          this.databaseRef.ref(articleReaderTakeawaysPath)
           .push({
             author: this.currentUser.uid,
-            tip: this.tip
+            takeaway: this.takeaway
           })
           .then((snapshot) => {
-            const newTipId = snapshot.key
-            this.databaseRef.ref(userTipsPath + '/' + newTipId).set(true)
+            const newTakeawayId = snapshot.key
+            this.databaseRef.ref(userTakeawaysPath + '/' + newTakeawayId).set(true)
           })
         }
 
         // Reset inputs
-        this.wish = ''
-        this.tip = ''
+        this.challenge = ''
+        this.takeaway = ''
 
         this.close()
       }

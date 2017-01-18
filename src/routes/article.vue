@@ -75,32 +75,34 @@
       <grid-block columns="12">
         <div class="span-6 offset-3">
 
-          <div class="display-flex justifyContent-spaceBetween alignItems-flexEnd">
+          <div class="display-flex justifyContent-spaceBetween alignItems-flexEnd margin-bottom-2-1">
             <h2>Reader notes</h2>
-            <p @click="sortReaderTips" class="a">Sort by most thanked</p>
+            <p @click="sortReaderChallenges" class="a">Sort by most thanked</p>
           </div>
 
+          <hr>
+          <h6 class="margin-top">Challenges</h6>
           <ul class="list-unstyled">
-            <li v-for="(tip, index) in readerTips" :id="tip.id" class="margin-top-3-1">
-              {{ tip.tip }}
+            <li v-for="(challenge, index) in readerChallenges" :id="challenge.id" class="margin-top-3-1">
+              {{ challenge.challenge }}
               <div class="display-flex alignItems-center margin-top">
-                <button class="toggle margin-right" v-bind:class="{ active: tip.thankedBy && tip.thankedBy[currentUser.uid] ? tip.thankedBy[currentUser.uid] : null }">
-                  <div v-if="tip.thankedBy && tip.thankedBy[currentUser.uid] ? tip.thankedBy[currentUser.uid] : null" @click="decrementThanks">
-                    <span v-html="tip.thankedBy && tip.thankedBy[currentUser.uid] ? tip.thankedBy[currentUser.uid].emoji : null" class="emoji margin-right-1-3"></span> Thanks!
+                <button class="toggle margin-right" v-bind:class="{ active: challenge.thankedBy && challenge.thankedBy[currentUser.uid] ? challenge.thankedBy[currentUser.uid] : null }">
+                  <div v-if="challenge.thankedBy && challenge.thankedBy[currentUser.uid] ? challenge.thankedBy[currentUser.uid] : null" @click="decrementThanks">
+                    <span v-html="challenge.thankedBy && challenge.thankedBy[currentUser.uid] ? challenge.thankedBy[currentUser.uid].emoji : null" class="emoji margin-right-1-3"></span> Thanks!
                   </div>
                   <span v-else @click="incrementThanks">Say thanks!</span>
                 </button>
                 <p class="color-brandGrey-lighter-2">
-                  {{ tip.thanksCount === 0 || tip.thanksCount === 1 && tip.thankedBy[currentUser.uid] ? 'Like no one else' : null }}
-                  {{ tip.thanksCount > 0 && !tip.thankedBy[currentUser.uid] ? 'Like ' + tip.thanksCount + ' other' + (tip.thanksCount > 1 ? 's' : '') : null }}
-                  {{ tip.thanksCount > 1 && tip.thankedBy[currentUser.uid] ? 'Said you and ' + (tip.thanksCount - 1) + ' other' + (tip.thanksCount > 2 ? 's' : '') : null }}
+                  {{ challenge.thanksCount === 0 || challenge.thanksCount === 1 && challenge.thankedBy[currentUser.uid] ? 'Like no one else' : null }}
+                  {{ challenge.thanksCount > 0 && !challenge.thankedBy[currentUser.uid] ? 'Like ' + challenge.thanksCount + ' other' + (challenge.thanksCount > 1 ? 's' : '') : null }}
+                  {{ challenge.thanksCount > 1 && challenge.thankedBy[currentUser.uid] ? 'Said you and ' + (challenge.thanksCount - 1) + ' other' + (challenge.thanksCount > 2 ? 's' : '') : null }}
                 </p>
               </div>
             </li>
           </ul>
 
-          <form v-on:submit.prevent="handleTipSubmit" class="display-flex margin-top-6-1">
-            <input class="padding-2-1 margin-right backgroundColor-white width-full" v-model="tip" type="text" placeholder="Tip" maxlength="140">
+          <form v-on:submit.prevent="handleChallengeSubmit" class="display-flex margin-top-6-1 margin-bottom-4-1">
+            <input class="padding-2-1 margin-right backgroundColor-white width-full" v-model="challenge" type="text" placeholder="Challenge" maxlength="140">
             <button class="button submit" type="submit">Go</button>
           </form>
 
@@ -129,9 +131,9 @@
         article: {},
         articleCourseIds: [],
         articleCourses: [],
-        readerTips: [],
+        readerChallenges: [],
         emojis: ['&#128077;', '&#128076;', '&#128074;', '&#128591;', '&#9994;', '&#128406;'],
-        tip: null
+        challenge: null
       }
     },
     computed: {
@@ -150,13 +152,13 @@
       '$route': 'setArticle'
     },
     methods: {
-      setReaderTips() {
-        let readerTips = []
-        for (let tip in this.article.readerTips) {
-          this.article.readerTips[tip].id = tip
-          readerTips.push(this.article.readerTips[tip])
+      setReaderChallenges() {
+        let readerChallenges = []
+        for (let challenge in this.article.readerChallenges) {
+          this.article.readerChallenges[challenge].id = challenge
+          readerChallenges.push(this.article.readerChallenges[challenge])
         }
-        this.readerTips = readerTips
+        this.readerChallenges = readerChallenges
       },
       setArticle() {
         const activeArticleId = this.$route.params.articleId
@@ -172,7 +174,7 @@
             }
           }
           this.article = articleObj
-          this.setReaderTips()
+          this.setReaderChallenges()
         })
       },
       fetchCourses() {
@@ -188,10 +190,10 @@
         })
       },
       incrementThanks(e) {
-        const tipRef = this.databaseRef.ref('articles/' + this.$route.params.articleId + '/readerTips/' + e.target.parentNode.parentNode.parentNode.id)
-        const thankedByUserRef = tipRef.child('thankedBy/' + this.currentUser.uid)
+        const challengeRef = this.databaseRef.ref('articles/' + this.$route.params.articleId + '/readerChallenges/' + e.target.parentNode.parentNode.parentNode.id)
+        const thankedByUserRef = challengeRef.child('thankedBy/' + this.currentUser.uid)
         const thankedByUserEmojiRef = thankedByUserRef.child('emoji')
-        const thanksCountRef = tipRef.child('thanksCount')
+        const thanksCountRef = challengeRef.child('thanksCount')
 
         thankedByUserRef.set(true)
 
@@ -206,9 +208,9 @@
         })
       },
       decrementThanks(e) {
-        const tipRef = this.databaseRef.ref('articles/' + this.$route.params.articleId + '/readerTips/' + e.target.parentNode.parentNode.parentNode.id)
-        const thankedByUserRef = tipRef.child('thankedBy/' + this.currentUser.uid)
-        const thanksCountRef = tipRef.child('thanksCount')
+        const challengeRef = this.databaseRef.ref('articles/' + this.$route.params.articleId + '/readerChallenges/' + e.target.parentNode.parentNode.parentNode.id)
+        const thankedByUserRef = challengeRef.child('thankedBy/' + this.currentUser.uid)
+        const thanksCountRef = challengeRef.child('thanksCount')
 
         thankedByUserRef.set(false)
 
@@ -218,30 +220,30 @@
           thanksCountRef.set(thanksCountNewValue)
         })
       },
-      handleTipSubmit() {
-        const articleReaderTipsPath = 'articles/' + this.$route.params.articleId + '/readerTips/'
-        const userTipsPath = 'users/' + this.currentUser.uid + '/tips/'
+      handleChallengeSubmit() {
+        const articleReaderChallengesPath = 'articles/' + this.$route.params.articleId + '/readerChallenges/'
+        const userChallengesPath = 'users/' + this.currentUser.uid + '/challenges/'
 
-        // Set tip on Firebase
-        if (this.tip) {
-          this.databaseRef.ref(articleReaderTipsPath).push({
+        // Set challenge on Firebase
+        if (this.challenge) {
+          this.databaseRef.ref(articleReaderChallengesPath).push({
             author: this.currentUser.uid,
-            tip: this.tip
+            challenge: this.challenge
           }).then((snapshot) => {
-            const newTipId = snapshot.key
-            this.databaseRef.ref(userTipsPath + '/' + newTipId).set(true)
+            const newChallengeId = snapshot.key
+            this.databaseRef.ref(userChallengesPath + '/' + newChallengeId).set(true)
           })
         }
 
-        this.tip = ''
+        this.challenge = ''
       },
-      sortReaderTips() {
+      sortReaderChallenges() {
         console.log('tes');
-        console.log(this.readerTips, 'THIS');
-        let sortedTips = []
-        sortedTips = this.readerTips.sort( (a,b) => { return b.thanksCount - a.thanksCount } )
-        this.readerTips = sortedTips
-        console.log(sortedTips);
+        console.log(this.readerChallenges, 'THIS');
+        let sortedChallenges = []
+        sortedChallenges = this.readerChallenges.sort( (a,b) => { return b.thanksCount - a.thanksCount } )
+        this.readerChallenges = sortedChallenges
+        console.log(sortedChallenges);
       }
     }
   }
