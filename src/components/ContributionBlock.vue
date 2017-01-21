@@ -2,7 +2,7 @@
   <div class="contributionBlock">
 
     <h3 class="float-left">{{ title }}</h3>
-    <p @click="sortContributions" class="a h6 margin-top-1-2 margin-left display-inlineBlock float-right">Sort by most thanked</p>
+    <p @click="sortContributions" class="a h6 margin-top-1-2 margin-left display-inlineBlock float-right">Sort by most agreed</p>
 
     <div class="clear-both"></div>
 
@@ -10,16 +10,16 @@
       <li v-for="(contribution, index) in contributions" :id="contribution.id" class="margin-top-3-1">
         {{ contribution[type] }}
         <div class="display-flex alignItems-center margin-top">
-          <button class="toggle margin-right" v-bind:class="{ active: contribution.thankedBy && contribution.thankedBy[currentUser.uid] ? contribution.thankedBy[currentUser.uid] : null }">
-            <div v-if="contribution.thankedBy && contribution.thankedBy[currentUser.uid] ? contribution.thankedBy[currentUser.uid] : null" @click="decrementThanks">
-              <span v-html="contribution.thankedBy && contribution.thankedBy[currentUser.uid] ? contribution.thankedBy[currentUser.uid].emoji : null" class="emoji margin-right-1-3"></span> Thanks!
+          <button class="toggle margin-right" v-bind:class="{ active: contribution.agreedBy && contribution.agreedBy[currentUser.uid] ? contribution.agreedBy[currentUser.uid] : null }">
+            <div v-if="contribution.agreedBy && contribution.agreedBy[currentUser.uid] ? contribution.agreedBy[currentUser.uid] : null" @click="decrementAgrees">
+              <span v-html="contribution.agreedBy && contribution.agreedBy[currentUser.uid] ? contribution.agreedBy[currentUser.uid].emoji : null" class="emoji margin-right-1-3"></span>Agreed
             </div>
-            <span v-else @click="incrementThanks">Say thanks!</span>
+            <span v-else @click="incrementAgrees">I agree!</span>
           </button>
           <p class="color-brandGrey-lighter-2">
-            {{ contribution.thanksCount === 0 || contribution.thanksCount === 1 && contribution.thankedBy[currentUser.uid] ? 'Like no one else' : null }}
-            {{ contribution.thanksCount > 0 && !contribution.thankedBy[currentUser.uid] ? 'Like ' + contribution.thanksCount + ' other' + (contribution.thanksCount > 1 ? 's' : '') : null }}
-            {{ contribution.thanksCount > 1 && contribution.thankedBy[currentUser.uid] ? 'Said you and ' + (contribution.thanksCount - 1) + ' other' + (contribution.thanksCount > 2 ? 's' : '') : null }}
+            {{ contribution.agreesCount === 0 || contribution.agreesCount === 1 && contribution.agreedBy[currentUser.uid] ? 'Like no one else' : null }}
+            {{ contribution.agreesCount > 0 && !contribution.agreedBy[currentUser.uid] ? 'Like ' + contribution.agreesCount + ' other' + (contribution.agreesCount > 1 ? 's' : '') : null }}
+            {{ contribution.agreesCount > 1 && contribution.agreedBy[currentUser.uid] ? 'Said you and ' + (contribution.agreesCount - 1) + ' other' + (contribution.agreesCount > 2 ? 's' : '') : null }}
           </p>
         </div>
       </li>
@@ -71,40 +71,40 @@
 
         this.contribution = ''
       },
-      incrementThanks(e) {
+      incrementAgrees(e) {
         const contributionRef = this.databaseRef.ref('articles/' + this.$route.params.articleId + '/' + this.articleReaderContributionsPathEndpoint + '/' + e.target.parentNode.parentNode.parentNode.id)
-        const thankedByUserRef = contributionRef.child('thankedBy/' + this.currentUser.uid)
-        const thankedByUserEmojiRef = thankedByUserRef.child('emoji')
-        const thanksCountRef = contributionRef.child('thanksCount')
+        const agreedByUserRef = contributionRef.child('agreedBy/' + this.currentUser.uid)
+        const agreedByUserEmojiRef = agreedByUserRef.child('emoji')
+        const agreesCountRef = contributionRef.child('agreesCount')
 
-        thankedByUserRef.set(true)
+        agreedByUserRef.set(true)
 
         const randomNumber = Math.floor(Math.random() * this.emojis.length)
         const randomEmoji = this.emojis[randomNumber]
-        thankedByUserEmojiRef.set(randomEmoji)
+        agreedByUserEmojiRef.set(randomEmoji)
 
-        thanksCountRef.once('value', (snapshot) => {
-          const thanksCountCurrentValue = snapshot.val()
-          const thanksCountNewValue = thanksCountCurrentValue ? thanksCountCurrentValue + 1 : 1
-          thanksCountRef.set(thanksCountNewValue)
+        agreesCountRef.once('value', (snapshot) => {
+          const agreesCountCurrentValue = snapshot.val()
+          const agreesCountNewValue = agreesCountCurrentValue ? agreesCountCurrentValue + 1 : 1
+          agreesCountRef.set(agreesCountNewValue)
         })
       },
-      decrementThanks(e) {
+      decrementAgrees(e) {
         const contributionRef = this.databaseRef.ref('articles/' + this.$route.params.articleId + '/' + this.articleReaderContributionsPathEndpoint + '/' + e.target.parentNode.parentNode.parentNode.id)
-        const thankedByUserRef = contributionRef.child('thankedBy/' + this.currentUser.uid)
-        const thanksCountRef = contributionRef.child('thanksCount')
+        const agreedByUserRef = contributionRef.child('agreedBy/' + this.currentUser.uid)
+        const agreesCountRef = contributionRef.child('agreesCount')
 
-        thankedByUserRef.set(false)
+        agreedByUserRef.set(false)
 
-        thanksCountRef.once('value', (snapshot) => {
-          const thanksCountCurrentValue = snapshot.val()
-          const thanksCountNewValue = thanksCountCurrentValue - 1
-          thanksCountRef.set(thanksCountNewValue)
+        agreesCountRef.once('value', (snapshot) => {
+          const agreesCountCurrentValue = snapshot.val()
+          const agreesCountNewValue = agreesCountCurrentValue - 1
+          agreesCountRef.set(agreesCountNewValue)
         })
       },
       sortContributions() {
         let sortedContributions = []
-        sortedContributions = this.contributions.sort( (a,b) => { return b.thanksCount - a.thanksCount } )
+        sortedContributions = this.contributions.sort( (a,b) => { return b.agreesCount - a.agreesCount } )
         this.contributions = sortedContributions
       }
     }

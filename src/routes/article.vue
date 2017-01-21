@@ -75,16 +75,12 @@
       <grid-block columns="12">
         <div class="span-6 offset-3">
 
-          <h2>Reader notes</h2>
-
-          <hr class="margin-top-6-1 margin-bottom-3-1">
-
           <contribution-block
             :currentUser="currentUser"
             :databaseRef="databaseRef"
             :contributions="readerChallenges"
             type="challenge"
-            title="Challenges"
+            title="Frustrations"
             articleReaderContributionsPathEndpoint="readerChallenges"
             userContributionsPathEndpoint="challenges"
             inputPlaceholder="What was difficult to understand?" />
