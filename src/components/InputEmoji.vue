@@ -7,14 +7,16 @@
       name="difficulty"
       :id="id"
       :value="value"
-      :checked="checked">
+      :checked="checked"
+      ref="inputEmoji"
+      v-on:change="emitId" />
 
     <label
       class="inputEmoji_label"
       :class="{
-        'inputEmoji_label-1': this.id === 'emoji-1',
-        'inputEmoji_label-2': this.id === 'emoji-2',
-        'inputEmoji_label-3': this.id === 'emoji-3'
+        'inputEmoji_label-1': this.id === 'easyRead',
+        'inputEmoji_label-2': this.id === 'understandable',
+        'inputEmoji_label-3': this.id === 'interesting'
       }"
       :for="id"
       v-html="this.label">
@@ -31,6 +33,11 @@
       value: { type: String },
       checked: { type: Boolean }
     },
+    methods: {
+      emitId() {
+        this.$emit('idEmit', this.$refs.inputEmoji.id)
+      }
+    }
   }
 </script>
 

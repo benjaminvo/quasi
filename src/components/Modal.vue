@@ -9,10 +9,31 @@
       <form v-on:submit.prevent="handleSubmit">
 
         <h6 class="color-brandLight-darker-2 textAlign-center">How was it to read {{ article.title }}?</h6>
+
         <div class="margin-top-4-1 margin-bottom-6-1 display-flex justifyContent-center">
-          <input-emoji id="emoji-1" label="&#128526;" value="1" />
-          <input-emoji id="emoji-2" label="&#128519;" value="2" />
-          <input-emoji id="emoji-3" label="&#129300;" value="3" />
+
+          <input-emoji
+            id="easyRead"
+            label="&#128526;"
+            value="Easy read"
+            v-on:idEmit="toggleEmojiReaction"
+            v-bind:checked="emojiReactions.includes('easyRead')" />
+
+          <input-emoji
+            id="understandable"
+            label="&#128519;"
+            value="Understandable"
+            v-on:idEmit="toggleEmojiReaction"
+            v-bind:checked="emojiReactions.includes('understandable')" />
+
+          <input-emoji
+            class="margin-none"
+            id="interesting"
+            label="&#129300;"
+            value="Interesting"
+            v-on:idEmit="toggleEmojiReaction"
+            v-bind:checked="emojiReactions.includes('interesting')" />
+
         </div>
 
         <input class="modal_form_input margin-bottom" v-model="challenge" type="text" placeholder="What was difficult to understand?" maxlength="140">
@@ -25,6 +46,7 @@
             <button class="button submit" type="submit">Go</button>
           </div>
         </div>
+
       </form>
     </div>
   </div>
@@ -50,10 +72,28 @@
         takeaway: null
       }
     },
+    computed: {
+      emojiReactions() {
+        let emojiReactions = []
+        if ( this.article.readerEmojiReactions ) {
+          for (let reaction in this.article.readerEmojiReactions) {
+            if ( this.article.readerEmojiReactions[reaction].reactedBy && this.article.readerEmojiReactions[reaction].reactedBy[this.currentUser.uid] ) {
+              emojiReactions.push(reaction)
+            }
+          }
+        }
+        return emojiReactions
+      }
+    },
     created() {
       this.getArticleData()
     },
     methods: {
+      toggleEmojiReaction(id) {
+        const idIndex = this.emojiReactions.indexOf(id)
+        if (idIndex > -1) this.emojiReactions.splice(idIndex, 1)
+        else this.emojiReactions.push(id)
+      },
       close() { this.$emit('close') },
       getArticleData() {
         this.databaseRef.ref('articles/' + this.clickedArticleId).once('value', (snapshot) => { this.article = snapshot.val() })
@@ -63,6 +103,8 @@
         const articleReaderTakeawaysPath = 'articles/' + this.clickedArticleId + '/readerTakeaways/'
         const userChallengesPath = 'users/' + this.currentUser.uid + '/challenges/'
         const userTakeawaysPath = 'users/' + this.currentUser.uid + '/takeaways/'
+
+        const articleReaderEmojiReactionsPath = 'articles/' + this.clickedArticleId + '/readerEmojiReactions/'
 
         // Set challenge on Firebase
         if (this.challenge) {
@@ -88,6 +130,24 @@
             const newTakeawayId = snapshot.key
             this.databaseRef.ref(userTakeawaysPath + '/' + newTakeawayId).set(true)
           })
+        }
+
+        // Set emojiReactions on Firebase
+        if (this.emojiReactions.length) {
+          for ( let i = 0; i < this.emojiReactions.length; i++ ) {
+
+            const emojiReactionPath = this.databaseRef.ref(articleReaderEmojiReactionsPath + '/' + this.emojiReactions[i])
+            const emojiReactionCountPath = emojiReactionPath.child('count')
+            const emojiReactionReactedByPath = emojiReactionPath.child('reactedBy')
+
+            emojiReactionPath.once('value', (snapshot) => {
+              const reaction = snapshot.val()
+              const newReactionCount = reaction && reaction.count && reaction.reactedBy[this.currentUser.uid] && reaction.reactedBy[this.currentUser.uid] !== true ? reaction.count += 1 : 1
+              emojiReactionCountPath.set(newReactionCount)
+              emojiReactionReactedByPath.child(this.currentUser.uid).set(true)
+            })
+
+          }
         }
 
         // Reset inputs
