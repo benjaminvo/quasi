@@ -9,23 +9,19 @@
       <form v-on:submit.prevent="handleSubmit">
 
         <h6 class="color-brandLight-darker-2 textAlign-center">How was it to read {{ article.title }}?</h6>
-
         <div class="margin-top-4-1 margin-bottom-6-1 display-flex justifyContent-center">
-
           <input-emoji
             id="easyRead"
             label="&#128526;"
             value="Easy read"
             v-on:idEmit="toggleEmojiReaction"
             v-bind:checked="emojiReactions.includes('easyRead')" />
-
           <input-emoji
             id="understandable"
             label="&#128519;"
             value="Understandable"
             v-on:idEmit="toggleEmojiReaction"
             v-bind:checked="emojiReactions.includes('understandable')" />
-
           <input-emoji
             class="margin-none"
             id="interesting"
@@ -33,10 +29,10 @@
             value="Interesting"
             v-on:idEmit="toggleEmojiReaction"
             v-bind:checked="emojiReactions.includes('interesting')" />
-
         </div>
 
-        <input class="modal_form_input margin-bottom" v-model="challenge" type="text" placeholder="What was difficult to understand?" maxlength="140">
+        <h6 class="color-brandLight-darker-2 textAlign-center">What frustrated you about the text, if anything?</h6>
+        <textarea class="modal_form_input margin-top-2-1 margin-bottom" v-model="challenge" type="text" rows="3"></textarea>
 
         <div class="modal_form_footer">
           <p class="modal_form_footer_text">Everything is anonymous</p>

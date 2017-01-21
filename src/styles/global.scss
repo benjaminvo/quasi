@@ -86,9 +86,11 @@ input, textarea, button {
   &:-moz-placeholder { color: $color-brandLight-darker-3; } /* Firefox 18- */
 }
 
+textarea:focus,
 input:focus {
   background-color: white;
   transition: all 300ms $animationBezier;
+  outline: none;
 }
 
 button {
