@@ -37,7 +37,6 @@
         </div>
 
         <input class="modal_form_input margin-bottom" v-model="challenge" type="text" placeholder="What was difficult to understand?" maxlength="140">
-        <input class="modal_form_input" v-model="takeaway" type="text" placeholder="What was your key takeaway?" maxlength="140">
 
         <div class="modal_form_footer">
           <p class="modal_form_footer_text">Everything is anonymous</p>
@@ -68,8 +67,7 @@
     data() {
       return {
         article: {},
-        challenge: null,
-        takeaway: null
+        challenge: null
       }
     },
     computed: {
@@ -100,9 +98,7 @@
       },
       handleSubmit() {
         const articleReaderChallengesPath = 'articles/' + this.clickedArticleId + '/readerChallenges/'
-        const articleReaderTakeawaysPath = 'articles/' + this.clickedArticleId + '/readerTakeaways/'
         const userChallengesPath = 'users/' + this.currentUser.uid + '/challenges/'
-        const userTakeawaysPath = 'users/' + this.currentUser.uid + '/takeaways/'
 
         const articleReaderEmojiReactionsPath = 'articles/' + this.clickedArticleId + '/readerEmojiReactions/'
 
@@ -116,19 +112,6 @@
           .then((snapshot) => {
             const newChallengeId = snapshot.key
             this.databaseRef.ref(userChallengesPath + '/' + newChallengeId).set(true)
-          })
-        }
-
-        // Set takeaway on Firebase
-        if (this.takeaway) {
-          this.databaseRef.ref(articleReaderTakeawaysPath)
-          .push({
-            author: this.currentUser.uid,
-            takeaway: this.takeaway
-          })
-          .then((snapshot) => {
-            const newTakeawayId = snapshot.key
-            this.databaseRef.ref(userTakeawaysPath + '/' + newTakeawayId).set(true)
           })
         }
 
@@ -152,7 +135,6 @@
 
         // Reset inputs
         this.challenge = ''
-        this.takeaway = ''
 
         this.close()
       }
@@ -182,6 +164,7 @@
     &_inner {
       position: relative;
       max-width: 600px;
+      min-width: 400px;
       margin-top: -10%;
       padding: $scale-2-1;
 

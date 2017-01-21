@@ -89,18 +89,6 @@
             userContributionsPathEndpoint="challenges"
             inputPlaceholder="What was difficult to understand?" />
 
-          <hr class="margin-top-6-1 margin-bottom-3-1">
-
-          <contribution-block
-            :currentUser="currentUser"
-            :databaseRef="databaseRef"
-            :contributions="readerTakeaways"
-            type="takeaway"
-            title="Takeaways"
-            articleReaderContributionsPathEndpoint="readerTakeaways"
-            userContributionsPathEndpoint="takeaways"
-            inputPlaceholder="What was your key take away?" />
-
         </div>
       </grid-block>
     </div>
@@ -128,8 +116,7 @@
         article: {},
         articleCourseIds: [],
         articleCourses: [],
-        readerChallenges: [],
-        readerTakeaways: []
+        readerChallenges: []
       }
     },
     computed: {
@@ -156,14 +143,6 @@
         }
         this.readerChallenges = readerChallenges
       },
-      setReaderTakeaways() {
-        let readerTakeaways = []
-        for (let takeaway in this.article.readerTakeaways) {
-          this.article.readerTakeaways[takeaway].id = takeaway
-          readerTakeaways.push(this.article.readerTakeaways[takeaway])
-        }
-        this.readerTakeaways = readerTakeaways
-      },
       setArticle() {
         const activeArticleId = this.$route.params.articleId
         this.databaseRef.ref('articles/').on('value', (snapshot) => {
@@ -179,7 +158,6 @@
           }
           this.article = articleObj
           this.setReaderChallenges()
-          this.setReaderTakeaways()
         })
       },
       fetchCourses() {
