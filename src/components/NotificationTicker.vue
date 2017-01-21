@@ -110,7 +110,7 @@
         left: 0;
         width: 100%;
         height: 60%;
-        background: linear-gradient(to top, white 0%,  transparent 100%);
+        background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
       }
 
       &.hideGradient {
