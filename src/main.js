@@ -10,6 +10,9 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   routes,
   linkActiveClass: 'active',
+  scrollBehavior (to, from, savedPosition) {
+    return { x: 0, y: 0 }
+  },
   mode: 'history' // TODO: Remember to set up the server to ALWAYS serve the index.html file when this history-mode is on (to avoid hashes in the url)
 })
 
