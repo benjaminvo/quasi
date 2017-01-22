@@ -37,6 +37,7 @@
     methods: {
       logout() {
         firebase.auth().signOut().then( () => {
+          window.Intercom( 'shutdown' )
           window.location.href = '/auth.html'
         }, function(error) {
           console.log(error)

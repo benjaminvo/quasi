@@ -97,6 +97,9 @@
         if ( this.numOfReadArticles !== 0 ) return this.numOfArticles - this.numOfReadArticles === 0
       }
     },
+    created() {
+      window.Intercom( 'update' )
+    },
     mounted() {
       this.fetchCoursesAndCreateDayblocks()
       this.setUserNameOnDatabase()

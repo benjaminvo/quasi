@@ -120,6 +120,9 @@
         return parseInt(this.article.pageTo, 10) - parseInt(this.article.pageFrom, 10)
       }
     },
+    created() {
+      window.Intercom( 'update' )
+    },
     mounted() {
       this.setArticle()
       this.fetchCourses()

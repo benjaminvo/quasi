@@ -52,8 +52,12 @@ window.addEventListener('load', function () {
         render: h => h(Quasi)
       })
 
+      const timestamp = new Date().getTime()
       window.Intercom( 'boot', {
-        app_id: "igx39wnq"
+        app_id: "igx39wnq",
+        name: user.displayName,
+        email: user.email,
+        created_at: timestamp
       })
 
     } else {
