@@ -74,33 +74,37 @@
       },
       incrementAgrees(e) {
         const contributionRef = this.databaseRef.ref('articles/' + this.$route.params.articleId + '/' + this.articleReaderContributionsPathEndpoint + '/' + e.target.parentNode.parentNode.parentNode.id)
-        const agreedByUserRef = contributionRef.child('agreedBy/' + this.currentUser.uid)
-        const agreedByUserEmojiRef = agreedByUserRef.child('emoji')
-        const agreesCountRef = contributionRef.child('agreesCount')
-
-        agreedByUserRef.set(true)
 
         const randomNumber = Math.floor(Math.random() * this.emojis.length)
         const randomEmoji = this.emojis[randomNumber]
-        agreedByUserEmojiRef.set(randomEmoji)
 
-        agreesCountRef.once('value', (snapshot) => {
-          const agreesCountCurrentValue = snapshot.val()
-          const agreesCountNewValue = agreesCountCurrentValue ? agreesCountCurrentValue + 1 : 1
-          agreesCountRef.set(agreesCountNewValue)
+        contributionRef.once('value', (snapshot) => {
+          const contribution = snapshot.val()
+          let newContributionObj = {}
+          if ( contribution ) newContributionObj = Object.assign({}, contribution) // Create a copy of object on database
+          if ( !newContributionObj.agreesCount ) newContributionObj.agreesCount = 0 // If no count prop, create it
+          if ( !newContributionObj.agreedBy ) newContributionObj.agreedBy = {} // if no agreedBy prop, create it
+          if ( !newContributionObj.agreedBy[this.currentUser.uid] ) { // If not already agreed by this user
+            newContributionObj.agreesCount++
+            newContributionObj.agreedBy[this.currentUser.uid] = { emoji: randomEmoji }
+          }
+          contributionRef.update(newContributionObj) // Update database with the new object
         })
       },
       decrementAgrees(e) {
         const contributionRef = this.databaseRef.ref('articles/' + this.$route.params.articleId + '/' + this.articleReaderContributionsPathEndpoint + '/' + e.target.parentNode.parentNode.parentNode.id)
-        const agreedByUserRef = contributionRef.child('agreedBy/' + this.currentUser.uid)
-        const agreesCountRef = contributionRef.child('agreesCount')
 
-        agreedByUserRef.set(false)
-
-        agreesCountRef.once('value', (snapshot) => {
-          const agreesCountCurrentValue = snapshot.val()
-          const agreesCountNewValue = agreesCountCurrentValue - 1
-          agreesCountRef.set(agreesCountNewValue)
+        contributionRef.once('value', (snapshot) => {
+          const contribution = snapshot.val()
+          let newContributionObj = {}
+          if ( contribution ) newContributionObj = Object.assign({}, contribution) // Create a copy of object on database
+          if ( !newContributionObj.agreesCount ) newContributionObj.agreesCount = 0 // If no count prop, create it
+          if ( !newContributionObj.agreedBy ) newContributionObj.agreedBy = {} // if no agreedBy prop, create it
+          if ( newContributionObj.agreedBy[this.currentUser.uid] ) { // If not already agreed by this user
+            if ( newContributionObj.agreesCount > 0 ) newContributionObj.agreesCount--
+            newContributionObj.agreedBy[this.currentUser.uid] = false
+          }
+          contributionRef.update(newContributionObj) // Update database with the new object
         })
       },
       sortContributions() {
