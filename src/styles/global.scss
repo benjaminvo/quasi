@@ -109,12 +109,13 @@ button {
   &.toggle {
     background-color: transparent;
     border: 1px solid $color-brandGrey-lighter-3;
-    padding: 0 $scale;
+    padding: 0 $scale-1-2;
     color: $color-brandGrey;
+    font-size: $fontSize-xxsmall;
     font-weight: 400;
     text-transform: none;
-    height: 28px;
-    line-height: 28px;
+    height: 20px;
+    line-height: 12px;
     overflow: hidden;
 
     &:hover {

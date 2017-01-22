@@ -52,7 +52,8 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 		&-large 	{ font-size: $fontSize-large; }
 		&-base 		{ font-size: $fontSize-base; }
 		&-small 	{ font-size: $fontSize-small; }
-		&-xsmall 	{ font-size: $fontSize-xsmall; }}
+		&-xsmall 	{ font-size: $fontSize-xsmall; }
+		&-xxsmall { font-size: $fontSize-xxsmall; }}
 	&Weight {
 		&-thin 		{ font-weight: 100; }
 		&-normal 	{ font-weight: 400; }
