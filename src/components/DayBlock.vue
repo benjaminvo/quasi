@@ -11,7 +11,8 @@
           :currentUser="currentUser"
           :toggleArticleFinished="toggleArticleFinished"
           :courseName="course.course"
-          :articles="course.articles" />
+          :articles="course.articles"
+          :numOfUsers="numOfUsers" />
       </div>
     </grid-block>
   </div>
@@ -29,7 +30,8 @@
       currentUser: { type: Object },
       day: { type: String },
       courses: { type: Array },
-      toggleArticleFinished: { type: Function }
+      toggleArticleFinished: { type: Function },
+      numOfUsers: { type: Number }
     }
   }
 </script>
@@ -40,7 +42,7 @@
   .dayBlock {
     width: 100%;
     background: $color-brandLight;
-    border-top: 1px solid $color-brandLight-darker-1;
+    border-top: 1px solid $color-brandLight-lighter-3;
     padding: $scale-5-1 0;
 
     &_emptyText { color: $color-brandLight-darker-2; }

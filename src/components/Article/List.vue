@@ -10,7 +10,10 @@
       :title="article.title"
       :author="article.author"
       :pageNum="article.pageTo - article.pageFrom"
-      :year="article.year" />
+      :year="article.year"
+      :finishedBy="article.finishedBy"
+      :readerEmojiReactions="article.readerEmojiReactions"
+      :numOfUsers="numOfUsers" />
   </ul>
 </template>
 
@@ -26,7 +29,8 @@
       currentUser: { type: Object },
       articles: { type: Object },
       courseName: { type: String },
-      toggleArticleFinished: { type: Function }
+      toggleArticleFinished: { type: Function },
+      numOfUsers: { type: Number }
     }
   }
 </script>

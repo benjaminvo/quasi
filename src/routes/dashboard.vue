@@ -14,7 +14,8 @@
       :toggleArticleFinished="toggleArticleFinished"
       v-for="(dayBlock, key, index) in dayBlocks"
       :day="key"
-      :courses="dayBlock.courses" />
+      :courses="dayBlock.courses"
+      :numOfUsers="numOfUsers" />
 
     <modal
       v-if="modalVisible"
@@ -49,17 +50,23 @@
         modalVisible: false,
         clickedArticleId: null,
         articles: {},
+        users: {},
         dayBlocks: {},
         coursesFetched: false,
         uniqueArticles: [],
         articleDuplicates: 0,
         totalPages: 0,
-        userFullName: this.currentUser.displayName,
-        userFirstName: this.currentUser.displayName.split(' ')[0],
-        userLastName: this.currentUser.displayName.substr(this.currentUser.displayName.indexOf(' ') + 1)
+        userFullName: this.currentUser.displayName
       }
     },
     computed: {
+      userFirstName() { return this.currentUser.displayName.split(' ')[0] },
+      userLastName() { return this.currentUser.displayName.substr(this.currentUser.displayName.indexOf(' ') + 1) },
+      numOfUsers() {
+        let usersArray = []
+        for ( let user in this.users ) usersArray.push(user)
+        return usersArray.length
+      },
       numOfArticles() {
         const articleIds = []
         const allArticleIds = []
@@ -107,8 +114,8 @@
     methods: {
       setUserNameOnDatabase() {
         this.databaseRef.ref('users/').once('value', (snapshot) => {
-          const users = snapshot.val()
-          for (let user in users) {
+          this.users = snapshot.val()
+          for (let user in this.users) {
             if (user === this.currentUser.uid) {
               this.databaseRef.ref('users/' + user + '/firstName').set(this.userFirstName)
               this.databaseRef.ref('users/' + user + '/lastName').set(this.userLastName)
@@ -200,7 +207,7 @@
         }
       },
       toggleArticleFinished(e) {
-        this.clickedArticleId = e.currentTarget.parentNode.id
+        this.clickedArticleId = e.currentTarget.parentNode.parentNode.id
         const articleFinishedByPath = 'articles/' + this.clickedArticleId + '/finishedBy/'
         const articleFinishedPath = 'users/' + this.currentUser.uid + '/articles/' + this.clickedArticleId + '/finished'
         this.databaseRef.ref(articleFinishedPath).once('value', (snapshot) => {

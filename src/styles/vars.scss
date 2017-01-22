@@ -75,13 +75,17 @@ $color-brandDark-lighter-3: lighten( $color-brandDark, 30% );
 // ----- Light
 $color-brandLight: #ebeff0;
 
-$color-brandLight-darker-3: darken( $color-brandLight, 15% );
-$color-brandLight-darker-2: darken( $color-brandLight, 10% );
-$color-brandLight-darker-1: darken( $color-brandLight, 5% );
+$color-brandLight-lighter-6: mix(white, $color-brandLight, 98% );
+$color-brandLight-lighter-5: mix(white, $color-brandLight, 88% );
+$color-brandLight-lighter-4: mix(white, $color-brandLight, 70% );
+$color-brandLight-lighter-3: mix(white, $color-brandLight, 50% );
+$color-brandLight-lighter-2: mix(white, $color-brandLight, 30% );
+$color-brandLight-lighter-1: mix(white, $color-brandLight, 15% );
 
-$color-brandLight-lighter-1: lighten( $color-brandLight, 5% );
-$color-brandLight-lighter-2: lighten( $color-brandLight, 10% );
-$color-brandLight-lighter-3: lighten( $color-brandLight, 15% );
+$color-brandLight-darker-1: mix(black, $color-brandLight, 11% );
+$color-brandLight-darker-2: mix(black, $color-brandLight, 28% );
+$color-brandLight-darker-3: mix(black, $color-brandLight, 43% );
+$color-brandLight-darker-4: mix(black, $color-brandLight, 59% );
 
 // ----- Text
 $color-text: $color-brandGrey-darker-4;
