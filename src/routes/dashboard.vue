@@ -19,7 +19,7 @@
 
     <modal
       v-if="modalVisible"
-      v-on:close="modalVisible = false"
+      v-on:close="closeModal"
       :currentUser="currentUser"
       :databaseRef="databaseRef"
       :clickedArticleId="clickedArticleId" />
@@ -195,6 +195,10 @@
             }
           }
         })
+      },
+      closeModal() {
+        this.modalVisible = false
+        this.fetchRelevantArticlesPerCourse()
       },
       getTotalPages() {
         if ( this.totalPages === 0 ) {
