@@ -1,5 +1,5 @@
 <template>
-  <div class="notificationTicker" :class="{ 'notificationTicker-expanded': notificationTickerExpanded }">
+  <div class="notificationTicker border-top border--near-white" :class="{ 'notificationTicker-expanded': notificationTickerExpanded }">
     <grid-block columns="12" noPadding>
 
       <!-- <div class="span-2 color-brandLight-darker-3 margin-top margin-bottom">
@@ -90,7 +90,6 @@
 
   .notificationTicker {
     background-color: white;
-    border-top: 1px solid $color-brandGrey-lighter-6;
     position: relative;
     height: 62px;
     overflow: hidden;

@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer padding-top-4-1 padding-bottom-4-1 textAlign-center">
+  <footer class="footer padding-top-4-1 padding-bottom-4-1 textAlign-center border-top border--light-grey">
     <p class="copyright fontSize-small">Quasi &copy; <span>2017 {{ toCurrentYear }}</span></p>
   </footer>
 </template>
@@ -24,10 +24,6 @@
 
 <style lang="scss" scoped>
   @import '~styles/global';
-
-  .footer {
-    border-top: 1px solid $color-brandGrey-lighter-5;
-  }
 
   .copyright {
     color: $color-brandDark-lighter-3;
