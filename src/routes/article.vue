@@ -73,7 +73,7 @@
 
     <div class="backgroundColor-brandLight border-top border--light-grey">
       <grid-block columns="12">
-        <div class="span-6 offset-3">
+        <div class="span-9 offset-3">
 
           <contribution-block
             :currentUser="currentUser"
@@ -83,7 +83,7 @@
             title="Frustrations"
             articleReaderContributionsPathEndpoint="readerChallenges"
             userContributionsPathEndpoint="challenges"
-            inputPlaceholder="What was difficult to understand?" />
+            inputPlaceholder="What frustrated you about the text, if anything?" />
 
         </div>
       </grid-block>
