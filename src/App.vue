@@ -1,0 +1,35 @@
+<template>
+  <div class="app">
+    <app-header :currentUser="currentUser" :authenticated="authenticated" />
+    <router-view :databaseRef="database" :currentUser="currentUser" :authenticated="authenticated"></router-view>
+    <app-footer />
+  </div>
+</template>
+
+<script>
+  import Header from 'components/Header'
+  import Footer from 'components/Footer'
+  export default {
+    name: 'App',
+    components: {
+      'app-header': Header,
+      'app-footer': Footer
+    },
+    props: {
+      authenticated: { type: Boolean },
+      currentUser: { type: Object },
+      database: { type: Object }
+    }
+  }
+</script>
+
+<style lang="scss">
+
+  @import './styles/global';
+
+  .app {
+    height: 100%;
+    width: 100%;
+  }
+
+</style>

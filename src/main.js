@@ -1,17 +1,16 @@
 import Vue from 'vue'
+import App from './App.vue'
 import VueRouter from 'vue-router'
 import { routes } from './routes'
 import firebase from 'firebase'
 import { fireInit } from './auth/fireInit'
-import Header from 'components/Header'
-import Footer from 'components/Footer'
 
 Vue.use(VueRouter)
 
 const router = new VueRouter({
   routes,
   linkActiveClass: 'active',
-  mode: 'history' // Remember to set up the server to ALWAYS serve the index.html file when this history-mode is on (to avoid hashes in the url)
+  mode: 'history' // TODO: Remember to set up the server to ALWAYS serve the index.html file when this history-mode is on (to avoid hashes in the url)
 })
 
 // Check if route requires authentication
@@ -31,48 +30,22 @@ function fireStatus(loggedIn, user) {
 
     authenticated = true
 
-    const database = firebase.database()
-
-    const App = Vue.extend({
+    const Quasi = Vue.extend({
+      components: { 'app': App },
       data () {
         return {
           authenticated: authenticated,
           currentUser: user,
-          database: database
+          database: firebase.database()
         }
       },
-      template:
-        '<div v-if="authenticated">' +
-          '<app-header :currentUser="currentUser" :authenticated="authenticated"></app-header>' +
-          '<router-view :databaseRef="database" :currentUser="currentUser" :authenticated="authenticated"></router-view>' + // <- nested outlet
-          '<app-footer></app-footer>' +
-        '</div>',
-        components: {
-          'app-header': Header,
-          'app-footer': Footer
-        },
-      // // WARNING! THIS CREATED INFINITE LOOP OF THE USER ID AS A VALUE TO INFINITELY MANU KEYS INSTEAD OF ONE SINGLE KEY.
-      // // ASK USERS TO FINISH THEIR PROFILE AS FIRST THING WHEN LOGGING IN AND CREATE THE USER THERE INSTEAD.
-      // created() {
-      //   // Check if user exists in database on login. If not, create the user with the uid
-      //   const currentUserId = user.uid
-      //   usersRef.on('value', (snapshot) => {
-      //     const data = snapshot.val()
-      //     for (let user in data) {
-      //       if (currentUserId === user) {
-      //         console.log('User is set in database');
-      //       } else {
-      //         usersRef.push(currentUserId)
-      //       }
-      //     }
-      //   });
-      // }
+      template: '<app :database="database" :currentUser="currentUser" :authenticated="authenticated" />'
     })
 
     new Vue({
       el: '#app',
       router,
-      render: h => h(App)
+      render: h => h(Quasi)
     })
 
   } else {
