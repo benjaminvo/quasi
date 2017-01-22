@@ -90,7 +90,7 @@
 
   .notificationTicker {
     background-color: white;
-    border-top: 1px solid $color-brandLight;
+    border-top: 1px solid $color-brandGrey-lighter-6;
     position: relative;
     height: 62px;
     overflow: hidden;

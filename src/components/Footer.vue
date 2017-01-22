@@ -25,7 +25,7 @@
   @import '~styles/global';
 
   .footer {
-    border-top: 1px solid #dce3e5;
+    border-top: 1px solid $color-brandGrey-lighter-5;
   }
 
   .copyright {
