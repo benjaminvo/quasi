@@ -4,7 +4,7 @@
     <div v-bind:class="{ shown: allRead }" id="particles"></div>
 
     <grid-block columns="12">
-      <h1 class="span-8 offset-2 margin-bottom-4-1" v-html="this.renderMotivationMessage()" />
+      <h1 class="dashboard_message span-8 offset-2 margin-bottom-4-1" v-html="this.renderMotivationMessage()" /> <!-- Height = 3 lines of text -->
     </grid-block>
 
     <notification-ticker :databaseRef="databaseRef" :articles="articles" />
@@ -285,15 +285,25 @@
 
 <style lang="scss">
 
-#particles {
-  height: 100vh;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -96px;
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 400ms ease;
-}
+  @import '~styles/global';
+
+  .dashboard {
+    &_message {
+      min-height: 194px;
+      @include breakpoint( 'tablet' ) { min-height: 108px; }
+      @include breakpoint( 'mobile' ) { min-height: 81px; }
+    }
+  }
+
+  #particles {
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -96px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 400ms ease;
+  }
 
 </style>
