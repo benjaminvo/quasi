@@ -14,7 +14,7 @@
             <div v-if="contribution.agreedBy && contribution.agreedBy[currentUser.uid] ? contribution.agreedBy[currentUser.uid] : null" @click="decrementAgrees">
               <span v-html="contribution.agreedBy && contribution.agreedBy[currentUser.uid] ? contribution.agreedBy[currentUser.uid].emoji : null" class="emoji margin-right-1-3"></span>Agreed
             </div>
-            <span v-else @click="incrementAgrees">I agree!</span>
+            <span v-else @click="incrementAgrees">Agree</span>
           </button>
           <p class="color-brandGrey-lighter-2">
             {{ contribution.agreesCount === 0 || contribution.agreesCount === 1 && contribution.agreedBy[currentUser.uid] ? 'Like no one else' : null }}
