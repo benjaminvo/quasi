@@ -1,5 +1,5 @@
 <template>
-  <div class="dayBlock">
+  <div class="dayBlock width-full backgroundColor-brandLight padding-top-5-1 padding-bottom-5-1 border-top border--light-grey">
     <grid-block columns="12" noPadding>
       <div class="span-2">
         <h5 class="margin-bottom">{{ day }}</h5>
@@ -41,11 +41,6 @@
   @import '~styles/global';
 
   .dayBlock {
-    width: 100%;
-    background: $color-brandLight;
-    border-top: 1px solid $color-brandGrey-lighter-5;
-    padding: $scale-5-1 0;
-
     &_emptyText { color: $color-brandLight-darker-2; }
   }
 </style>
