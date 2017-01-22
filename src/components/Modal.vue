@@ -122,9 +122,15 @@
 
             emojiReactionPath.once('value', (snapshot) => {
               const reaction = snapshot.val()
-              const newReactionCount = reaction && reaction.count && reaction.reactedBy[this.currentUser.uid] && reaction.reactedBy[this.currentUser.uid] !== true ? reaction.count += 1 : 1
-              emojiReactionCountPath.set(newReactionCount)
-              emojiReactionReactedByPath.child(this.currentUser.uid).set(true)
+              let newReactionObj = {}
+              if ( reaction ) newReactionObj = Object.assign({}, reaction) // Create a copy of object on database
+              if ( !newReactionObj.count ) newReactionObj.count = 0 // If no count prop, create it
+              if ( !newReactionObj.reactedBy ) newReactionObj.reactedBy = {} // if no reactedBy prop, create it
+              if ( !newReactionObj.reactedBy[this.currentUser.uid] ) { // If not already reacted by this user
+                newReactionObj.count++
+                newReactionObj.reactedBy[this.currentUser.uid] = true
+              }
+              emojiReactionPath.update(newReactionObj) // Update database with the new object
             })
 
           }
