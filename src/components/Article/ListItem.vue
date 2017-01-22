@@ -47,6 +47,7 @@
 <script>
   import ToggleCheckmark from 'components/ToggleCheckmark'
   export default {
+    name: 'ArticleListItem',
     components: { 'toggle-checkmark': ToggleCheckmark },
     props: {
       currentUser: { type: Object },

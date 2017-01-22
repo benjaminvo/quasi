@@ -97,7 +97,7 @@
   import ContributionBlock from 'components/ContributionBlock'
   import ToggleCheckmark from 'components/ToggleCheckmark'
   export default {
-    name: 'Article',
+    name: 'ArticleRoute',
     components: {
       'grid-block': GridBlock,
       'contribution-block': ContributionBlock,

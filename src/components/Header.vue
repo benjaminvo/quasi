@@ -30,6 +30,7 @@
   import firebase from 'firebase'
   import { showNoFunctionMessageThenHide } from 'utils/showNoFunctionMessageThenHide'
   export default {
+    name: 'Header',
     components: { 'grid-block': GridBlock },
     props: { currentUser: { type: Object } },
     mixins: [showNoFunctionMessageThenHide],

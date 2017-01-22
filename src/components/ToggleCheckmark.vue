@@ -10,6 +10,7 @@
 
 <script>
   export default {
+    name: 'ToggleCheckmark',
     props: {
       toggleArticleFinished: { type: Function },
       finished: { type: Boolean },

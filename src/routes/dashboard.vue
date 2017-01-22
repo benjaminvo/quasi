@@ -34,7 +34,7 @@
   import Modal from 'components/Modal'
   import NotificationTicker from 'components/NotificationTicker'
   export default {
-    name: 'Dashboard',
+    name: 'DashboardRoute',
     components: {
       'grid-block': GridBlock,
       'day-block': DayBlock,
