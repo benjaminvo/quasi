@@ -52,6 +52,10 @@ window.addEventListener('load', function () {
         render: h => h(Quasi)
       })
 
+      window.Intercom( 'boot', {
+        app_id: "igx39wnq"
+      })
+
     } else {
     	authenticated = false
       window.location.href = 'auth.html'
