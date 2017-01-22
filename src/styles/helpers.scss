@@ -165,6 +165,23 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 // Lists
 .list-unstyled { list-style-type: none; }
 
+// Borders
+.border {
+	&-all 		{ border-style: solid; border-width: 1px; }
+	&-top 		{ border-top-style: solid; border-top-width: 1px; }
+	&-right 	{ border-right-style: solid; border-right-width: 1px; }
+	&-bottom 	{ border-bottom-style: solid; border-bottom-width: 1px; }
+	&-left 		{ border-left-style: solid; border-left-width: 1px; }
+	&-none 		{ border-style: none; border-width: 0; }}
+
+// Border colors
+.border {
+	&--black  	  { border-color: $color-brandGrey-darker-4; }
+	&--grey  { border-color: $color-brandGrey; }
+	&--light-grey { border-color: $color-brandGrey-lighter-5; }
+	&--near-white { border-color: $color-brandGrey-lighter-6; }
+  &--white 			{ border-color: #fff; }}
+
 .tooltip {
 	position: absolute;
 	top: 80%;
