@@ -139,7 +139,7 @@
       align-items: center;
       justify-content: space-between;
       padding: $scale $scale-3-1;
-      background: $color-brandGrey-lighter-6;
+      background: $color-brandGrey-lighter-7;
       border-bottom-left-radius: inherit;
       border-bottom-right-radius: inherit;
       color: $color-brandGrey-lighter-4;
