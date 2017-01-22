@@ -6,6 +6,7 @@
 
 <script>
   export default {
+    name: 'Footer',
     computed: {
       toCurrentYear() {
         const d = new Date().getFullYear()

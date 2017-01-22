@@ -21,6 +21,7 @@
   import GridBlock from 'components/GridBlock'
   import ArticleListItem from 'components/Article/ListItem'
   export default {
+    name: 'ArticleList',
     components: {
       'grid-block': GridBlock,
       'article-list-item': ArticleListItem

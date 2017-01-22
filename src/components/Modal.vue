@@ -51,6 +51,7 @@
   import ToggleCheckmark from 'components/ToggleCheckmark'
   import InputEmoji from 'components/InputEmoji'
   export default {
+    name: 'Modal',
     components: {
       'toggle-checkmark': ToggleCheckmark,
       'input-emoji': InputEmoji

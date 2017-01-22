@@ -27,6 +27,7 @@
 
 <script>
   export default {
+    name: 'InputEmoji',
     props: {
       id: { type: String },
       label: { type: String },

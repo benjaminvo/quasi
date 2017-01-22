@@ -29,7 +29,7 @@
 <script>
   import GridBlock from 'components/GridBlock'
   export default {
-    name: 'notification-ticker',
+    name: 'NotificationTicker',
     components: {
       'grid-block': GridBlock
     },

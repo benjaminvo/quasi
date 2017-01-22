@@ -11,6 +11,7 @@
 
 <script>
   export default {
+    name: 'GridBlock',
     props: {
       columns: { type: String },
       noPadding: { type: Boolean }

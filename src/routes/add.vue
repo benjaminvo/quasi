@@ -104,6 +104,7 @@
 <script>
   import GridBlock from 'components/GridBlock'
   export default {
+    name: 'AddRoute',
     components: {
       'grid-block': GridBlock,
     },

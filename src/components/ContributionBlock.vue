@@ -35,6 +35,7 @@
 
 <script>
   export default {
+    name: 'ContributionBlock',
     props: {
       currentUser: { type: Object },
       databaseRef: { type: Object },

@@ -22,6 +22,7 @@
   import GridBlock from 'components/GridBlock'
   import ArticleList from 'components/Article/List'
   export default {
+    name: 'DayBlock',
     components: {
       'grid-block': GridBlock,
       'article-list': ArticleList
