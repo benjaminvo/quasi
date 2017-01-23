@@ -2,21 +2,41 @@
   <div class="notificationTicker border-top border--near-white" :class="{ 'notificationTicker-expanded': notificationTickerExpanded }">
     <grid-block columns="12" noPadding>
 
-      <!-- <div class="span-2 color-brandLight-darker-3 margin-top margin-bottom">
-        <p>Recent activity</p>
-      </div> -->
+      <div class="span-2 color-brandLight-darker-1 margin-top margin-bottom">
+        <p>Shit happens</p>
+      </div>
 
-      <div class="display-flex justifyContent-spaceBetween offset-2 span-10 padding-top">
+      <div class="display-flex justifyContent-spaceBetween span-10 padding-top">
 
         <ul class="notificationTicker_list color-brandLight-darker-3 list-unstyled padding-bottom" :class="{ hideGradient: notificationTickerExpanded || notifications.length < 2 }">
           <li class="margin-bottom-1-3" v-if="notifications.length === 0">No recent happenings...</li>
-          <li class="margin-bottom-1-3" v-else v-for="notification in notifications">{{ notification }}</li>
+          <li class="margin-bottom-1-3" v-else v-for="(notification, index) in notifications">
+
+            <p v-if="notification.type === 'articleFinished'" class="display-inlineBlock">
+              {{ notification.user.id === currentUser.uid ? 'You' : 'Someone' }} finished {{ notification.article.title }}
+            </p>
+
+            <p v-if="notification.type === 'frustrationAdded'" class="display-inlineBlock">
+              {{ notification.user.id === currentUser.uid ? 'You' : 'Someone' }} added a frustration to {{ notification.article.title }}
+            </p>
+
+            <p v-if="notification.type === 'emojiReactionAdded'" class="display-inlineBlock">
+              {{ notification.user.id === currentUser.uid ? 'You' : 'Someone' }} added
+              <span v-html="
+                notification.emoji === 'easyRead' ? '&#128526;' :
+                notification.emoji === 'understandable' ? '&#128519;' :
+                notification.emoji === 'interesting' ? '&#129300;' : null" />
+              to {{ notification.article.title }}
+            </p>
+
+            <p class="fontSize-xxsmall color-brandLight-darker-1 display-inlineBlock">{{ moment(notification.timestamp).fromNow() }}</p>
+
+          </li>
         </ul>
         <div
           class="h6 a"
           style="z-index: 1;"
-          @click="notificationTickerExpanded = !notificationTickerExpanded"
-          v-if="notifications.length > 2">
+          @click="notificationTickerExpanded = !notificationTickerExpanded" >
           {{ this.notificationTickerExpanded ? 'Close' : 'Expand' }}
         </div>
 
@@ -27,61 +47,23 @@
 </template>
 
 <script>
+  import moment from 'moment'
   import GridBlock from 'components/GridBlock'
   export default {
     name: 'NotificationTicker',
-    components: {
-      'grid-block': GridBlock
-    },
+    components: { 'grid-block': GridBlock },
     props: {
-      databaseRef: { type: Object },
-      articles: { type: Object }
+      currentUser: { type: Object },
+      notifications: { type: Array }
     },
     data() {
       return {
-        notificationTypes: [
-          'Someone finished',
-          'A reaction was added to'
-        ],
-        notifications: [],
-        notificationTickerExpanded: null,
-        notificationsInterval: null
+        notificationTickerExpanded: null
       }
-    },
-    computed: {
-      articleTitles() {
-        let articleTitles = []
-        for ( let article in this.articles ) { articleTitles.push(this.articles[article].title) }
-        return articleTitles
-      }
-    },
-    mounted() {
-      this.notificationsInterval = setInterval( () => {
-        this.deliverNotification()
-      }, 12000)
-    },
-    beforeDestroy() {
-      clearInterval(this.notificationsInterval)
-    },
-    watch: {
-      articleTitles: 'deliverNotification'
     },
     methods: {
-      deliverNotification() {
-        const numberOfNotificationTypes = this.notificationTypes.length
-        const numberOfArticleTitles = this.articleTitles.length
-
-        const randomNotificationTypePickerInt = Math.floor(Math.random() * numberOfNotificationTypes)
-        const randomArticleTitlePickerInt = Math.floor(Math.random() * numberOfArticleTitles)
-
-        const randomNotificationType = this.notificationTypes[randomNotificationTypePickerInt]
-        const randomArticleTitle = this.articleTitles[randomArticleTitlePickerInt]
-
-        const notification = randomNotificationType + ' ' + randomArticleTitle
-
-        this.notifications.unshift(notification)
-      }
-    }
+      moment(timestamp) { return moment(timestamp) }
+    },
   }
 </script>
 
@@ -96,7 +78,7 @@
     transition: all 600ms cubic-bezier(0.6, -0.28, 0.735, 0.045);
 
     &-expanded {
-      height: 298px;
+      height: 296px;
       transition: all 1000ms cubic-bezier(0.23, 1, 0.32, 1);
     }
 

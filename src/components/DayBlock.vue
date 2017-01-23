@@ -5,7 +5,7 @@
         <h5 class="margin-bottom">{{ day }}</h5>
       </div>
       <div class="span-8">
-        <h2 class="dayBlock_emptyText" v-if="courses.length === 0">Freedom</h2>
+        <h2 class="dayBlock_emptyText color-brandLight-darker-1" v-if="courses.length === 0">Freedom</h2>
         <article-list
           v-for="(course, index) in courses"
           :currentUser="currentUser"
@@ -37,10 +37,4 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  @import '~styles/global';
-
-  .dayBlock {
-    &_emptyText { color: $color-brandLight-darker-2; }
-  }
-</style>
+<style lang="scss" scoped></style>

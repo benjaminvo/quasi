@@ -7,7 +7,9 @@
       <h1 class="dashboard_message span-8 offset-2 margin-bottom-4-1" v-html="this.renderMotivationMessage()" /> <!-- Height = 3 lines of text -->
     </grid-block>
 
-    <notification-ticker :databaseRef="databaseRef" :articles="articles" />
+    <notification-ticker
+      :currentUser="currentUser"
+      :notifications="notifications" />
 
     <day-block
       :currentUser="currentUser"
@@ -56,7 +58,9 @@
         uniqueArticles: [],
         articleDuplicates: 0,
         totalPages: 0,
-        userFullName: this.currentUser.displayName
+        userFullName: this.currentUser.displayName,
+        notifications: [],
+        notificationsRefetchInterval: null
       }
     },
     computed: {
@@ -104,11 +108,13 @@
       this.fetchCoursesAndCreateDayblocks()
       this.setUserNameOnDatabase()
       this.particlesInit()
+      this.fetchNotifications()
     },
     beforeDestroy() {
       this.databaseRef.ref('users/').off()
       this.databaseRef.ref('courses/').off()
       this.databaseRef.ref('articles/').off()
+      clearTimeout(this.notificationsRefetchInterval)
     },
     watch: {
       uniqueArticles: 'getTotalPages',
@@ -199,6 +205,15 @@
           }
         })
       },
+      fetchNotifications() {
+        this.databaseRef.ref('notifications').limitToLast(20).on('value', (snapshot) => {
+          let notificationsArray = []
+          const notifications = snapshot.val()
+          for ( let notification in notifications) notificationsArray.unshift(notifications[notification])
+          this.notifications = notificationsArray
+        })
+        this.notificationsRefetchInterval = setTimeout(this.fetchNotifications, 30000) // Refetch every half minute to update 'X minutes ago'
+      },
       closeModal() {
         this.modalVisible = false
         this.fetchRelevantArticlesPerCourse()
@@ -217,15 +232,39 @@
         this.clickedArticleId = e.currentTarget.parentNode.parentNode.id
         const articleFinishedByPath = 'articles/' + this.clickedArticleId + '/finishedBy/'
         const articleFinishedPath = 'users/' + this.currentUser.uid + '/articles/' + this.clickedArticleId + '/finished'
+
         this.databaseRef.ref(articleFinishedPath).once('value', (snapshot) => {
+
           const data = snapshot.val()
-          if (data === false || data === null) {
+
+          if (data === false || data === null || !data) {
             this.databaseRef.ref(articleFinishedPath).set(true)
             this.databaseRef.ref(articleFinishedByPath + '/' + this.currentUser.uid).set(true)
+
+            // Add notification about finished article to notifications node on database
+            this.databaseRef.ref('articles/' + this.clickedArticleId).once('value', (snapshot) => {
+              const notification = {
+                type: 'articleFinished',
+                timestamp: new Date().getTime(),
+                article: {
+                  id: this.clickedArticleId,
+                  title: snapshot.val().title
+                },
+                user: {
+                  id: this.currentUser.uid,
+                  name: this.currentUser.displayName
+                }
+              }
+              this.databaseRef.ref('notifications').push(notification)
+            })
+
             this.modalVisible = true
+
           } else if (data === true) {
+
             this.databaseRef.ref(articleFinishedPath).set(false)
             this.databaseRef.ref(articleFinishedByPath + '/' + this.currentUser.uid).set(false)
+
           }
         })
         this.fetchRelevantArticlesPerCourse()

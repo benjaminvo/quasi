@@ -110,6 +110,23 @@
             const newChallengeId = snapshot.key
             this.databaseRef.ref(userChallengesPath + '/' + newChallengeId).set(true)
           })
+
+          // Add notification about added frustration to notifications node on database
+          this.databaseRef.ref('articles/' + this.clickedArticleId).once('value', (snapshot) => {
+            const notification = {
+              type: 'frustrationAdded',
+              timestamp: new Date().getTime(),
+              article: {
+                id: this.clickedArticleId,
+                title: snapshot.val().title
+              },
+              user: {
+                id: this.currentUser.uid,
+                name: this.currentUser.displayName
+              }
+            }
+            this.databaseRef.ref('notifications').push(notification)
+          })
         }
 
         // Set emojiReactions on Firebase
@@ -131,6 +148,24 @@
                 newReactionObj.reactedBy[this.currentUser.uid] = true
               }
               emojiReactionPath.update(newReactionObj) // Update database with the new object
+            })
+
+            // Add notification about added emoji reaction to notifications node on database
+            this.databaseRef.ref('articles/' + this.clickedArticleId).once('value', (snapshot) => {
+              const notification = {
+                type: 'emojiReactionAdded',
+                timestamp: new Date().getTime(),
+                emoji: this.emojiReactions[i],
+                article: {
+                  id: this.clickedArticleId,
+                  title: snapshot.val().title
+                },
+                user: {
+                  id: this.currentUser.uid,
+                  name: this.currentUser.displayName
+                }
+              }
+              this.databaseRef.ref('notifications').push(notification)
             })
 
           }
