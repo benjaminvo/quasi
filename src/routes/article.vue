@@ -1,17 +1,18 @@
 <template>
   <div>
+    <!-- Article header -->
     <grid-block columns="12">
 
       <!-- Breadcrumb -->
-      <ul class="article_breadcrumb span-12 padding-bottom-2-1 fontFamily-body fontSize-base list-unstyled textTransform-uppercase">
+      <ul class="article_breadcrumb span-12 margin-bottom-2-1 fontFamily-body fontSize-base list-unstyled textTransform-uppercase">
         <router-link :to="{ name: 'dashboard' }" tag="li" class="a fontSize-xsmall">Dashboard</router-link>
         <li class="fontSize-xsmall"><span class="color-brandLight-darker-3">/ article</span></li>
       </ul>
 
       <!-- Article title -->
-      <div class="span-12 padding-bottom-4-1">
+      <div class="span-12 margin-bottom-6-1">
         <div class="display-flex alignItems-center">
-          <h1 class="margin-right-2-1">{{ article.title }}</h1>
+          <h1 class="margin-right-2-1">{{ article.meta ? article.meta.title : null }}</h1>
           <toggle-checkmark
             finished
             disabled
@@ -24,68 +25,64 @@
         </p>
       </div>
 
-      <!-- Article information -->
-
-      <!-- Left column -->
-      <div class="span-3">
-
-        <!-- Article details -->
-        <div class="backgroundColor-brandLight padding-2-1 margin-bottom-2-1">
-          <h5 class="padding-bottom">Article details</h5>
-          <ul class="list-unstyled">
-            <li class="padding-bottom">{{ pagesTotal }} pages ({{ article.pageFrom }}-{{ article.pageTo}})</li>
-            <li class="padding-bottom">Cited by {{ article.citeCount }}</li>
-            <li class="padding-bottom">{{ article.journal }}</li>
-            <li class="padding-none">{{ article.publisher }}</li>
-          </ul>
-        </div>
-
-        <!-- Article structure -->
-        <div>
-          <h5 class="padding-bottom">Table of contents</h5>
-          <ul class="list-unstyled">
-            <li class="padding-bottom">Introduction: bringing the power debates together</li>
-            <li class="padding-bottom">The first dimension of power</li>
-            <li class="padding-bottom">The second dimension of power</li>
-            <li class="padding-bottom">The third dimension of power</li>
-            <li class="padding-bottom">Fourth dimension of power</li>
-            <li class="padding-none">Conclusion</li>
-          </ul>
-        </div>
-
-      </div>
-
-      <!-- Right column -->
-      <div class="article_meta span-9">
-
-        <h5 class="padding-bottom-2-1">Teacher notes</h5>
-        <p class="padding-bottom-4-1">{{ article.readingGuide }}</p>
-
-        <h5 class="padding-bottom-2-1">Keywords</h5>
-        <p class="padding-bottom-4-1">{{ article.keywords }}</p>
-
-        <h5 class="padding-bottom-2-1">Abstract</h5>
-        <p class="padding-bottom-4-1">{{ article.abstract }}</p>
-
-      </div>
-
     </grid-block>
 
     <div class="backgroundColor-brandLight border-top border--light-grey">
       <grid-block columns="12">
-        <div class="span-9 offset-3">
 
+        <!-- Left column -->
+        <div class="span-3 color-brandLight-darker-2">
+
+          <h6 class="margin-bottom">Details</h6>
+          <ul class="list-unstyled">
+            <li v-for="(item, key, index) in article.meta" class="margin-bottom-1-2 fontSize-xsmall">
+              <span v-if="key === 'pages'">{{ pagesTotal }} pages ({{ item.from }} - {{ item.to }})</span>
+              <span v-else-if="key === 'citedBy'">Cited by {{ item }}</span>
+              <span v-else-if="key !== 'title'">{{ item }}</span>
+            </li>
+          </ul>
+
+          <h6 class="margin-bottom margin-top-3-1">ToC</h6>
+          <ul class="list-unstyled">
+            <li v-for="(item, key, index) in article.tableOfContents" class="margin-bottom-1-2 fontSize-xsmall">{{ item }}</li>
+          </ul>
+
+        </div>
+
+        <!-- Right column -->
+        <div class="article_introduction span-9">
+
+          <h2 class="margin-bottom-4-1">Reading guide</h2>
+          <ul class="list-unstyled">
+            <li v-for="(item, key, index) in article.teacherNotes" v-if="key !== 'concepts'" class="margin-bottom">
+              <h4 class="margin-bottom-1-2">{{ item.title }}</h4>
+              <p class="margin-bottom-3-1">{{ item.text }}</p>
+            </li>
+          </ul>
+
+          <h4 class="margin-bottom">Concepts</h4>
+          <ul class="list-unstyled">
+            <li v-for="(item, index) in articleConcepts" class="margin-bottom-2-1 padding-left border-left border--blue border-3">
+              <a :href="item.wikiLink" class="margin-bottom-1-2 h6">{{ item.name }}</a>
+              <p class="margin-bottom">{{ item.description }}</p>
+            </li>
+          </ul>
+
+          <div class="article_introduction-splitter" />
+
+          <h2 class="margin-top-4-1 margin-bottom-2-1">Student thoughts</h2>
           <contribution-block
             :currentUser="currentUser"
             :databaseRef="databaseRef"
             :contributions="readerChallenges"
             type="challenge"
-            title="Frustrations"
+            title="Reactions"
             articleReaderContributionsPathEndpoint="readerChallenges"
             userContributionsPathEndpoint="challenges"
             inputPlaceholder="What frustrated you about the text, if anything?" />
 
         </div>
+
       </grid-block>
     </div>
 
@@ -110,30 +107,35 @@
     data() {
       return {
         article: {},
-        articleCourseIds: [],
         articleCourses: [],
+        articleConcepts: [],
         readerChallenges: []
       }
     },
     computed: {
-      pagesTotal() {
-        return parseInt(this.article.pageTo, 10) - parseInt(this.article.pageFrom, 10)
-      }
+      pagesTotal() { if ( this.article.meta ) return parseInt(this.article.meta.pages.to, 10) - parseInt(this.article.meta.pages.from, 10) },
     },
     created() {
       window.Intercom( 'update' )
     },
     mounted() {
       this.setArticle()
-      this.fetchCourses()
     },
     beforeDestroy() {
-      this.databaseRef.ref('articles/').off()
+      this.databaseRef.ref('articles').off()
+      this.databaseRef.ref('courses').off()
+      this.databaseRef.ref('concepts').off()
     },
     watch: {
-      '$route': 'setArticle'
+      '$route': 'setArticle',
+      article: 'fetchOtherData'
     },
     methods: {
+      fetchOtherData() {
+        this.setReaderChallenges()
+        this.setArticleConcepts()
+        this.setArticleCourses()
+      },
       setReaderChallenges() {
         let readerChallenges = []
         for (let challenge in this.article.readerChallenges) {
@@ -142,33 +144,39 @@
         }
         this.readerChallenges = readerChallenges
       },
+      setArticleConcepts() { // TODO: Create util scripts for fetching like this (setArticleConcepts and setArticleCourses are similar)
+        let articleConcepts = []
+        this.databaseRef.ref('concepts').on('value', (snapshot) => {
+          const concepts = snapshot.val()
+          for (let concept in concepts) {
+            for (let conceptId in this.article.concepts) {
+              if (concept === conceptId) articleConcepts.push(concepts[concept])
+            }
+          }
+        })
+        this.articleConcepts = articleConcepts
+      },
+      setArticleCourses() {
+        let articleCourses = []
+        this.databaseRef.ref('courses').once('value', (snapshot) => {
+          const courses = snapshot.val()
+          for (let course in courses) {
+            for (let courseId in this.article.courses) {
+              if (course === courseId) articleCourses.push(courses[course])
+            }
+          }
+        })
+        this.articleCourses = articleCourses
+      },
       setArticle() {
         const activeArticleId = this.$route.params.articleId
-        this.databaseRef.ref('articles/').on('value', (snapshot) => {
+        this.databaseRef.ref('articles').on('value', (snapshot) => {
           let articleObj = {}
           const data = snapshot.val()
           for (let article in data) {
-            if (article === activeArticleId) {
-              articleObj = data[article]
-              for (let course in articleObj.courses) {
-                this.articleCourseIds.push(course) // Get ids of courses that the article is part of
-              }
-            }
+            if (article === activeArticleId) articleObj = data[article]
           }
           this.article = articleObj
-          this.setReaderChallenges()
-        })
-      },
-      fetchCourses() {
-        this.databaseRef.ref('courses/').once('value', (snapshot) => {
-          const courses = snapshot.val()
-          for (let course in courses) {
-            for (let i = 0; i < this.articleCourseIds.length; i++) {
-              if (course === this.articleCourseIds[i]) {
-                this.articleCourses.push(courses[course])
-              }
-            }
-          }
         })
       }
     }
@@ -176,7 +184,9 @@
 </script>
 
 <style lang="scss">
+
   @import '~styles/global';
+  @import '~styles/card';
 
   .article {
 
@@ -186,8 +196,27 @@
       }
     }
 
-    &_meta {
-      height: 100px;
+    &_introduction {
+      @include card;
+      border: 1px solid #f1f1f1;
+      margin-top: -$scale-12-1;
+      background: white;
+      padding: $scale-4-1 !important;
+      margin-left: -$scale-2-1;
+
+      @include breakpoint('tablet') {
+        margin-top: -$scale-6-1;
+        margin-left: 0;
+        margin-bottom: $scale-4-1;
+        padding: $scale-2-1;
+      }
+
+      &-splitter {
+        width: calc(100% + #{$scale-8-1});
+        margin-left: -$scale-4-1;
+        margin-top: $scale-4-1;
+        border-bottom: 1px solid $color-brandGrey-lighter-6;
+      }
     }
 
   }

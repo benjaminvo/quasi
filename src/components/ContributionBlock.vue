@@ -1,8 +1,8 @@
 <template>
   <div class="contributionBlock">
 
-    <h3 class="float-left">{{ title }}</h3>
-    <p @click="sortContributions" class="a h6 margin-top-1-2 margin-left display-inlineBlock float-right">Sort by most agreed</p>
+    <h6 class="float-left">{{ title }}</h6>
+    <p @click="sortContributions" class="a h6 margin-left display-inlineBlock float-right">Sort by most agreed</p>
 
     <div class="clear-both"></div>
 
@@ -26,7 +26,7 @@
     </ul>
 
     <form v-on:submit.prevent="handleContributionSubmit" class="display-flex margin-top-4-1">
-      <input class="padding-2-1 margin-right backgroundColor-white width-full" v-model="contribution" type="text" :placeholder="inputPlaceholder" maxlength="140">
+      <input class="padding-2-1 margin-right width-full" v-model="contribution" type="text" :placeholder="inputPlaceholder" maxlength="140">
       <button class="button submit" type="submit">Go</button>
     </form>
 

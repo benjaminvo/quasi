@@ -178,10 +178,15 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 // Border colors
 .border {
 	&--black  	  { border-color: $color-brandGrey-darker-4; }
-	&--grey  { border-color: $color-brandGrey; }
+	&--blue  	  	{ border-color: $color-brandFirst; }
+	&--grey  			{ border-color: $color-brandGrey; }
 	&--light-grey { border-color: $color-brandGrey-lighter-5; }
 	&--near-white { border-color: $color-brandGrey-lighter-6; }
   &--white 			{ border-color: #fff; }}
+
+.border {
+	&-3 { border-width: 3px !important; }
+}
 
 .tooltip {
 	position: absolute;

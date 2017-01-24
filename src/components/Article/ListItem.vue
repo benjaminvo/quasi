@@ -94,12 +94,11 @@
 <style lang="scss" scoped>
 
   @import '~styles/global';
+  @import '~styles/card';
 
   .articleListItem {
+    @include card;
     cursor: pointer;
-    background-color: white;
-    border-radius: $borderRadius;
-    box-shadow: $cardShadow;
     width: calc(100% + (#{$scale-3-1}*2)); // 100% + 48px
     margin-left: -#{$scale-3-1}; // -24px
     margin-bottom: $scale-3-1;
@@ -140,7 +139,7 @@
       align-items: center;
       justify-content: space-between;
       padding: $scale $scale-3-1;
-      background: $color-brandGrey-lighter-7;
+      border-top: 1px solid $color-brandGrey-lighter-6;
       border-bottom-left-radius: inherit;
       border-bottom-right-radius: inherit;
       color: $color-brandGrey-lighter-4;
