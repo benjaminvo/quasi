@@ -104,7 +104,8 @@
           this.databaseRef.ref(articleReaderChallengesPath)
           .push({
             author: this.currentUser.uid,
-            challenge: this.challenge
+            challenge: this.challenge,
+            agreesCount: 0
           })
           .then((snapshot) => {
             const newChallengeId = snapshot.key
