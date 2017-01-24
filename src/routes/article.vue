@@ -5,7 +5,7 @@
       <!-- Breadcrumb -->
       <ul class="article_breadcrumb span-12 padding-bottom-2-1 fontFamily-body fontSize-base list-unstyled">
         <router-link :to="{ name: 'dashboard' }" tag="li" class="a">Dashboard</router-link>
-        <li><span class="color-brandLight-darker-3">/ </span> {{ article.title }} ({{ article.year }})</li>
+        <li><span class="color-brandLight-darker-3">/ </span> {{ article.author }} ({{ article.year }})</li>
       </ul>
 
       <!-- Article title -->
