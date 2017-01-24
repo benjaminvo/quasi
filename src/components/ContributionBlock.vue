@@ -17,7 +17,7 @@
             <span v-else @click="incrementAgrees">Agree</span>
           </button>
           <p class="color-brandGrey-lighter-2 fontSize-xxsmall">
-            {{ contribution.agreesCount === 0 || contribution.agreesCount === 1 && contribution.agreedBy[currentUser.uid] ? 'Like no one else' : null }}
+            {{ !contribution.agreesCount || contribution.agreesCount === 0 || contribution.agreesCount === 1 && contribution.agreedBy[currentUser.uid] ? 'Like no one else' : null }}
             {{ contribution.agreesCount > 0 && !contribution.agreedBy[currentUser.uid] ? 'Like ' + contribution.agreesCount + ' other' + (contribution.agreesCount > 1 ? 's' : '') : null }}
             {{ contribution.agreesCount > 1 && contribution.agreedBy[currentUser.uid] ? 'Said you and ' + (contribution.agreesCount - 1) + ' other' + (contribution.agreesCount > 2 ? 's' : '') : null }}
           </p>
