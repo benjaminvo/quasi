@@ -3,9 +3,9 @@
     <grid-block columns="12">
 
       <!-- Breadcrumb -->
-      <ul class="article_breadcrumb span-12 padding-bottom-2-1 fontFamily-body fontSize-base list-unstyled">
-        <router-link :to="{ name: 'dashboard' }" tag="li" class="a">Dashboard</router-link>
-        <li><span class="color-brandLight-darker-3">/ </span> {{ article.title }} ({{ article.year }})</li>
+      <ul class="article_breadcrumb span-12 padding-bottom-2-1 fontFamily-body fontSize-base list-unstyled textTransform-uppercase">
+        <router-link :to="{ name: 'dashboard' }" tag="li" class="a fontSize-xsmall">Dashboard</router-link>
+        <li class="fontSize-xsmall"><span class="color-brandLight-darker-3">/ article</span></li>
       </ul>
 
       <!-- Article title -->
