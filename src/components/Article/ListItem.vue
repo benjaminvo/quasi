@@ -3,7 +3,7 @@
     tag="li"
     :to="{ name: 'article', params: { articleId: articleId } }"
     :id="articleId"
-    class="articleListItem">
+    class="articleListItem card card-1 card-1-hover">
 
     <div class="articleListItem_upper">
       <toggle-checkmark
@@ -104,9 +104,9 @@
     margin-bottom: $scale-3-1;
     transition: all 200ms ease;
 
-    &:hover {
-      transform: translateY(-1px);
-      box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.12); }
+    // &:hover {
+    //   transform: translateY(-1px);
+    //   box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.12); }
 
     &:last-child { margin-bottom: 0; }
 
