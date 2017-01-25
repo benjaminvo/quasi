@@ -55,7 +55,7 @@
     &.disabled {
       &:hover {
         cursor: default;
-        background-color: $$color-brandGrey-lighter-6; }
+        background-color: $color-brandGrey-lighter-6; }
     }
 
     &.finished {
