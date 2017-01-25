@@ -13,7 +13,7 @@
 
     </grid-block>
 
-    <div class="backgroundColor-light border-top border--light-grey">
+    <div class="backgroundColor-light border-top border-lightGrey">
       <grid-block columns="12">
 
         <!-- Left column -->
