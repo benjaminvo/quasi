@@ -74,6 +74,9 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 		&-center { text-align: center; }}
 }
 
+.whiteSpace {
+	&-noWrap { white-space: nowrap; }}
+
 .color 					{
 	&-primary 	{ color: $color-primary;
 		&-darker {
@@ -139,6 +142,10 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 	&-inlineBlock { display: inline-block; }}
 
 // Flex
+.flex {
+	&-1 { flex: 1; }
+	&-2 { flex: 2; }}
+
 .justifyContent {
 	&-center 	{ justify-content: center; }
 	&-flexStart { justify-content: flex-start; }

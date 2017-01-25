@@ -65,7 +65,19 @@
 
           <div class="article_introduction_lower">
 
-            <h2 class="margin-bottom">Student thoughts</h2>
+            <h2 class="display-inlineBlock margin-bottom">Student thoughts</h2>
+
+            <div class="float-right">
+              <p class="display-inlineBlock color-base-lighter-3 fontSize-xlarge margin-left-2-1"
+                v-if="article.readerEmojiReactions"
+                v-for="reaction in article.readerEmojiReactions">
+                <span class="fontSize-xsmall">{{ reaction.count }}</span>
+                &#128526; <!-- Put reaction.emoji here when ready in new data structure -->
+              </p>
+            </div>
+
+            <div class="clear-both margin-bottom-2-1"></div>
+
             <contribution-block
               :currentUser="currentUser"
               :databaseRef="databaseRef"
