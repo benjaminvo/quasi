@@ -64,7 +64,7 @@
     data() {
       return {
         article: {},
-        encouragements: ['Good job', 'Way to go', 'Great job', 'Excellent', ''],
+        encouragements: ['Good job', 'Way to go', 'Great job', 'Excellent', 'High five'],
         challenge: null
       }
     },
@@ -242,7 +242,6 @@
 
       &_input {
         min-width: 100%;
-        padding: $scale-2-1;
       }
 
       &_footer {
