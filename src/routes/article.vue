@@ -57,7 +57,7 @@
 
           <h4 class="margin-bottom">Concepts</h4>
           <ul class="list-unstyled">
-            <li v-for="(item, index) in articleConcepts" class="margin-bottom-2-1 padding-left border-left border-blue border-3">
+            <li v-for="(item, index) in articleConcepts" class="concept">
               <a :href="item.wikiLink" class="h6 margin-bottom-1-2">{{ item.name }}</a>
               <p class="margin-bottom">{{ item.description }}</p>
             </li>
@@ -264,6 +264,13 @@
         }
       }
     }
+  }
+
+  .concept {
+    margin-bottom: $scale-2-1;
+    border-left: 3px solid $color-primary;
+    margin-left: -$scale-6-1;
+    padding-left: $scale-6-1 - 3px;
   }
 
 </style>
