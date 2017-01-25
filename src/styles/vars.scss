@@ -144,9 +144,11 @@ $contentWidth-extraWidescreen: 1152px; // 48px up tp 1200px
 
 $borderRadius: 8px;
 
-/* ----- Card-shadow ----- */
+/* ----- Shadows ----- */
 
-$cardShadow: 0px 1px 2px 0px rgba(0,0,0,0.16);
+$shadow-1: 0px 1px 2px 0px rgba(0,0,0,0.16);
+$shadow-2: 0px 3px 6px 0px rgba(0,0,0,0.16);
+$shadow-3: 0px 4px 10px 0px rgba(0,0,0,0.12);
 
 /* ----- Animation ----- */
 
