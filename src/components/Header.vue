@@ -1,26 +1,33 @@
 <template>
   <header class="header">
-    <grid-block columns="12" noPadding>
-      <div class="header_inner span-12">
-        <router-link tag="a" class="h2 fontWeight-bold" :to="{ name: 'dashboard' }">Quasi</router-link>
+    <grid-block columns="12" noPadding class="height-full">
 
-        <div class="header_period">
+      <div class="span-3 display-flex alignItems-center">
+        <router-link tag="a" class="h2 fontWeight-bold" :to="{ name: 'dashboard' }">Quasi</router-link>
+      </div>
+
+      <div class="span-6 display-flex alignItems-center justifyContent-center">
+        <div class="display-flex alignItems-center">
           <div class="arrowWrap" @click="showNoFunctionMessageThenHide">
             <div class="arrow arrow-left"></div>
           </div>
-          <h6 class="textAlign-center margin-left-4-1 margin-right-4-1">
-            <span>Week 6, 2017</span>
-            <span class="header_period_date margin-top">Feb 6 – Feb 10</span>
-          </h6>
+          <div class="h6 textAlign-center margin-left-4-1 margin-right-4-1">
+            <div class="margin-bottom fontWeight-semibold">Week 6, 2017</div>
+            <div class="color-base-lighter-2 fontWeight-medium">Feb 6 – Feb 10</div>
+          </div>
           <div class="arrowWrap" @click="showNoFunctionMessageThenHide">
             <div class="arrow arrow-right"></div>
           </div>
         </div>
+      </div>
+
+      <div class="span-3 textAlign-right display-flex alignItems-center justifyContent-flexEnd">
         <h6>
-          {{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }},
-          <a class="h6" v-on:click="logout()">Sign out</a>
+          <span class="margin-right-3-1 fontWeight-medium">Hi, {{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }}</span>
+          <a class="h6 fontWeight-semibold" v-on:click="logout()">Sign out</a>
         </h6>
       </div>
+
     </grid-block>
   </header>
 </template>
@@ -51,27 +58,7 @@
   @import '~styles/global';
 
   .header {
-    width: 100%;
     height: 96px;
-    display: flex;
-    align-items: center;
-
-    &_inner {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    &_period {
-      display: flex;
-      align-items: center;
-
-      &_date {
-        display: block;
-        color: $color-base-lighter-1;
-      }
-    }
   }
 
   .arrowWrap {
@@ -79,6 +66,7 @@
     width: 32px;
     height: 32px;
     background: $color-light;
+    border: 1px solid $color-base-lighter-5;
     padding: $scale;
     border-radius: 50%;
     display: flex;
