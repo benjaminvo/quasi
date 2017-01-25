@@ -69,7 +69,7 @@
 
       &_date {
         display: block;
-        color: $color-brandDark-lighter-3;
+        color: $color-brandGrey-lighter-1;
       }
     }
   }
@@ -94,7 +94,7 @@
     border-bottom: 6px solid transparent;
     display: inline-block;
 
-    &-right { margin-left: 2px; border-left: 7px solid $color-brandDark-lighter-3; pointer-events: none; }
-    &-left { margin-right: 2px; border-right: 7px solid $color-brandDark-lighter-3; pointer-events: none; }
+    &-right { margin-left: 2px; border-left: 7px solid $color-brandGrey-lighter-1; pointer-events: none; }
+    &-left { margin-right: 2px; border-right: 7px solid $color-brandGrey-lighter-1; pointer-events: none; }
   }
 </style>

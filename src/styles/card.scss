@@ -1,7 +1,15 @@
 @import '~styles/vars';
 
-@mixin card {
+.card {
 	background-color: white;
-	border-radius: $borderRadius;
-	box-shadow: $cardShadow;
-}
+	border-radius: $borderRadius; }
+
+.card-1 {
+	box-shadow: $shadow-1; }
+
+.card-1-hover:hover {
+	box-shadow: $shadow-3;
+	transform: translateY(-1px); }
+
+.card-2 {
+	box-shadow: $shadow-2; }

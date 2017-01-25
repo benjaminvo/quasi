@@ -45,7 +45,7 @@
         </div>
 
         <!-- Right column -->
-        <div class="article_introduction span-9">
+        <div class="article_introduction span-9 card card-2">
 
           <h2 class="margin-bottom-4-1">Reading guide</h2>
           <ul class="list-unstyled">
@@ -205,8 +205,8 @@
       @include breakpoint('tablet') { margin-top: 0; }}
 
     &_introduction {
-      @include card;
-      border: 1px solid #f1f1f1;
+      border-top: 1px solid #f1f1f1;
+      margin-top: -$scale-12-1;
       background: white;
       padding: $scale-4-1 !important;
 
