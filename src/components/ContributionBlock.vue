@@ -1,14 +1,9 @@
 <template>
   <div class="contributionBlock">
 
-    <h6 class="float-left">{{ title }}</h6>
-    <p @click="sortContributions"
-      class="a h6 display-inlineBlock"
-      :class="{ 'float-right': title, 'margin-left': title }">Sort by most agreed</p>
+    <h6>{{ title }}</h6>
 
-    <div class="clear-both"></div>
-
-    <form v-on:submit.prevent="handleContributionSubmit" class="margin-top-4-1">
+    <form v-on:submit.prevent="handleContributionSubmit">
       <label for="contributionInput">{{ inputPlaceholder }}</label>
       <div class="display-flex margin-top">
         <input id="contributionInput" class="withButton padding-2-1 width-full backgroundColor-white" v-model="contribution" type="text">
@@ -114,11 +109,6 @@
           }
           contributionRef.update(newContributionObj) // Update database with the new object
         })
-      },
-      sortContributions() {
-        let sortedContributions = []
-        sortedContributions = this.contributions.sort( (a,b) => { return b.agreesCount - a.agreesCount } )
-        this.contributions = sortedContributions
       }
     }
   }
