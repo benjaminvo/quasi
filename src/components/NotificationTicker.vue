@@ -2,11 +2,7 @@
   <div class="notificationTicker border-top border--near-white" :class="{ 'notificationTicker-expanded': notificationTickerExpanded }">
     <grid-block columns="12" noPadding>
 
-      <div class="span-2 color-brandLight-darker-1 margin-top margin-bottom">
-        <p>Shit happens</p>
-      </div>
-
-      <div class="display-flex justifyContent-spaceBetween span-10 padding-top">
+      <div class="display-flex justifyContent-spaceBetween offset-2 span-10 padding-top">
 
         <ul class="notificationTicker_list color-brandLight-darker-3 list-unstyled padding-bottom" :class="{ hideGradient: notificationTickerExpanded || notifications.length < 2 }">
           <li class="margin-bottom-1-3" v-if="notifications.length === 0">No recent happenings...</li>
