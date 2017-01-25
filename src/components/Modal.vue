@@ -3,7 +3,7 @@
     <div class="modal_inner">
       <div class="modal_header">
         <toggle-checkmark finished disabled class="margin-bottom-2-1" />
-        <h1>Good job!</h1>
+        <h1>{{ randomEncouragement }}, {{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }}!</h1>
       </div>
 
       <form v-on:submit.prevent="handleSubmit">
@@ -64,6 +64,7 @@
     data() {
       return {
         article: {},
+        encouragements: ['Good job', 'Way to go', 'Great job', 'Excellent', 'High five'],
         challenge: null
       }
     },
@@ -78,6 +79,9 @@
           }
         }
         return emojiReactions
+      },
+      randomEncouragement() {
+        return this.encouragements[Math.floor(Math.random() * this.encouragements.length)]
       }
     },
     created() {
@@ -238,7 +242,6 @@
 
       &_input {
         min-width: 100%;
-        padding: $scale-2-1;
       }
 
       &_footer {

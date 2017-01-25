@@ -74,27 +74,31 @@ a, .a {
 input, textarea, button {
   font-family: $fontFamily-sans;
   font-size: $fontSize-base;
-  padding: $scale-1-2;
+  padding: 12px $scale-2-1;
   border: none;
-  background-color: $color-brandLight;
+  background-color: $color-brandGrey-lighter-6;
+  border: 1px solid $color-brandGrey-lighter-6;
   border-radius: $borderRadius / 2;
+  line-height: 1.5;
 
-
-  &::-webkit-input-placeholder { color: $color-brandGrey-lighter-3; font-size: $fontSize-small; } /* Chrome/Opera/Safari */
-  &::-moz-placeholder { color: $color-brandGrey-lighter-3; font-size: $fontSize-small; } /* Firefox 19+ */
-  &:-ms-input-placeholder { color: $color-brandGrey-lighter-3; font-size: $fontSize-small; }  /* IE 10+ */
-  &:-moz-placeholder { color: $color-brandGrey-lighter-3; font-size: $fontSize-small; } /* Firefox 18- */
+  &::-webkit-input-placeholder { color: $color-brandGrey-lighter-1; font-size: $fontSize-small; } /* Chrome/Opera/Safari */
+  &::-moz-placeholder { color: $color-brandGrey-lighter-1; font-size: $fontSize-small; } /* Firefox 19+ */
+  &:-ms-input-placeholder { color: $color-brandGrey-lighter-1; font-size: $fontSize-small; }  /* IE 10+ */
+  &:-moz-placeholder { color: $color-brandGrey-lighter-1; font-size: $fontSize-small; } /* Firefox 18- */
 }
 
 textarea:focus,
 input:focus {
-  background-color: white;
+  background-color: $color-brandGrey-lighter-7;
   transition: all 300ms $animationBezier;
   outline: none;
 }
 
 input {
-  &.withButton { border-top-right-radius: 0; border-bottom-right-radius: 0; }}
+  &.withButton {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: none; }}
 
 button {
   padding: $scale $scale-2-1;
@@ -107,7 +111,7 @@ button {
 
   &:hover { opacity: 0.9; }
 
-  &.withInput { border-top-left-radius: 0; border-bottom-left-radius: 0; }
+  &.withInput { border-top-left-radius: 0; border-bottom-left-radius: 0; border: 1px solid $color-brandFirst; }
   &.submit { background-color: $color-brandFirst; }
 
   &.toggle {

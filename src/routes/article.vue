@@ -226,6 +226,7 @@
       background: white;
       padding: $scale-5-1 $scale-6-1 !important;
       overflow: hidden;
+      padding-bottom: $scale-6-1 !important;
 
       @include breakpoint('tablet') {
         margin-top: -$scale-6-1;
