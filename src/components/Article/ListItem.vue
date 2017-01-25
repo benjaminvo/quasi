@@ -21,23 +21,21 @@
     </div>
 
     <div class="articleListItem_lower">
-      <div class="articleListItem_readers">
-        <p>{{ articleFinishedByNum }} of {{ numOfUsers }} have read this</p>
-      </div>
-      <div class="articleListItem_reactions">
-        <p>
+      
+        <span class="articleListItem_readers fontSize-xsmall">{{ articleFinishedByNum }} out of {{ numOfUsers }} have read this</span>
+
+      <div class="articleListItem_reactions fontSize-xsmall">
           <span
             v-if="easyReadCount > 0"
-            :class="{ 'color-brandFirst': easyReadReactedByCurrentUser }">{{ easyReadCount }} &#128526;</span>
+            :class="{ 'color-brandFirst': easyReadReactedByCurrentUser }">{{ easyReadCount }} x &#128526;</span>
           <span
             v-if="understandableCount > 0"
             class="margin-left"
-            :class="{ 'color-brandFirst': understandableReactedByCurrentUser }">{{ understandableCount }} &#128519;</span>
+            :class="{ 'color-brandFirst': understandableReactedByCurrentUser }">{{ understandableCount }} x &#128519;</span>
           <span
             v-if="interestingCount > 0"
             class="margin-left"
-            :class="{ 'color-brandFirst': interestingReactedByCurrentUser }">{{ interestingCount }} &#129300;</span>
-        </p>
+            :class="{ 'color-brandFirst': interestingReactedByCurrentUser }">{{ interestingCount }} x &#129300;</span>
       </div>
     </div>
 
@@ -137,12 +135,7 @@
       border-top: 1px solid $color-brandGrey-lighter-6;
       border-bottom-left-radius: inherit;
       border-bottom-right-radius: inherit;
-      color: $color-brandGrey-lighter-4;
-    }
-
-    &_readers p,
-    &_reactions p {
-      font-size: $fontSize-xxsmall;
+      color: $color-brandGrey-lighter-3;
     }
   }
 
