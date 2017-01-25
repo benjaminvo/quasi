@@ -8,7 +8,7 @@
 
       <form v-on:submit.prevent="handleSubmit">
 
-        <h6 class="color-brandLight-darker-2 textAlign-center">How was it to read {{ article.title }}?</h6>
+        <h6 class="color-brandLight-darker-2 textAlign-center">How was it to read {{ article.meta ? article.meta.title : null }}?</h6>
         <div class="margin-top-4-1 margin-bottom-6-1 display-flex justifyContent-center">
           <input-emoji
             id="easyRead"
@@ -57,9 +57,9 @@
       'input-emoji': InputEmoji
     },
     props: {
-      currentUser: { type: Object },
-      databaseRef: { type: Object },
-      clickedArticleId: { type: String },
+      currentUser: Object,
+      databaseRef: Object,
+      articleId: String
     },
     data() {
       return {
@@ -91,13 +91,13 @@
       },
       close() { this.$emit('close') },
       getArticleData() {
-        this.databaseRef.ref('articles/' + this.clickedArticleId).once('value', (snapshot) => { this.article = snapshot.val() })
+        this.databaseRef.ref('articles/' + this.articleId).once('value', (snapshot) => { this.article = snapshot.val() })
       },
       handleSubmit() {
-        const articleReaderChallengesPath = 'articles/' + this.clickedArticleId + '/readerChallenges/'
+        const articleReaderChallengesPath = 'articles/' + this.articleId + '/readerChallenges/'
         const userChallengesPath = 'users/' + this.currentUser.uid + '/challenges/'
 
-        const articleReaderEmojiReactionsPath = 'articles/' + this.clickedArticleId + '/readerEmojiReactions/'
+        const articleReaderEmojiReactionsPath = 'articles/' + this.articleId + '/readerEmojiReactions/'
 
         // Set challenge on Firebase
         if (this.challenge) {
@@ -113,12 +113,12 @@
           })
 
           // Add notification about added frustration to notifications node on database
-          this.databaseRef.ref('articles/' + this.clickedArticleId).once('value', (snapshot) => {
+          this.databaseRef.ref('articles/' + this.articleId).once('value', (snapshot) => {
             const notification = {
               type: 'frustrationAdded',
               timestamp: new Date().getTime(),
               article: {
-                id: this.clickedArticleId,
+                id: this.articleId,
                 title: snapshot.val().meta.title
               },
               user: {
@@ -152,13 +152,13 @@
             })
 
             // Add notification about added emoji reaction to notifications node on database
-            this.databaseRef.ref('articles/' + this.clickedArticleId).once('value', (snapshot) => {
+            this.databaseRef.ref('articles/' + this.articleId).once('value', (snapshot) => {
               const notification = {
                 type: 'emojiReactionAdded',
                 timestamp: new Date().getTime(),
                 emoji: this.emojiReactions[i],
                 article: {
-                  id: this.clickedArticleId,
+                  id: this.articleId,
                   title: snapshot.val().meta.title
                 },
                 user: {

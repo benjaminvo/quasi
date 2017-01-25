@@ -81,6 +81,13 @@
       </grid-block>
     </div>
 
+    <modal
+      v-if="modalVisible"
+      v-on:close="closeModal"
+      :currentUser="currentUser"
+      :databaseRef="databaseRef"
+      :articleId="this.$route.params.articleId" />
+
   </div>
 </template>
 
@@ -88,17 +95,19 @@
   import GridBlock from 'components/GridBlock'
   import ContributionBlock from 'components/ContributionBlock'
   import ToggleCheckmark from 'components/ToggleCheckmark'
+  import Modal from 'components/Modal'
   import { fetchDataRelatedToData } from 'utils/fetchDataRelatedToData'
   export default {
     name: 'ArticleRoute',
     components: {
       'grid-block': GridBlock,
       'contribution-block': ContributionBlock,
-      'toggle-checkmark': ToggleCheckmark
+      'toggle-checkmark': ToggleCheckmark,
+      'modal': Modal
     },
     props: {
-      currentUser: { type: Object },
-      databaseRef: { type: Object },
+      currentUser: Object,
+      databaseRef: Object
     },
     mixins: [fetchDataRelatedToData],
     data() {
@@ -106,7 +115,8 @@
         article: {},
         articleCourses: [],
         articleConcepts: [],
-        readerChallenges: []
+        readerChallenges: [],
+        modalVisible: false
       }
     },
     computed: {
@@ -162,6 +172,7 @@
           if (data === false || data === null || !data) {
             this.databaseRef.ref(articleFinishedPath).set(true)
             this.databaseRef.ref(articleFinishedByPath + '/' + this.currentUser.uid).set(true)
+            this.modalVisible = true
 
             // Add notification about finished article to notifications node on database
             this.databaseRef.ref('articles/' + articleId).once('value', (snapshot) => {
@@ -185,6 +196,10 @@
             this.databaseRef.ref(articleFinishedByPath + '/' + this.currentUser.uid).set(false)
           }
         })
+        this.setArticle()
+      },
+      closeModal() {
+        this.modalVisible = false
         this.setArticle()
       }
     }

@@ -24,7 +24,7 @@
       v-on:close="closeModal"
       :currentUser="currentUser"
       :databaseRef="databaseRef"
-      :clickedArticleId="clickedArticleId" />
+      :articleId="clickedArticleId" />
 
   </div>
 </template>
@@ -240,6 +240,7 @@
           if (data === false || data === null || !data) {
             this.databaseRef.ref(articleFinishedPath).set(true)
             this.databaseRef.ref(articleFinishedByPath + '/' + this.currentUser.uid).set(true)
+            this.modalVisible = true
 
             // Add notification about finished article to notifications node on database
             this.databaseRef.ref('articles/' + this.clickedArticleId).once('value', (snapshot) => {
@@ -257,8 +258,6 @@
               }
               this.databaseRef.ref('notifications').push(notification)
             })
-
-            this.modalVisible = true
 
           } else if (data === true) {
 
