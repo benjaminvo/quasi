@@ -32,7 +32,7 @@
         </div>
 
         <h6 class="textAlign-center">What frustrated you about the text, if anything?</h6>
-        <textarea class="modal_form_input margin-top-2-1 margin-bottom" v-model="challenge" type="text" rows="3"></textarea>
+        <textarea class="modal_form_input margin-top-2-1 margin-bottom border border-nearWhite backgroundColor-light" v-model="challenge" type="text" rows="3"></textarea>
 
         <div class="modal_form_footer">
           <p class="modal_form_footer_text color-base-lighter-3">Everything is anonymous</p>
@@ -242,6 +242,10 @@
 
       &_input {
         min-width: 100%;
+
+        &:focus {
+          background-color: $color-base-lighter-7;
+        }
       }
 
       &_footer {

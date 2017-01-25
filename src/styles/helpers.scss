@@ -94,6 +94,7 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 			&-1 { color: $color-base-darker-1; }
 			&-2 { color: $color-base-darker-2; }
 			&-3 { color: $color-base-darker-3; }
+			&-4 { color: $color-base-darker-4; }
 		}
 	}
 	&-dark 	{ color: $color-dark; }
@@ -172,9 +173,9 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 	&-left 			{ border-left-style: solid; border-left-width: 1px; }
 	&-none 			{ border-style: none; border-width: 0; }
 	// Colors
-	&-black  	  { border-color: $color-base-darker-4; }
-	&-blue  	  { border-color: $color-primary; }
-	&-grey  		{ border-color: $color-base; }
+	&-dark  	  { border-color: $color-dark; }
+	&-primary  	{ border-color: $color-primary; }
+	&-base  		{ border-color: $color-base; }
 	&-lightGrey { border-color: $color-base-lighter-5; }
 	&-nearWhite { border-color: $color-base-lighter-6; }
 	&-white 		{ border-color: #fff; }
