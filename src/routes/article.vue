@@ -13,7 +13,7 @@
 
     </grid-block>
 
-    <div class="backgroundColor-brandLight border-top border--light-grey">
+    <div class="backgroundColor-brandLight border-top border-lightGrey">
       <grid-block columns="12">
 
         <!-- Left column -->
@@ -57,24 +57,25 @@
 
           <h4 class="margin-bottom">Concepts</h4>
           <ul class="list-unstyled">
-            <li v-for="(item, index) in articleConcepts" class="margin-bottom-2-1 padding-left border-left border--blue border-3">
-              <a :href="item.wikiLink" class="margin-bottom-1-2 h6">{{ item.name }}</a>
+            <li v-for="(item, index) in articleConcepts" class="margin-bottom-2-1 padding-left border-left border-blue border-3">
+              <a :href="item.wikiLink" class="h6 margin-bottom-1-2">{{ item.name }}</a>
               <p class="margin-bottom">{{ item.description }}</p>
             </li>
           </ul>
 
-          <div class="article_introduction-splitter" />
+          <div class="article_introduction_lower">
 
-          <h2 class="margin-top-4-1 margin-bottom-2-1">Student thoughts</h2>
-          <contribution-block
-            :currentUser="currentUser"
-            :databaseRef="databaseRef"
-            :contributions="readerChallenges"
-            type="challenge"
-            title="Reactions"
-            articleReaderContributionsPathEndpoint="readerChallenges"
-            userContributionsPathEndpoint="challenges"
-            inputPlaceholder="What frustrated you about the text, if anything?" />
+            <h2 class="margin-bottom">Student thoughts</h2>
+            <contribution-block
+              :currentUser="currentUser"
+              :databaseRef="databaseRef"
+              :contributions="readerChallenges"
+              type="challenge"
+              articleReaderContributionsPathEndpoint="readerChallenges"
+              userContributionsPathEndpoint="challenges"
+              inputPlaceholder="Your thoughts on the text. Frustrations, aha-moments etc." />
+
+          </div>
 
         </div>
 
@@ -223,23 +224,33 @@
       border-top: 1px solid #f1f1f1;
       margin-top: -$scale-12-1;
       background: white;
-      padding: $scale-4-1 !important;
+      padding: $scale-5-1 $scale-6-1 !important;
+      overflow: hidden;
 
       @include breakpoint('tablet') {
         margin-top: -$scale-6-1;
         margin-left: 0;
         margin-bottom: $scale-4-1;
-        padding: $scale-2-1;
+        padding: $scale-4-1 !important;
+        padding-bottom: $scale-6-1 !important;
       }
 
-      &-splitter {
-        width: calc(100% + #{$scale-8-1});
-        margin-left: -$scale-4-1;
-        margin-top: $scale-4-1;
-        border-bottom: 1px solid $color-brandGrey-lighter-6;
+      &_lower {
+        background: $color-brandGrey-lighter-7;
+        padding: inherit;
+        margin-top: $scale-6-1;
+        margin-left: -$scale-6-1;
+        margin-bottom: -$scale-6-1;
+        width: calc(100% + #{$scale-12-1});
+        display: block;
+
+        @include breakpoint('tablet') {
+          padding-bottom: $scale-4-1;
+          margin-left: -$scale-4-1;
+          width: calc(100% + #{$scale-8-1});
+        }
       }
     }
-
   }
 
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="dayBlock width-full backgroundColor-brandLight padding-top-5-1 padding-bottom-5-1 border-top border--light-grey">
+  <div class="dayBlock width-full backgroundColor-brandLight padding-top-5-1 padding-bottom-5-1 border-top border-lightGrey">
     <grid-block columns="12" noPadding>
       <div class="span-2">
         <h5 class="margin-bottom">{{ day }}</h5>

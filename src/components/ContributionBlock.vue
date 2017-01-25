@@ -2,12 +2,22 @@
   <div class="contributionBlock">
 
     <h6 class="float-left">{{ title }}</h6>
-    <p @click="sortContributions" class="a h6 margin-left display-inlineBlock float-right">Sort by most agreed</p>
+    <p @click="sortContributions"
+      class="a h6 display-inlineBlock"
+      :class="{ 'float-right': title, 'margin-left': title }">Sort by most agreed</p>
 
     <div class="clear-both"></div>
 
-    <ul class="list-unstyled">
-      <li v-for="(contribution, index) in contributions" :id="contribution.id" class="margin-top-3-1">
+    <form v-on:submit.prevent="handleContributionSubmit" class="margin-top-4-1">
+      <label for="contributionInput">{{ inputPlaceholder }}</label>
+      <div class="display-flex margin-top">
+        <input id="contributionInput" class="withButton padding-2-1 width-full backgroundColor-white" v-model="contribution" type="text">
+        <button class="button withInput submit" type="submit">Go</button>
+      </div>
+    </form>
+
+    <ul class="list-unstyled margin-top-4-1">
+      <li v-for="(contribution, index) in contributionsReversed" :id="contribution.id" class="backgroundColor-white padding-2-1 borderRadius-1-2 margin-top-2-1 border border-nearWhite">
         {{ contribution[type] }}
         <div class="display-flex alignItems-center margin-top">
           <button class="toggle margin-right" v-bind:class="{ active: contribution.agreedBy && contribution.agreedBy[currentUser.uid] ? contribution.agreedBy[currentUser.uid] : null }">
@@ -24,11 +34,6 @@
         </div>
       </li>
     </ul>
-
-    <form v-on:submit.prevent="handleContributionSubmit" class="display-flex margin-top-4-1">
-      <input class="withButton padding-2-1 width-full" v-model="contribution" type="text" :placeholder="inputPlaceholder">
-      <button class="button withInput submit" type="submit">Go</button>
-    </form>
 
   </div>
 </template>
@@ -51,6 +56,9 @@
         emojis: ['&#128077;', '&#128076;', '&#128074;', '&#128591;', '&#9994;', '&#128406;'],
         contribution: null
       }
+    },
+    computed: {
+      contributionsReversed() { return this.contributions.reverse() }
     },
     methods: {
       handleContributionSubmit() {
@@ -116,4 +124,4 @@
   }
 </script>
 
-<style lang="scss" scoped></style>
+<style></style>

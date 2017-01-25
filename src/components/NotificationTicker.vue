@@ -1,5 +1,5 @@
 <template>
-  <div class="notificationTicker border-top border--near-white" :class="{ 'notificationTicker-expanded': notificationTickerExpanded }">
+  <div class="notificationTicker border-top border-nearWhite" :class="{ 'notificationTicker-expanded': notificationTickerExpanded }">
     <grid-block columns="12" noPadding>
 
       <div class="display-flex justifyContent-spaceBetween offset-2 span-10 padding-top">

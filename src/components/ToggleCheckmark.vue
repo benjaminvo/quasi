@@ -35,7 +35,7 @@
     height: 32px;
     border: 1px solid $color-brandGrey-lighter-3;
     border-radius: 100%;
-    background-color: $color-brandGrey-lighter-7;
+    background-color: $color-brandGrey-lighter-8;
     transition: background-color $animationSpeed ease;
 
     &_checkmark {

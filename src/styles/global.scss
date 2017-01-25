@@ -58,7 +58,7 @@ h6, .h6 {
   text-transform: uppercase;
 }
 
-p, li, a {
+p, li, a, label {
   font-family: $fontFamily-sans;
   font-size: $fontSize-base;
   line-height: 1.5; }
@@ -80,10 +80,10 @@ input, textarea, button {
   border-radius: $borderRadius / 2;
 
 
-  &::-webkit-input-placeholder { color: $color-brandLight-darker-3; } /* Chrome/Opera/Safari */
-  &::-moz-placeholder { color: $color-brandLight-darker-3; } /* Firefox 19+ */
-  &:-ms-input-placeholder { color: $color-brandLight-darker-3; }  /* IE 10+ */
-  &:-moz-placeholder { color: $color-brandLight-darker-3; } /* Firefox 18- */
+  &::-webkit-input-placeholder { color: $color-brandGrey-lighter-3; font-size: $fontSize-small; } /* Chrome/Opera/Safari */
+  &::-moz-placeholder { color: $color-brandGrey-lighter-3; font-size: $fontSize-small; } /* Firefox 19+ */
+  &:-ms-input-placeholder { color: $color-brandGrey-lighter-3; font-size: $fontSize-small; }  /* IE 10+ */
+  &:-moz-placeholder { color: $color-brandGrey-lighter-3; font-size: $fontSize-small; } /* Firefox 18- */
 }
 
 textarea:focus,
