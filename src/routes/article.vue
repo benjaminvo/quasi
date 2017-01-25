@@ -4,26 +4,12 @@
     <grid-block columns="12">
 
       <!-- Breadcrumb -->
-      <ul class="article_breadcrumb span-12 margin-bottom-2-1 fontFamily-body fontSize-base list-unstyled textTransform-uppercase">
-        <router-link :to="{ name: 'dashboard' }" tag="li" class="a fontSize-xsmall">Dashboard</router-link>
-        <li class="fontSize-xsmall"><span class="color-brandLight-darker-3">/ article</span></li>
+      <ul class="span-12 margin-bottom-2-1 fontFamily-body fontSize-base list-unstyled textTransform-uppercase">
+        <router-link :to="{ name: 'dashboard' }" tag="li" class="a fontSize-xsmall display-inlineBlock">Dashboard</router-link>
+        <li class="fontSize-xsmall display-inlineBlock"><span class="color-brandLight-darker-3">/ article</span></li>
       </ul>
 
-      <!-- Article title -->
-      <div class="span-12 margin-bottom-6-1">
-        <div class="display-flex alignItems-center">
-          <h1 class="margin-right-2-1">{{ article.meta ? article.meta.title : null }}</h1>
-          <toggle-checkmark
-            finished
-            disabled
-            v-if="article.finishedBy ? article.finishedBy[currentUser.uid] : null" />
-        </div>
-        <p class="color-brandLight-darker-3">{{ 'Read for course' + (this.articleCourses.length > 1 ? 's' : '') }}
-          <span v-for="(course, index) in this.articleCourses">
-            {{ course.name }} on
-            {{ course.weekday + (articleCourses.length > 1 && articleCourses.length !== index + 1 ? ', ' : '') }}</span>
-        </p>
-      </div>
+      <h1 class="span-12 margin-bottom-6-1">{{ article.meta ? article.meta.title : null }}</h1>
 
     </grid-block>
 
@@ -31,9 +17,18 @@
       <grid-block columns="12">
 
         <!-- Left column -->
-        <div class="span-3 color-brandLight-darker-2">
+        <div class="article_details span-3 color-brandLight-darker-2">
 
-          <h6 class="margin-bottom">Details</h6>
+          <div class="display-flex alignItems-center margin-top">
+            <toggle-checkmark
+              small
+              class="margin-right"
+              :toggleArticleFinished="toggleArticleFinished"
+              :finished="article.finishedBy ? article.finishedBy[currentUser.uid] : null" />
+            <p class="display-inlineBlock fontSize-xsmall" v-for="(course, index) in this.articleCourses">Due {{ course.weekday }}</p>
+          </div>
+
+          <h6 class="margin-top-6-1 margin-bottom">Details</h6>
           <ul class="list-unstyled">
             <li v-for="(item, key, index) in article.meta" class="margin-bottom-1-2 fontSize-xsmall">
               <span v-if="key === 'pages'">{{ pagesTotal }} pages ({{ item.from }} - {{ item.to }})</span>
@@ -156,6 +151,41 @@
           readerChallenges.push(this.article.readerChallenges[challenge])
         }
         this.readerChallenges = readerChallenges
+      },
+      toggleArticleFinished() {
+        const articleId = this.$route.params.articleId
+        const articleFinishedByPath = 'articles/' + articleId + '/finishedBy/'
+        const articleFinishedPath = 'users/' + this.currentUser.uid + '/articles/' + articleId + '/finished'
+
+        this.databaseRef.ref(articleFinishedPath).once('value', (snapshot) => {
+          const data = snapshot.val()
+          if (data === false || data === null || !data) {
+            this.databaseRef.ref(articleFinishedPath).set(true)
+            this.databaseRef.ref(articleFinishedByPath + '/' + this.currentUser.uid).set(true)
+
+            // Add notification about finished article to notifications node on database
+            this.databaseRef.ref('articles/' + articleId).once('value', (snapshot) => {
+              const notification = {
+                type: 'articleFinished',
+                timestamp: new Date().getTime(),
+                article: {
+                  id: articleId,
+                  title: snapshot.val().meta.title
+                },
+                user: {
+                  id: this.currentUser.uid,
+                  name: this.currentUser.displayName
+                }
+              }
+              this.databaseRef.ref('notifications').push(notification)
+            })
+
+          } else {
+            this.databaseRef.ref(articleFinishedPath).set(false)
+            this.databaseRef.ref(articleFinishedByPath + '/' + this.currentUser.uid).set(false)
+          }
+        })
+        this.setArticle()
       }
     }
   }
@@ -168,18 +198,17 @@
 
   .article {
 
-    &_breadcrumb {
-      & li {
-        display: inline-block;
-      }
-    }
+    &_details,
+    &_introduction { margin-top: -$scale-12-1; }
+
+    &_details {
+      @include breakpoint('tablet') { margin-top: 0; }}
 
     &_introduction {
       border-top: 1px solid #f1f1f1;
       margin-top: -$scale-12-1;
       background: white;
       padding: $scale-4-1 !important;
-      margin-left: -$scale-2-1;
 
       @include breakpoint('tablet') {
         margin-top: -$scale-6-1;
