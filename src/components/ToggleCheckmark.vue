@@ -33,9 +33,9 @@
     align-items: center;
     width: 32px;
     height: 32px;
-    border: 1px solid $color-brandGrey-lighter-3;
+    border: 1px solid $color-base-lighter-3;
     border-radius: 100%;
-    background-color: $color-brandGrey-lighter-8;
+    background-color: $color-base-lighter-8;
     transition: background-color $animationSpeed ease;
 
     &_checkmark {
@@ -48,26 +48,26 @@
     }
 
     &:hover {
-      background-color: $color-brandGrey-lighter-6;
+      background-color: $color-base-lighter-6;
       cursor: pointer;
     }
 
     &.disabled {
       &:hover {
         cursor: default;
-        background-color: $color-brandGrey-lighter-6; }
+        background-color: $color-base-lighter-6; }
     }
 
     &.finished {
-      background-color: $color-brandFirst;
+      background-color: $color-primary;
       border: none;
 
-      &:hover { background-color: darken($color-brandFirst, 2%); }
+      &:hover { background-color: darken($color-primary, 2%); }
 
       &.disabled {
         &:hover {
           cursor: default;
-          background-color: $color-brandFirst;
+          background-color: $color-primary;
         }
       }
     }

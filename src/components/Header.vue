@@ -69,7 +69,7 @@
 
       &_date {
         display: block;
-        color: $color-brandGrey-lighter-1;
+        color: $color-base-lighter-1;
       }
     }
   }
@@ -78,7 +78,7 @@
     position: relative;
     width: 32px;
     height: 32px;
-    background: $color-brandLight;
+    background: $color-light;
     padding: $scale;
     border-radius: 50%;
     display: flex;
@@ -94,7 +94,7 @@
     border-bottom: 6px solid transparent;
     display: inline-block;
 
-    &-right { margin-left: 2px; border-left: 7px solid $color-brandGrey-lighter-1; pointer-events: none; }
-    &-left { margin-right: 2px; border-right: 7px solid $color-brandGrey-lighter-1; pointer-events: none; }
+    &-right { margin-left: 2px; border-left: 7px solid $color-base-lighter-1; pointer-events: none; }
+    &-left { margin-right: 2px; border-right: 7px solid $color-base-lighter-1; pointer-events: none; }
   }
 </style>

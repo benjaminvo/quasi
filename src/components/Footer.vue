@@ -1,6 +1,6 @@
 <template>
   <footer class="footer padding-top-4-1 padding-bottom-4-1 textAlign-center border-top border-lightGrey">
-    <p class="color-brandGrey-lighter-3 fontSize-small">Quasi &copy; <span>2017 {{ toCurrentYear }}</span></p>
+    <p class="color-base-lighter-3 fontSize-small">Quasi &copy; <span>2017 {{ toCurrentYear }}</span></p>
   </footer>
 </template>
 
