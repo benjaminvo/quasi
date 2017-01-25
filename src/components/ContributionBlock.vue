@@ -1,7 +1,7 @@
 <template>
   <div class="contributionBlock">
 
-    <h6>{{ title }}</h6>
+    <h6 v-if="title">{{ title }}</h6>
 
     <form v-on:submit.prevent="handleContributionSubmit">
       <label for="contributionInput">{{ inputPlaceholder }}</label>
