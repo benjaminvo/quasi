@@ -6,7 +6,7 @@
     <form v-on:submit.prevent="handleContributionSubmit">
       <label for="contributionInput">{{ inputPlaceholder }}</label>
       <div class="display-flex margin-top">
-        <input id="contributionInput" class="withButton padding-2-1 width-full backgroundColor-white" v-model="contribution" type="text">
+        <input id="contributionInput" class="withButton padding-2-1 width-full backgroundColor-white border border-nearWhite" v-model="contribution" type="text">
         <button class="button withInput submit" type="submit">Go</button>
       </div>
     </form>
