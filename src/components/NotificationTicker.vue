@@ -4,7 +4,7 @@
 
       <div class="display-flex justifyContent-spaceBetween offset-2 span-10 padding-top">
 
-        <ul class="notificationTicker_list color-brandLight-darker-3 list-unstyled padding-bottom" :class="{ hideGradient: notificationTickerExpanded || notifications.length < 2 }">
+        <ul class="notificationTicker_list list-unstyled padding-bottom" :class="{ hideGradient: notificationTickerExpanded || notifications.length < 2 }">
           <li class="margin-bottom-1-3" v-if="notifications.length === 0">No recent happenings...</li>
           <li class="margin-bottom-1-3" v-else v-for="(notification, index) in notifications">
 
@@ -25,7 +25,7 @@
               to {{ notification.article.title }}
             </p>
 
-            <p class="fontSize-xxsmall color-brandLight-darker-1 display-inlineBlock">{{ moment(notification.timestamp).fromNow() }}</p>
+            <p class="fontSize-xxsmall color-base-lighter-4 display-inlineBlock">{{ moment(notification.timestamp).fromNow() }}</p>
 
           </li>
         </ul>

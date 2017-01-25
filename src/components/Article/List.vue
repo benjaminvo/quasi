@@ -1,5 +1,5 @@
 <template>
-  <ul class="articleList span-12">
+  <ul class="list-unstyled span-12">
     <h2 class="margin-bottom-3-1">{{ courseName }}</h2>
     <article-list-item
       :currentUser="currentUser"
@@ -37,16 +37,4 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '~styles/global';
-
-  .articleList {
-    list-style: none;
-
-    &_loading {
-      font-size: $fontSize-large;
-      color: $color-brandLight-darker-1;
-      margin-top: $scale-4-1;
-      text-align: center;
-    }
-  }
 </style>

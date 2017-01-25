@@ -8,7 +8,7 @@
 
       <form v-on:submit.prevent="handleSubmit">
 
-        <h6 class="color-brandLight-darker-2 textAlign-center">How was it to read {{ article.meta ? article.meta.title : null }}?</h6>
+        <h6 class="textAlign-center">How was it to read {{ article.meta ? article.meta.title : null }}?</h6>
         <div class="margin-top-4-1 margin-bottom-6-1 display-flex justifyContent-center">
           <input-emoji
             id="easyRead"
@@ -31,11 +31,11 @@
             v-bind:checked="emojiReactions.includes('interesting')" />
         </div>
 
-        <h6 class="color-brandLight-darker-2 textAlign-center">What frustrated you about the text, if anything?</h6>
+        <h6 class="textAlign-center">What frustrated you about the text, if anything?</h6>
         <textarea class="modal_form_input margin-top-2-1 margin-bottom" v-model="challenge" type="text" rows="3"></textarea>
 
         <div class="modal_form_footer">
-          <p class="modal_form_footer_text">Everything is anonymous</p>
+          <p class="modal_form_footer_text color-base-lighter-3">Everything is anonymous</p>
           <div class="modal_form_footer_actions">
             <a @click="close">No thanks</a>
             <button class="button submit" type="submit">Go</button>
@@ -249,8 +249,6 @@
         justify-content: space-between;
         align-items: center;
         margin-top: $scale-2-1;
-
-        &_text { color: $color-brandLight-darker-2; }
 
         &_actions {
           .button {

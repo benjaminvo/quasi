@@ -6,18 +6,18 @@
       <!-- Breadcrumb -->
       <ul class="span-12 margin-bottom-2-1 fontFamily-body fontSize-base list-unstyled textTransform-uppercase">
         <router-link :to="{ name: 'dashboard' }" tag="li" class="a fontSize-xsmall display-inlineBlock">Dashboard</router-link>
-        <li class="fontSize-xsmall display-inlineBlock"><span class="color-brandLight-darker-3">/ article</span></li>
+        <li class="fontSize-xsmall display-inlineBlock"><span class="color-base-lighter-3">/ </span><span class="color-base-lighter-1">article</span></li>
       </ul>
 
       <h1 class="span-12 margin-bottom-6-1">{{ article.meta ? article.meta.title : null }}</h1>
 
     </grid-block>
 
-    <div class="backgroundColor-brandLight border-top border-lightGrey">
+    <div class="backgroundColor-light border-top border--light-grey">
       <grid-block columns="12">
 
         <!-- Left column -->
-        <div class="article_details span-3 color-brandLight-darker-2">
+        <div class="article_details span-3">
 
           <div class="display-flex alignItems-center margin-top">
             <toggle-checkmark
@@ -25,11 +25,11 @@
               class="margin-right"
               :toggleArticleFinished="toggleArticleFinished"
               :finished="article.finishedBy ? article.finishedBy[currentUser.uid] : null" />
-            <p class="display-inlineBlock fontSize-xsmall" v-for="(course, index) in this.articleCourses">Due {{ course.weekday }}</p>
+            <p class="display-inlineBlock fontSize-xsmall color-dark" v-for="(course, index) in this.articleCourses">Due {{ course.weekday }}</p>
           </div>
 
-          <h6 class="margin-top-6-1 margin-bottom">Details</h6>
-          <ul class="list-unstyled">
+          <h6 class="margin-top-6-1 margin-bottom color-base-lighter-2">Details</h6>
+          <ul class="list-unstyled color-base-lighter-2">
             <li v-for="(item, key, index) in article.meta" class="margin-bottom-1-2 fontSize-xsmall">
               <span v-if="key === 'pages'">{{ pagesTotal }} pages ({{ item.from }} - {{ item.to }})</span>
               <span v-else-if="key === 'citedBy'">Cited by {{ item }}</span>
@@ -37,8 +37,8 @@
             </li>
           </ul>
 
-          <h6 class="margin-bottom margin-top-3-1">ToC</h6>
-          <ul class="list-unstyled">
+          <h6 class="margin-bottom margin-top-3-1 color-base-lighter-2">Table of Contents</h6>
+          <ul class="list-unstyled color-base-lighter-2">
             <li v-for="(item, key, index) in article.tableOfContents" class="margin-bottom-1-2 fontSize-xsmall">{{ item }}</li>
           </ul>
 
@@ -237,7 +237,7 @@
       }
 
       &_lower {
-        background: $color-brandGrey-lighter-7;
+        background: $color-base-lighter-7;
         padding: inherit;
         margin-top: $scale-6-1;
         margin-left: -$scale-6-1;

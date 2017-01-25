@@ -5,7 +5,7 @@
 @import '~styles/animations';
 
 body {
-  color: $color-text;
+  color: $color-dark;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -64,7 +64,7 @@ p, li, a, label {
   line-height: 1.5; }
 
 a, .a {
-  color: $color-brandFirst;
+  color: $color-primary;
   cursor: pointer;
   text-decoration: none;
 
@@ -76,20 +76,20 @@ input, textarea, button {
   font-size: $fontSize-base;
   padding: 12px $scale-2-1;
   border: none;
-  background-color: $color-brandGrey-lighter-6;
-  border: 1px solid $color-brandGrey-lighter-6;
+  background-color: $color-base-lighter-6;
+  border: 1px solid $color-base-lighter-6;
   border-radius: $borderRadius / 2;
   line-height: 1.5;
 
-  &::-webkit-input-placeholder { color: $color-brandGrey-lighter-1; font-size: $fontSize-small; } /* Chrome/Opera/Safari */
-  &::-moz-placeholder { color: $color-brandGrey-lighter-1; font-size: $fontSize-small; } /* Firefox 19+ */
-  &:-ms-input-placeholder { color: $color-brandGrey-lighter-1; font-size: $fontSize-small; }  /* IE 10+ */
-  &:-moz-placeholder { color: $color-brandGrey-lighter-1; font-size: $fontSize-small; } /* Firefox 18- */
+  &::-webkit-input-placeholder { color: $color-base-lighter-1; font-size: $fontSize-small; } /* Chrome/Opera/Safari */
+  &::-moz-placeholder { color: $color-base-lighter-1; font-size: $fontSize-small; } /* Firefox 19+ */
+  &:-ms-input-placeholder { color: $color-base-lighter-1; font-size: $fontSize-small; }  /* IE 10+ */
+  &:-moz-placeholder { color: $color-base-lighter-1; font-size: $fontSize-small; } /* Firefox 18- */
 }
 
 textarea:focus,
 input:focus {
-  background-color: $color-brandGrey-lighter-7;
+  background-color: $color-base-lighter-8;
   transition: all 300ms $animationBezier;
   outline: none;
 }
@@ -102,7 +102,7 @@ input {
 
 button {
   padding: $scale $scale-2-1;
-  color: $color-brandLight;
+  color: $color-light;
   text-transform: uppercase;
   cursor: pointer;
   font-weight: 500;
@@ -111,14 +111,14 @@ button {
 
   &:hover { opacity: 0.9; }
 
-  &.withInput { border-top-left-radius: 0; border-bottom-left-radius: 0; border: 1px solid $color-brandFirst; }
-  &.submit { background-color: $color-brandFirst; }
+  &.withInput { border-top-left-radius: 0; border-bottom-left-radius: 0; border: 1px solid $color-primary; }
+  &.submit { background-color: $color-primary; }
 
   &.toggle {
     background-color: transparent;
-    border: 1px solid $color-brandGrey-lighter-4;
+    border: 1px solid $color-base-lighter-4;
     padding: 0 $scale-1-2;
-    color: $color-brandGrey-lighter-2;
+    color: $color-base-lighter-2;
     font-size: $fontSize-xxsmall;
     font-weight: 400;
     text-transform: none;
@@ -128,14 +128,14 @@ button {
     border-radius: $borderRadius / 4;
 
     &:hover {
-      color: $color-brandFirst;
-      border-color: $color-brandFirst-lighter-2;
+      color: $color-primary;
+      border-color: $color-primary-lighter-2;
     }
 
     &.active {
-      background-color: $color-brandFirst-lighter-6;
-      border-color: $color-brandFirst-lighter-4;
-      color: $color-brandFirst-lighter-1;
+      background-color: $color-primary-lighter-6;
+      border-color: $color-primary-lighter-4;
+      color: $color-primary-lighter-1;
 
       @keyframes fadeAndSlideEmojiIn {
     	  0% 		{ opacity: 0; transform: translateX(-10px); }
@@ -149,7 +149,7 @@ button {
         animation: fadeAndSlideEmojiIn 300ms $animationBezier forwards;
       }
 
-      &:hover { border-color: $color-brandFirst-lighter-2; }
+      &:hover { border-color: $color-primary-lighter-2; }
     }
   }
 
@@ -166,7 +166,7 @@ hr {
   display: block;
   height: 1px;
   border: 0;
-  border-top: 1px solid $color-brandLight-darker-1;
+  border-top: 1px solid $color-base-lighter-4;
   margin: 0;
   padding: 0;
 }

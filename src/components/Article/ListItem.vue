@@ -21,21 +21,20 @@
     </div>
 
     <div class="articleListItem_lower">
-      
-        <span class="articleListItem_readers fontSize-xsmall">{{ articleFinishedByNum }} out of {{ numOfUsers }} have read this</span>
+      <span class="articleListItem_readers fontSize-xsmall">{{ articleFinishedByNum }} out of {{ numOfUsers }} have read this</span>
 
       <div class="articleListItem_reactions fontSize-xsmall">
           <span
             v-if="easyReadCount > 0"
-            :class="{ 'color-brandFirst': easyReadReactedByCurrentUser }">{{ easyReadCount }} x &#128526;</span>
+            :class="{ 'color-primary': easyReadReactedByCurrentUser }">{{ easyReadCount }} &#128526;</span>
           <span
             v-if="understandableCount > 0"
             class="margin-left"
-            :class="{ 'color-brandFirst': understandableReactedByCurrentUser }">{{ understandableCount }} x &#128519;</span>
+            :class="{ 'color-primary': understandableReactedByCurrentUser }">{{ understandableCount }} &#128519;</span>
           <span
             v-if="interestingCount > 0"
             class="margin-left"
-            :class="{ 'color-brandFirst': interestingReactedByCurrentUser }">{{ interestingCount }} x &#129300;</span>
+            :class="{ 'color-primary': interestingReactedByCurrentUser }">{{ interestingCount }} &#129300;</span>
       </div>
     </div>
 
@@ -120,7 +119,7 @@
     &_meta {
       display: flex;
       justify-content: space-between;
-      color: $color-brandGrey;
+      color: $color-base;
 
       p {
         line-height: 1.25;
@@ -132,10 +131,10 @@
       align-items: center;
       justify-content: space-between;
       padding: $scale $scale-3-1;
-      border-top: 1px solid $color-brandGrey-lighter-6;
+      border-top: 1px solid $color-base-lighter-6;
       border-bottom-left-radius: inherit;
       border-bottom-right-radius: inherit;
-      color: $color-brandGrey-lighter-3;
+      color: $color-base-lighter-3;
     }
   }
 

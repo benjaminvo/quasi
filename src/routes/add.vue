@@ -297,7 +297,7 @@
   @import '~styles/global';
 
   .addPage {
-    background-color: $color-brandLight;
+    background-color: $color-light;
     padding-bottom: $scale-4-1;
 
     h1, h2, h3, h4, h5, h6, p, li { font-family: $fontFamily-sans; }
@@ -305,7 +305,7 @@
 
     input, textarea { background: white; display: block; margin-bottom: $scale; width: 100%; }
 
-    button { background: $color-brandFirst; padding: $scale-1-2 $scale; }
+    button { background: $color-primary; padding: $scale-1-2 $scale; }
   }
 
   .subtitle { margin: $scale-3-1 0 $scale; }

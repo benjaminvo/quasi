@@ -1,11 +1,11 @@
 <template>
-  <div class="dayBlock width-full backgroundColor-brandLight padding-top-5-1 padding-bottom-5-1 border-top border-lightGrey">
+  <div class="dayBlock width-full padding-top-5-1 padding-bottom-5-1 border-top border--light-grey">
     <grid-block columns="12" noPadding>
       <div class="span-2">
         <h5 class="margin-bottom">{{ day }}</h5>
       </div>
       <div class="span-8">
-        <h2 class="dayBlock_emptyText color-brandLight-darker-1" v-if="courses.length === 0">Freedom</h2>
+        <h2 class="dayBlock_emptyText color-base-lighter-3" v-if="courses.length === 0">Freedom</h2>
         <article-list
           v-for="(course, index) in courses"
           :currentUser="currentUser"
@@ -37,4 +37,11 @@
   }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+  @import '~styles/global';
+
+  .dayBlock {
+    background-color: $color-base-lighter-6;
+  }
+
+</style>
