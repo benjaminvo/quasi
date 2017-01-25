@@ -119,7 +119,7 @@
               timestamp: new Date().getTime(),
               article: {
                 id: this.clickedArticleId,
-                title: snapshot.val().title
+                title: snapshot.val().meta.title
               },
               user: {
                 id: this.currentUser.uid,
@@ -159,7 +159,7 @@
                 emoji: this.emojiReactions[i],
                 article: {
                   id: this.clickedArticleId,
-                  title: snapshot.val().title
+                  title: snapshot.val().meta.title
                 },
                 user: {
                   id: this.currentUser.uid,
