@@ -91,9 +91,7 @@
         let numOfReadArticles = 0
         this.databaseRef.ref('users/' + this.currentUser.uid + '/articles').on('value', (snapshot) => {
           const articles = snapshot.val()
-          for (let article in articles) {
-            if ( articles[article].finished === true ) numOfReadArticles += 1
-          }
+          for (let article in articles) if ( articles[article].finished === true ) numOfReadArticles += 1
         })
         return numOfReadArticles
       },
