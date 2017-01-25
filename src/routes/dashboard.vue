@@ -204,7 +204,7 @@
         })
       },
       fetchNotifications() {
-        this.databaseRef.ref('notifications').limitToLast(20).on('value', (snapshot) => {
+        this.databaseRef.ref('notifications').limitToLast(5).on('value', (snapshot) => {
           let notificationsArray = []
           const notifications = snapshot.val()
           for ( let notification in notifications) notificationsArray.unshift(notifications[notification])
