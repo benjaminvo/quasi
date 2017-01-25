@@ -93,6 +93,7 @@
   import GridBlock from 'components/GridBlock'
   import ContributionBlock from 'components/ContributionBlock'
   import ToggleCheckmark from 'components/ToggleCheckmark'
+  import { fetchDataRelatedToData } from 'utils/fetchDataRelatedToData'
   export default {
     name: 'ArticleRoute',
     components: {
@@ -104,6 +105,7 @@
       currentUser: { type: Object },
       databaseRef: { type: Object },
     },
+    mixins: [fetchDataRelatedToData],
     data() {
       return {
         article: {},
@@ -131,43 +133,6 @@
       article: 'fetchOtherData'
     },
     methods: {
-      fetchOtherData() {
-        this.setReaderChallenges()
-        this.setArticleConcepts()
-        this.setArticleCourses()
-      },
-      setReaderChallenges() {
-        let readerChallenges = []
-        for (let challenge in this.article.readerChallenges) {
-          this.article.readerChallenges[challenge].id = challenge
-          readerChallenges.push(this.article.readerChallenges[challenge])
-        }
-        this.readerChallenges = readerChallenges
-      },
-      setArticleConcepts() { // TODO: Create util scripts for fetching like this (setArticleConcepts and setArticleCourses are similar)
-        let articleConcepts = []
-        this.databaseRef.ref('concepts').on('value', (snapshot) => {
-          const concepts = snapshot.val()
-          for (let concept in concepts) {
-            for (let conceptId in this.article.concepts) {
-              if (concept === conceptId) articleConcepts.push(concepts[concept])
-            }
-          }
-        })
-        this.articleConcepts = articleConcepts
-      },
-      setArticleCourses() {
-        let articleCourses = []
-        this.databaseRef.ref('courses').once('value', (snapshot) => {
-          const courses = snapshot.val()
-          for (let course in courses) {
-            for (let courseId in this.article.courses) {
-              if (course === courseId) articleCourses.push(courses[course])
-            }
-          }
-        })
-        this.articleCourses = articleCourses
-      },
       setArticle() {
         const activeArticleId = this.$route.params.articleId
         this.databaseRef.ref('articles').on('value', (snapshot) => {
@@ -178,6 +143,19 @@
           }
           this.article = articleObj
         })
+      },
+      fetchOtherData() {
+        this.setReaderChallenges()
+        this.articleCourses = this.fetchDataRelatedToData('courses', this.article.courses)
+        this.articleConcepts = this.fetchDataRelatedToData('concepts', this.article.concepts)
+      },
+      setReaderChallenges() {
+        let readerChallenges = []
+        for (let challenge in this.article.readerChallenges) {
+          this.article.readerChallenges[challenge].id = challenge
+          readerChallenges.push(this.article.readerChallenges[challenge])
+        }
+        this.readerChallenges = readerChallenges
       }
     }
   }
