@@ -28,7 +28,7 @@
             <p class="display-inlineBlock fontSize-small color-dark" v-for="(course, index) in this.articleCourses">Due {{ course.weekday }}</p>
           </div>
 
-          <h6 class=" margin-bottom color-base-lighter-2">Details</h6>
+          <h6 class="margin-bottom color-base-lighter-2">Details</h6>
           <ul class="list-unstyled color-base-lighter-2 margin-bottom-4-1">
             <li v-for="(item, key, index) in article.meta" class="margin-bottom fontSize-small">
               <span v-if="key === 'pages'">{{ pagesTotal }} pages ({{ item.from }} - {{ item.to }})</span>

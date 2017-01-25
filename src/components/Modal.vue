@@ -3,12 +3,12 @@
     <div class="modal_inner">
       <div class="modal_header">
         <toggle-checkmark finished disabled class="margin-bottom-2-1" />
-        <h1>{{ randomEncouragement }}, {{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }}!</h1>
+        <h1 class="margin-bottom-3-1">{{ randomEncouragement }}, {{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }}!</h1>
       </div>
 
       <form v-on:submit.prevent="handleSubmit">
 
-        <h6 class="textAlign-center">How was it to read {{ article.meta ? article.meta.title : null }}?</h6>
+        <h6 class="textAlign-center">How was it to read?</h6>
         <div class="margin-top-4-1 margin-bottom-6-1 display-flex justifyContent-center">
           <input-emoji
             id="easyRead"
@@ -37,7 +37,6 @@
         <div class="modal_form_footer">
           <p class="modal_form_footer_text color-base-lighter-3">Everything is anonymous</p>
           <div class="modal_form_footer_actions">
-            <a @click="close">No thanks</a>
             <button class="button submit" type="submit">Go</button>
           </div>
         </div>
@@ -208,19 +207,13 @@
       position: relative;
       max-width: 600px;
       min-width: 400px;
-      margin-top: -10%;
-      padding: $scale-2-1;
+      margin-top: -5%;
+      padding: $scale-2-1 0 0;
 
       transform: scale(0);
       opacity: 0;
       animation: fadeIn 100ms 200ms $animationBezier, scaleUp 300ms 400ms ease-out;
       animation-fill-mode: forwards;
-    }
-
-    &_close {
-      position: absolute;
-      right: $scale;
-      top: $scale;
     }
 
     &_header {
