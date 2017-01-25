@@ -97,7 +97,6 @@
   @import '~styles/card';
 
   .articleListItem {
-    @include card;
     cursor: pointer;
     width: calc(100% + (#{$scale-3-1}*2)); // 100% + 48px
     margin-left: -#{$scale-3-1}; // -24px
