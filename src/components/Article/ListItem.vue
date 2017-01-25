@@ -103,10 +103,6 @@
     margin-bottom: $scale-3-1;
     transition: all 200ms ease;
 
-    // &:hover {
-    //   transform: translateY(-1px);
-    //   box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.12); }
-
     &:last-child { margin-bottom: 0; }
 
     &_upper {
@@ -126,7 +122,7 @@
     &_meta {
       display: flex;
       justify-content: space-between;
-      color: $color-brandDark-lighter-3;
+      color: $color-brandGrey;
 
       p {
         line-height: 1.25;
