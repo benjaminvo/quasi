@@ -68,7 +68,7 @@
             <h2 class="display-inlineBlock margin-bottom">Student thoughts</h2>
 
             <div class="float-right">
-              <p class="display-inlineBlock color-brandGrey-lighter-3 fontSize-xlarge margin-left-2-1"
+              <p class="display-inlineBlock color-base-lighter-3 fontSize-xlarge margin-left-2-1"
                 v-if="article.readerEmojiReactions"
                 v-for="reaction in article.readerEmojiReactions">
                 <span class="fontSize-xsmall">{{ reaction.count }}</span>
