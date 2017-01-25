@@ -101,7 +101,7 @@
     width: calc(100% + (#{$scale-3-1}*2)); // 100% + 48px
     margin-left: -#{$scale-3-1}; // -24px
     margin-bottom: $scale-3-1;
-    transition: all 200ms ease;
+    transition: all $animationSpeed ease;
 
     &:last-child { margin-bottom: 0; }
 
