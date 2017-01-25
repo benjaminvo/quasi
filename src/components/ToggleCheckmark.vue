@@ -28,14 +28,14 @@
     align-items: center;
     width: 32px;
     height: 32px;
-    border: 1px solid $color-brandLight-darker-1;
+    border: 1px solid $color-brandGrey-lighter-3;
     border-radius: 100%;
-    background-color: $color-brandLight-lighter-1;
+    background-color: $color-brandGrey-lighter-7;
+    transition: background-color $animationSpeed ease;
 
     &_checkmark {
       width: 16px;
       height: 16px;
-
       transform: scale(0);
       opacity: 0;
       animation: fadeIn 100ms $animationBezier, elasticScaleUp 200ms ease-out;
@@ -43,15 +43,14 @@
     }
 
     &:hover {
-      background-color: darken($color-brandLight-lighter-1, 2%);
+      background-color: $color-brandGrey-lighter-6;
       cursor: pointer;
-      text-decoration: underline;
     }
 
     &.disabled {
       &:hover {
         cursor: default;
-        background-color: $color-brandLight-lighter-1; }
+        background-color: $$color-brandGrey-lighter-6; }
     }
 
     &.finished {
