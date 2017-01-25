@@ -26,8 +26,8 @@
     </ul>
 
     <form v-on:submit.prevent="handleContributionSubmit" class="display-flex margin-top-4-1">
-      <input class="padding-2-1 margin-right width-full" v-model="contribution" type="text" :placeholder="inputPlaceholder" maxlength="140">
-      <button class="button submit" type="submit">Go</button>
+      <input class="withButton padding-2-1 width-full" v-model="contribution" type="text" :placeholder="inputPlaceholder">
+      <button class="button withInput submit" type="submit">Go</button>
     </form>
 
   </div>
