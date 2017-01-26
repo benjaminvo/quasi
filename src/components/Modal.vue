@@ -8,31 +8,19 @@
 
       <form v-on:submit.prevent="handleSubmit">
 
-        <h6 class="textAlign-center">How was it to read {{ article.meta ? article.meta.title : null }}?</h6>
+        <h6 class="textAlign-center">How was it to read {{ article.title }}?</h6>
         <div class="margin-top-4-1 margin-bottom-6-1 display-flex justifyContent-center">
           <input-emoji
-            id="easyRead"
-            label="&#128526;"
-            value="Easy read"
-            v-on:idEmit="toggleEmojiReaction"
-            v-bind:checked="emojiReactions.includes('easyRead')" />
-          <input-emoji
-            id="understandable"
-            label="&#128519;"
-            value="Understandable"
-            v-on:idEmit="toggleEmojiReaction"
-            v-bind:checked="emojiReactions.includes('understandable')" />
-          <input-emoji
-            class="margin-none"
-            id="interesting"
-            label="&#129300;"
-            value="Interesting"
-            v-on:idEmit="toggleEmojiReaction"
-            v-bind:checked="emojiReactions.includes('interesting')" />
+            v-for="(reaction, key, index) in article.reactions"
+            :id="key"
+            :label="reaction.emoji"
+            :value="reaction.name"
+            v-on:idEmit="toggleReaction"
+            v-bind:checked="reactions.includes(key)" />
         </div>
 
-        <h6 class="textAlign-center">What frustrated you about the text, if anything?</h6>
-        <textarea class="modal_form_input margin-top-2-1 margin-bottom border border-nearWhite backgroundColor-light" v-model="challenge" type="text" rows="3"></textarea>
+        <h6 class="textAlign-center">Any thoughts on the text? Frustrations, aha-moments etc.</h6>
+        <textarea class="modal_form_input margin-top-2-1 margin-bottom border border-nearWhite backgroundColor-light" v-model="contribution" type="text" rows="3"></textarea>
 
         <div class="modal_form_footer">
           <p class="modal_form_footer_text color-base-lighter-3">Everything is anonymous</p>
@@ -65,84 +53,81 @@
       return {
         article: {},
         encouragements: ['Good job', 'Way to go', 'Great job', 'Excellent', 'High five'],
-        challenge: null
+        contribution: null
       }
     },
     computed: {
-      emojiReactions() {
-        let emojiReactions = []
-        if ( this.article.readerEmojiReactions ) {
-          for (let reaction in this.article.readerEmojiReactions) {
-            if ( this.article.readerEmojiReactions[reaction].reactedBy && this.article.readerEmojiReactions[reaction].reactedBy[this.currentUser.uid] ) {
-              emojiReactions.push(reaction)
+      reactions() {
+        let reactions = []
+        if ( this.article.reactions ) {
+          for ( let reaction in this.article.reactions ) {
+            if ( this.article.reactions[reaction].reactedBy && this.article.reactions[reaction].reactedBy[this.currentUser.uid] ) {
+              reactions.push(reaction)
             }
           }
         }
-        return emojiReactions
+        return reactions
       },
       randomEncouragement() {
         return this.encouragements[Math.floor(Math.random() * this.encouragements.length)]
       }
     },
     created() {
-      this.getArticleData()
+      this.setArticle()
     },
     methods: {
-      toggleEmojiReaction(id) {
-        const idIndex = this.emojiReactions.indexOf(id)
-        if (idIndex > -1) this.emojiReactions.splice(idIndex, 1)
-        else this.emojiReactions.push(id)
+      toggleReaction(id) {
+        const idIndex = this.reactions.indexOf(id)
+        if (idIndex > -1) this.reactions.splice(idIndex, 1)
+        else this.reactions.push(id)
       },
       close() { this.$emit('close') },
-      getArticleData() {
+      setArticle() {
         this.databaseRef.ref('articles/' + this.articleId).once('value', (snapshot) => { this.article = snapshot.val() })
       },
       handleSubmit() {
-        const articleReaderChallengesPath = 'articles/' + this.articleId + '/readerChallenges/'
-        const userChallengesPath = 'users/' + this.currentUser.uid + '/challenges/'
+        const articleContributionsPath = 'articles/' + this.articleId + '/contributions/'
+        const userContributionsPath = 'users/' + this.currentUser.uid + '/contributions/'
 
-        const articleReaderEmojiReactionsPath = 'articles/' + this.articleId + '/readerEmojiReactions/'
+        const articleReactionsPath = 'articles/' + this.articleId + '/reactions/'
 
-        // Set challenge on Firebase
-        if (this.challenge) {
-          this.databaseRef.ref(articleReaderChallengesPath)
+        // Set contribution on Firebase
+        if ( this.contribution ) {
+
+          this.databaseRef.ref('contributions')
           .push({
             author: this.currentUser.uid,
-            challenge: this.challenge,
-            agreesCount: 0
-          })
-          .then((snapshot) => {
-            const newChallengeId = snapshot.key
-            this.databaseRef.ref(userChallengesPath + '/' + newChallengeId).set(true)
-          })
+            text: this.contribution,
+            agrees: 0,
+            article: this.articleId })
 
-          // Add notification about added frustration to notifications node on database
-          this.databaseRef.ref('articles/' + this.articleId).once('value', (snapshot) => {
+          .then( (snapshot) => {
+            this.databaseRef.ref(userContributionsPath + snapshot.key).set(true)
+            this.databaseRef.ref(articleContributionsPath + snapshot.key).set(true)
+            // Add notification about added contribution to notifications node on database
             const notification = {
-              type: 'frustrationAdded',
+              type: 'contributionAdded',
               timestamp: new Date().getTime(),
               article: {
                 id: this.articleId,
-                title: snapshot.val().meta.title
-              },
+                title: this.article.title },
               user: {
                 id: this.currentUser.uid,
-                name: this.currentUser.displayName
-              }
-            }
+                name: this.currentUser.displayName }}
             this.databaseRef.ref('notifications').push(notification)
           })
+
         }
 
-        // Set emojiReactions on Firebase
-        if (this.emojiReactions.length) {
-          for ( let i = 0; i < this.emojiReactions.length; i++ ) {
+        // Set reactions on Firebase
+        if ( this.reactions.length ) {
+          for ( let i = 0; i < this.reactions.length; i++ ) {
 
-            const emojiReactionPath = this.databaseRef.ref(articleReaderEmojiReactionsPath + '/' + this.emojiReactions[i])
-            const emojiReactionCountPath = emojiReactionPath.child('count')
-            const emojiReactionReactedByPath = emojiReactionPath.child('reactedBy')
+            const reactionPath = this.databaseRef.ref(articleReactionsPath + this.reactions[i])
+            const reactionCountPath = reactionPath.child('count')
+            const reactionReactedByPath = reactionPath.child('reactedBy')
 
-            emojiReactionPath.once('value', (snapshot) => {
+            reactionPath.once( 'value', (snapshot) => {
               const reaction = snapshot.val()
               let newReactionObj = {}
               if ( reaction ) newReactionObj = Object.assign({}, reaction) // Create a copy of object on database
@@ -152,24 +137,21 @@
                 newReactionObj.count++
                 newReactionObj.reactedBy[this.currentUser.uid] = true
               }
-              emojiReactionPath.update(newReactionObj) // Update database with the new object
+              reactionPath.update(newReactionObj) // Update database with the new object
             })
 
-            // Add notification about added emoji reaction to notifications node on database
-            this.databaseRef.ref('articles/' + this.articleId).once('value', (snapshot) => {
+            .then( () => {
+              // Add notification about added emoji reaction to notifications node on database
               const notification = {
-                type: 'emojiReactionAdded',
+                type: 'reactionAdded',
                 timestamp: new Date().getTime(),
-                emoji: this.emojiReactions[i],
+                emoji: this.reactions[i],
                 article: {
                   id: this.articleId,
-                  title: snapshot.val().meta.title
-                },
+                  title: this.article.title },
                 user: {
                   id: this.currentUser.uid,
-                  name: this.currentUser.displayName
-                }
-              }
+                  name: this.currentUser.displayName }}
               this.databaseRef.ref('notifications').push(notification)
             })
 
@@ -177,7 +159,7 @@
         }
 
         // Reset inputs
-        this.challenge = ''
+        this.contribution = ''
 
         this.close()
       }

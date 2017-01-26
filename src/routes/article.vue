@@ -4,12 +4,12 @@
     <grid-block columns="12">
 
       <!-- Breadcrumb -->
-      <ul class="span-12 margin-bottom-2-1 fontFamily-body fontSize-base list-unstyled textTransform-uppercase">
+      <ul class="span-12 margin-bottom fontFamily-body fontSize-base list-unstyled">
         <router-link :to="{ name: 'dashboard' }" tag="li" class="a fontSize-xsmall display-inlineBlock">Dashboard</router-link>
         <li class="fontSize-xsmall display-inlineBlock"><span class="color-base-lighter-3">/ </span><span class="color-base-lighter-1">article</span></li>
       </ul>
 
-      <h1 class="span-12 margin-bottom-6-1">{{ article.meta ? article.meta.title : null }}</h1>
+      <h1 class="span-12 margin-bottom-8-1">{{ article.title }}</h1>
 
     </grid-block>
 
@@ -30,11 +30,11 @@
 
           <h6 class="margin-top-6-1 margin-bottom color-base-lighter-2">Details</h6>
           <ul class="list-unstyled color-base-lighter-2">
-            <li v-for="(item, key, index) in article.meta" class="margin-bottom-1-2 fontSize-xsmall">
-              <span v-if="key === 'pages'">{{ pagesTotal }} pages ({{ item.from }} - {{ item.to }})</span>
-              <span v-else-if="key === 'citedBy'">Cited by {{ item }}</span>
-              <span v-else-if="key !== 'title'">{{ item }}</span>
-            </li>
+            <li class="margin-bottom-1-2 fontSize-xsmall">{{ article.author }} ({{ article.year }})</li>
+            <li class="margin-bottom-1-2 fontSize-xsmall">{{ pagesTotal }} pages ({{ article.pageFrom }} - {{ article.pageTo }})</li>
+            <li class="margin-bottom-1-2 fontSize-xsmall">Cited by {{ article.citedBy }}</li>
+            <li class="margin-bottom-1-2 fontSize-xsmall">{{ article.journal }}</li>
+            <li class="margin-bottom-1-2 fontSize-xsmall">{{ article.publisher }}</li>
           </ul>
 
           <h6 class="margin-bottom margin-top-3-1 color-base-lighter-2">Table of Contents</h6>
@@ -49,7 +49,7 @@
 
           <h2 class="margin-bottom-4-1">Reading guide</h2>
           <ul class="list-unstyled">
-            <li v-for="(item, key, index) in article.teacherNotes" v-if="key !== 'concepts'" class="margin-bottom">
+            <li v-for="(item, key, index) in article.guide" v-if="key !== 'concepts'" class="margin-bottom">
               <h4 class="margin-bottom-1-2">{{ item.title }}</h4>
               <p class="margin-bottom-3-1">{{ item.text }}</p>
             </li>
@@ -69,10 +69,10 @@
 
             <div class="float-right">
               <p class="display-inlineBlock color-base-lighter-3 fontSize-xlarge margin-left-2-1"
-                v-if="article.readerEmojiReactions"
-                v-for="reaction in article.readerEmojiReactions">
+                v-if="article.reactions"
+                v-for="reaction in article.reactions">
                 <span class="fontSize-xsmall">{{ reaction.count }}</span>
-                &#128526; <!-- Put reaction.emoji here when ready in new data structure -->
+                <span v-html="reaction.emoji"></span>
               </p>
             </div>
 
@@ -81,11 +81,8 @@
             <contribution-block
               :currentUser="currentUser"
               :databaseRef="databaseRef"
-              :contributions="readerChallenges"
-              type="challenge"
-              articleReaderContributionsPathEndpoint="readerChallenges"
-              userContributionsPathEndpoint="challenges"
-              inputPlaceholder="Your thoughts on the text. Frustrations, aha-moments etc." />
+              :contributions="articleContributions"
+              v-on:agreesChanged="setArticle" />
 
           </div>
 
@@ -128,18 +125,21 @@
         article: {},
         articleCourses: [],
         articleConcepts: [],
-        readerChallenges: [],
+        articleContributions: [],
         modalVisible: false
       }
     },
     computed: {
-      pagesTotal() { if ( this.article.meta ) return parseInt(this.article.meta.pages.to, 10) - parseInt(this.article.meta.pages.from, 10) },
+      pagesTotal() { return parseInt(this.article.pageTo, 10) - parseInt(this.article.pageFrom, 10) },
     },
     created() {
       window.Intercom( 'update' )
     },
     mounted() {
       this.setArticle()
+    },
+    updated() {
+      console.log(this.articleContributions);
     },
     beforeDestroy() {
       this.databaseRef.ref('articles').off()
@@ -152,33 +152,20 @@
     },
     methods: {
       setArticle() {
-        const activeArticleId = this.$route.params.articleId
         this.databaseRef.ref('articles').on('value', (snapshot) => {
-          let articleObj = {}
           const data = snapshot.val()
-          for (let article in data) {
-            if (article === activeArticleId) articleObj = data[article]
-          }
-          this.article = articleObj
+          for ( let article in data ) { if ( article === this.$route.params.articleId ) this.article = data[article] }
         })
       },
       fetchOtherData() {
-        this.setReaderChallenges()
         this.articleCourses = this.fetchDataRelatedToData('courses', this.article.courses)
         this.articleConcepts = this.fetchDataRelatedToData('concepts', this.article.concepts)
-      },
-      setReaderChallenges() {
-        let readerChallenges = []
-        for (let challenge in this.article.readerChallenges) {
-          this.article.readerChallenges[challenge].id = challenge
-          readerChallenges.push(this.article.readerChallenges[challenge])
-        }
-        this.readerChallenges = readerChallenges
+        this.articleContributions = this.fetchDataRelatedToData('contributions', this.article.contributions, true)
       },
       toggleArticleFinished() {
         const articleId = this.$route.params.articleId
         const articleFinishedByPath = 'articles/' + articleId + '/finishedBy/'
-        const articleFinishedPath = 'users/' + this.currentUser.uid + '/articles/' + articleId + '/finished'
+        const articleFinishedPath = 'users/' + this.currentUser.uid + '/articlesFinished/' + articleId
 
         this.databaseRef.ref(articleFinishedPath).once('value', (snapshot) => {
           const data = snapshot.val()
@@ -194,7 +181,7 @@
                 timestamp: new Date().getTime(),
                 article: {
                   id: articleId,
-                  title: snapshot.val().meta.title
+                  title: snapshot.val().title
                 },
                 user: {
                   id: this.currentUser.uid,

@@ -12,11 +12,11 @@
               {{ notification.user.id === currentUser.uid ? 'You' : 'Someone' }} finished {{ notification.article.title }}
             </p>
 
-            <p v-if="notification.type === 'frustrationAdded'" class="display-inlineBlock">
-              {{ notification.user.id === currentUser.uid ? 'You' : 'Someone' }} added a frustration to {{ notification.article.title }}
+            <p v-if="notification.type === 'contributionAdded'" class="display-inlineBlock">
+              {{ notification.user.id === currentUser.uid ? 'You' : 'Someone' }} added a contribution to {{ notification.article.title }}
             </p>
 
-            <p v-if="notification.type === 'emojiReactionAdded'" class="display-inlineBlock">
+            <p v-if="notification.type === 'reactionAdded'" class="display-inlineBlock">
               {{ notification.user.id === currentUser.uid ? 'You' : 'Someone' }} added
               <span v-html="
                 notification.emoji === 'easyRead' ? '&#128526;' :

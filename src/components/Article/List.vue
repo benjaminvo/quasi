@@ -7,12 +7,12 @@
       :toggleArticleFinished="toggleArticleFinished"
       :articleId="key"
       :finished="article.finishedBy ? article.finishedBy[currentUser.uid] : null"
-      :title="article.meta ? article.meta.title : null"
-      :author="article.meta ? article.meta.author : null"
-      :pageNum="article.meta ? article.meta.pages.to - article.meta.pages.from : null"
-      :year="article.meta ? article.meta.year : null"
+      :title="article.title"
+      :author="article.author"
+      :pageNum="article.pageTo - article.pageFrom"
+      :year="article.year"
       :finishedBy="article.finishedBy"
-      :readerEmojiReactions="article.readerEmojiReactions"
+      :reactions="article.reactions"
       :numOfUsers="numOfUsers" />
   </ul>
 </template>

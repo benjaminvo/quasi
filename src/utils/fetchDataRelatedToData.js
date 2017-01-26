@@ -1,16 +1,18 @@
 export const fetchDataRelatedToData = {
   methods: {
-    fetchDataRelatedToData(databaseEndpoint, dataIdsToMatch) {
+    fetchDataRelatedToData(databaseEndpoint, dataIdsToMatch, includeKeysAsIds) {
+
       let finalDataArray = []
       this.databaseRef.ref(databaseEndpoint).on('value', (snapshot) => {
         const data = snapshot.val()
         for (let dataKey in data) {
           for (let dataId in dataIdsToMatch) {
-            if (dataKey === dataId) finalDataArray.push(data[dataKey])
-          }
-        }
-      })
+            if (dataKey === dataId) {
+              if (includeKeysAsIds) data[dataKey].id = dataKey
+              finalDataArray.push(data[dataKey]) }}}})
+
       return finalDataArray
+
     }
   }
 }
