@@ -16,11 +16,10 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 	.padding#{$position}-1-6 { padding#{$position}: $scale-1-6 !important; }
 	.padding#{$position}-1-7 { padding#{$position}: $scale-1-7 !important; }
 	.padding#{$position}-1-8 { padding#{$position}: $scale-1-8 !important; }}
-.padding-none              { padding: 0 !important; }
-.padding-none              {
-	&-top 		{ padding-top: 0 !important; }
-	&-bottom 	{ padding-bottom: 0 !important; }
-}
+
+.padding-none { padding: 0 !important;
+	&-top 	    { padding-top: 0 !important; }
+	&-bottom    { padding-bottom: 0 !important; }}
 
 @each $position in $positions {
 	.margin#{$position}-8-1 { margin#{$position}: $scale-8-1 !important; }
@@ -38,7 +37,14 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 	.margin#{$position}-1-6 { margin#{$position}: $scale-1-6 !important; }
 	.margin#{$position}-1-7 { margin#{$position}: $scale-1-7 !important; }
 	.margin#{$position}-1-8 { margin#{$position}: $scale-1-8 !important; }}
-.margin-none              { margin: 0 !important; }
+
+.margin-none  { margin: 0 !important;
+	&-top 	    { margin-top: 0 !important; }
+	&-bottom    { margin-bottom: 0 !important; }}
+
+.center {
+	margin-left: auto !important;
+	margin-right: auto !important; }
 
 .font {
 	&Size {
@@ -57,6 +63,8 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 	&Weight {
 		&-thin 		{ font-weight: 100; }
 		&-normal 	{ font-weight: 400; }
+		&-medium 	{ font-weight: 500; }
+		&-semibold{ font-weight: 600; }
 		&-bold 		{ font-weight: 700; }}
 	&Family {
 		&-logo 		{ font-family: $fontFamily-logo !important; }
@@ -71,7 +79,9 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 		&-uppercase { text-transform: uppercase; }
 		&-none 			{ text-transform: none; }}
 	&Align {
-		&-center { text-align: center; }}
+		&-left   { text-align: left; }
+		&-center { text-align: center; }
+		&-right  { text-align: right; }}
 }
 
 .whiteSpace {
@@ -115,10 +125,7 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 	&-full  { width: 100% }}
 
 .height 	{
-	&-full 	{ height: 100vh; }}
-
-.minHeight {
-	&-full 	 { min-height: 100vh; }}
+	&-full 	{ height: 100%; }}
 
 .position 	 {
 	&-absolute { position: absolute; }

@@ -1,41 +1,39 @@
 <template>
-  <div class="notificationTicker border-top border-nearWhite" :class="{ 'notificationTicker-expanded': notificationTickerExpanded }">
+  <div class="notificationTicker border-top border-nearWhite padding-top-2-1 padding-bottom-2-1" :class="{ 'notificationTicker-expanded': notificationTickerExpanded }">
     <grid-block columns="12" noPadding>
 
-      <div class="display-flex justifyContent-spaceBetween offset-2 span-10 padding-top">
+      <ul class="span-8 offset-2 notificationTicker_list list-unstyled padding-bottom">
+        <li class="margin-top color-base-lighter-3" v-if="notifications.length === 0">Loading...</li>
+        <li class="margin-bottom-3-1 display-block" v-else v-for="(notification, index) in notifications">
 
-        <ul class="notificationTicker_list list-unstyled padding-bottom" :class="{ hideGradient: notificationTickerExpanded || notifications.length < 2 }">
-          <li class="margin-bottom-1-3" v-if="notifications.length === 0">No recent happenings...</li>
-          <li class="margin-bottom-1-3" v-else v-for="(notification, index) in notifications">
+          <div v-if="notification.type === 'articleFinished'" class="notification display-inlineBlock">
+            {{ notification.user.id === currentUser.uid ? 'You' : 'Someone' }} finished  <span class="fontWeight-semibold">{{ notification.article.title }}</span>
+          </div>
 
-            <p v-if="notification.type === 'articleFinished'" class="display-inlineBlock">
-              {{ notification.user.id === currentUser.uid ? 'You' : 'Someone' }} finished {{ notification.article.title }}
-            </p>
+          <div v-if="notification.type === 'contributionAdded'" class="notification display-inlineBlock">
+            {{ notification.user.id === currentUser.uid ? 'You' : 'Someone' }} added a contribution to <span class="fontWeight-semibold">{{ notification.article.title }}</span>
+          </div>
 
-            <p v-if="notification.type === 'contributionAdded'" class="display-inlineBlock">
-              {{ notification.user.id === currentUser.uid ? 'You' : 'Someone' }} added a contribution to {{ notification.article.title }}
-            </p>
+          <div v-if="notification.type === 'reactionAdded'" class="notification display-inlineBlock">
+            {{ notification.user.id === currentUser.uid ? 'You' : 'Someone' }} reacted with
+            <span v-html="
+              notification.emoji === 'easyRead' ? '&#128526;' :
+              notification.emoji === 'understandable' ? '&#128519;' :
+              notification.emoji === 'interesting' ? '&#129300;' : null" />&nbsp; to <span class="fontWeight-semibold">{{ notification.article.title }}</span>
+          </div>
 
-            <p v-if="notification.type === 'reactionAdded'" class="display-inlineBlock">
-              {{ notification.user.id === currentUser.uid ? 'You' : 'Someone' }} added
-              <span v-html="
-                notification.emoji === 'easyRead' ? '&#128526;' :
-                notification.emoji === 'understandable' ? '&#128519;' :
-                notification.emoji === 'interesting' ? '&#129300;' : null" />
-              to {{ notification.article.title }}
-            </p>
+          <div class="fontSize-small color-base-lighter-3">{{ moment(notification.timestamp).fromNow() }}</div>
 
-            <p class="fontSize-xxsmall color-base-lighter-4 display-inlineBlock">{{ moment(notification.timestamp).fromNow() }}</p>
+        </li>
+      </ul>
 
-          </li>
-        </ul>
-        <div
-          class="h6 a"
+      <div class="span-2">
+        <span
+          class="h6 a float-right margin-top-2-1"
           style="z-index: 1;"
           @click="notificationTickerExpanded = !notificationTickerExpanded" >
-          {{ this.notificationTickerExpanded ? 'Close' : 'Expand' }}
-        </div>
-
+          {{ this.notificationTickerExpanded ? 'Close' : 'View recent' }}
+        </span>
       </div>
 
     </grid-block>
@@ -67,34 +65,23 @@
   @import '~styles/global';
 
   .notificationTicker {
-    background-color: white;
+    background-color: rgba(255,255,255,.92);
+    backdrop-filter: saturate(180%) blur(2px);
     position: relative;
-    height: 62px;
+    height: 80px;
     overflow: hidden;
-    transition: all 600ms cubic-bezier(0.6, -0.28, 0.735, 0.045);
+    transition: height 1000ms cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: height;
 
     &-expanded {
-      height: 296px;
-      transition: all 1000ms cubic-bezier(0.23, 1, 0.32, 1);
+      height: 352px;
+      //transition: height 1000ms cubic-bezier(0.23, 1, 0.32, 1);
     }
-
-    &_list {
-
-      &:after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 60%;
-        background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
-      }
-
-      &.hideGradient {
-        &:after {
-          background: none;
-        }
-      }
-    }
+  }
+  .notification {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 </style>

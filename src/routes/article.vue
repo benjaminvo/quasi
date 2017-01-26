@@ -19,27 +19,27 @@
         <!-- Left column -->
         <div class="article_details span-3">
 
-          <div class="display-flex alignItems-center margin-top">
+          <div class="display-flex alignItems-center margin-top margin-bottom-6-1">
             <toggle-checkmark
               small
-              class="margin-right"
+              class="margin-right-2-1"
               :toggleArticleFinished="toggleArticleFinished"
               :finished="article.finishedBy ? article.finishedBy[currentUser.uid] : null" />
-            <p class="display-inlineBlock fontSize-xsmall color-dark" v-for="(course, index) in this.articleCourses">Due {{ course.weekday }}</p>
+            <p class="display-inlineBlock fontSize-small color-dark" v-for="(course, index) in this.articleCourses">Due {{ course.weekday }}</p>
           </div>
 
           <h6 class="margin-top-6-1 margin-bottom color-base-lighter-2">Details</h6>
           <ul class="list-unstyled color-base-lighter-2">
-            <li class="margin-bottom-1-2 fontSize-xsmall">{{ article.author }} ({{ article.year }})</li>
-            <li class="margin-bottom-1-2 fontSize-xsmall">{{ pagesTotal }} pages ({{ article.pageFrom }} - {{ article.pageTo }})</li>
-            <li class="margin-bottom-1-2 fontSize-xsmall">Cited by {{ article.citedBy }}</li>
-            <li class="margin-bottom-1-2 fontSize-xsmall">{{ article.journal }}</li>
-            <li class="margin-bottom-1-2 fontSize-xsmall">{{ article.publisher }}</li>
+            <li class="margin-bottom-1-2 fontSize-small">{{ article.author }} ({{ article.year }})</li>
+            <li class="margin-bottom-1-2 fontSize-small">{{ pagesTotal }} pages ({{ article.pageFrom }} - {{ article.pageTo }})</li>
+            <li class="margin-bottom-1-2 fontSize-small">Cited by {{ article.citedBy }}</li>
+            <li class="margin-bottom-1-2 fontSize-small">{{ article.journal }}</li>
+            <li class="margin-bottom-1-2 fontSize-small">{{ article.publisher }}</li>
           </ul>
 
-          <h6 class="margin-bottom margin-top-3-1 color-base-lighter-2">Table of Contents</h6>
+          <h6 class="margin-bottom-2-1 color-base-lighter-2">Table of Contents</h6>
           <ul class="list-unstyled color-base-lighter-2">
-            <li v-for="(item, key, index) in article.tableOfContents" class="margin-bottom-1-2 fontSize-xsmall">{{ item }}</li>
+            <li v-for="(item, key, index) in article.tableOfContents" class="margin-bottom fontSize-small">{{ item }}</li>
           </ul>
 
         </div>
