@@ -7,18 +7,19 @@
         <li class="margin-bottom-3-1 display-block" v-else v-for="(notification, index) in notifications">
 
           <div v-if="notification.type === 'articleFinished'" class="notification display-inlineBlock">
-            {{ notification.user.id === currentUser.uid ? 'You' : 'Someone' }} finished  <span class="fontWeight-semibold">{{ notification.article.title }}</div>
-
-          <div v-if="notification.type === 'frustrationAdded'" class="notification display-inlineBlock">
-            {{ notification.user.id === currentUser.uid ? 'You' : 'Someone' }} added a thought to  <span class="fontWeight-semibold">{{ notification.article.title }}
+            {{ notification.user.id === currentUser.uid ? 'You' : 'Someone' }} finished  <span class="fontWeight-semibold">{{ notification.article.title }}</span>
           </div>
 
-          <div v-if="notification.type === 'emojiReactionAdded'" class="notification display-inlineBlock">
+          <div v-if="notification.type === 'contributionAdded'" class="notification display-inlineBlock">
+            {{ notification.user.id === currentUser.uid ? 'You' : 'Someone' }} added a contribution to <span class="fontWeight-semibold">{{ notification.article.title }}</span>
+          </div>
+
+          <div v-if="notification.type === 'reactionAdded'" class="notification display-inlineBlock">
             {{ notification.user.id === currentUser.uid ? 'You' : 'Someone' }} reacted with
             <span v-html="
               notification.emoji === 'easyRead' ? '&#128526;' :
               notification.emoji === 'understandable' ? '&#128519;' :
-              notification.emoji === 'interesting' ? '&#129300;' : null" />&nbsp; to <span class="fontWeight-semibold">{{ notification.article.title }}
+              notification.emoji === 'interesting' ? '&#129300;' : null" />&nbsp; to <span class="fontWeight-semibold">{{ notification.article.title }}</span>
           </div>
 
           <div class="fontSize-small color-base-lighter-3">{{ moment(notification.timestamp).fromNow() }}</div>

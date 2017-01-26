@@ -133,7 +133,7 @@
       renderMotivationMessage() {
         const initialMessage = `This week features ${ this.numOfArticles } ${ this.articleDuplicates ? 'unique' : '' } article${(this.numOfArticles > 1) ? 's' : '' } with a total of ${ this.totalPages } pages. Enjoy!`
 
-        if ( this.numOfArticles !== 0 ) {
+        if ( this.numOfArticles !== 0 && this.numOfArticles !== 1 ) {
           switch(this.numOfArticles - this.numOfReadArticles) {
             case 0:
               return "You've finished! &#127881;"
@@ -144,7 +144,7 @@
             default:
               return initialMessage
           }
-        }
+        } else return initialMessage
       },
       fetchCoursesAndCreateDayblocks() {
 
@@ -229,7 +229,7 @@
       toggleArticleFinished(e) {
         this.clickedArticleId = e.currentTarget.parentNode.parentNode.id
         const articleFinishedByPath = 'articles/' + this.clickedArticleId + '/finishedBy/'
-        const articleFinishedPath = 'users/' + this.currentUser.uid + '/articles/' + this.clickedArticleId + '/finished'
+        const articleFinishedPath = 'users/' + this.currentUser.uid + '/articlesFinished/' + this.clickedArticleId
 
         this.databaseRef.ref(articleFinishedPath).once('value', (snapshot) => {
 
@@ -247,7 +247,7 @@
                 timestamp: new Date().getTime(),
                 article: {
                   id: this.clickedArticleId,
-                  title: snapshot.val().meta.title
+                  title: snapshot.val().title
                 },
                 user: {
                   id: this.currentUser.uid,

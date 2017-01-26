@@ -76,10 +76,8 @@
           <input v-model="article.year" type="text" placeholder="Year">
           <input v-model="article.journal" type="text" placeholder="Journal">
           <input v-model="article.publisher" type="text" placeholder="Publisher">
-          <input v-model="article.keywords" type="text" placeholder="Keywords (Ex: Cognition, psychology, ...)">
           <input v-model="article.pageFrom" type="text" placeholder="Page from">
           <input v-model="article.pageTo" type="text" placeholder="Page to">
-          <textarea v-model="article.abstract" placeholder="Abstract"></textarea>
           <button type="submit">Add article</button>
         </form>
 
@@ -126,10 +124,10 @@
           year: null,
           journal: null,
           publisher: null,
-          keywords: null,
-          pageFrom: null,
-          pageTo: null,
-          abstract: null
+          pages: {
+            to: null,
+            from: null
+          }
         },
         assignUserToCourse: {
           userId: null,
@@ -229,20 +227,18 @@
             year: this.article.year,
             journal: this.article.journal,
             publisher: this.article.publisher,
-            keywords: this.article.keywords,
-            pageFrom: this.article.pageFrom,
-            pageTo: this.article.pageTo,
-            abstract: this.article.abstract
+            pages: {
+              to: this.article.pageTo,
+              from: this.article.pageFrom
+            }
           })
           this.article.title = ''
           this.article.author = ''
           this.article.year = ''
           this.article.journal = ''
           this.article.publisher = ''
-          this.article.keywords = ''
           this.article.pageFrom = ''
           this.article.pageTo = ''
-          this.article.abstract = ''
         }
       },
       deleteArticle(id) {

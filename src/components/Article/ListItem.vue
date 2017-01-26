@@ -55,7 +55,7 @@
       pageNum: { type: Number },
       year: { type: Number },
       finishedBy: { type: Object },
-      readerEmojiReactions: { type: Object },
+      reactions: { type: Object },
       toggleArticleFinished: { type: Function },
       numOfUsers: { type: Number }
     },
@@ -67,21 +67,21 @@
         }
         return finishers.length
       },
-      easyReadCount() { return this.readerEmojiReactions && this.readerEmojiReactions.easyRead ? this.readerEmojiReactions.easyRead.count : null },
+      easyReadCount() { return this.reactions && this.reactions.easyRead ? this.reactions.easyRead.count : null },
       easyReadReactedByCurrentUser() { return this.reactionReactedByUser('easyRead') },
-      understandableCount() { return this.readerEmojiReactions && this.readerEmojiReactions.understandable ? this.readerEmojiReactions.understandable.count : null },
+      understandableCount() { return this.reactions && this.reactions.understandable ? this.reactions.understandable.count : null },
       understandableReactedByCurrentUser() { return this.reactionReactedByUser('understandable') },
-      interestingCount() { return this.readerEmojiReactions && this.readerEmojiReactions.interesting ? this.readerEmojiReactions.interesting.count : null },
+      interestingCount() { return this.reactions && this.reactions.interesting ? this.reactions.interesting.count : null },
       interestingReactedByCurrentUser() { return this.reactionReactedByUser('interesting') },
     },
     methods: {
       reactionReactedByUser(reaction) {
         if (
-          this.readerEmojiReactions &&
-          this.readerEmojiReactions[reaction] &&
-          this.readerEmojiReactions[reaction].reactedBy &&
-          this.readerEmojiReactions[reaction].reactedBy[this.currentUser.uid] &&
-          this.readerEmojiReactions[reaction].reactedBy[this.currentUser.uid] === true
+          this.reactions &&
+          this.reactions[reaction] &&
+          this.reactions[reaction].reactedBy &&
+          this.reactions[reaction].reactedBy[this.currentUser.uid] &&
+          this.reactions[reaction].reactedBy[this.currentUser.uid] === true
         ) { return true } else { return false }
       }
     }
