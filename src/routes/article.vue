@@ -82,6 +82,7 @@
               :currentUser="currentUser"
               :databaseRef="databaseRef"
               :contributions="articleContributions"
+              :article="article"
               v-on:agreesChanged="setArticle" />
 
           </div>

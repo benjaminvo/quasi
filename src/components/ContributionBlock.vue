@@ -39,9 +39,10 @@
   export default {
     name: 'ContributionBlock',
     props: {
-      currentUser: { type: Object },
-      databaseRef: { type: Object },
-      contributions: { type: Array }
+      currentUser: Object,
+      databaseRef: Object,
+      contributions: Array,
+      article: Object
     },
     data() {
       return {
@@ -66,6 +67,17 @@
             const newContributionId = snapshot.key
             this.databaseRef.ref('users/' + this.currentUser.uid + '/contributions/' + newContributionId).set(true)
             this.databaseRef.ref('articles/' + this.$route.params.articleId + '/contributions/' + newContributionId).set(true)
+            // Add notification about added contribution to notifications node on database
+            const notification = {
+              type: 'contributionAdded',
+              timestamp: new Date().getTime(),
+              article: {
+                id: this.$route.params.articleId,
+                title: this.article.title },
+              user: {
+                id: this.currentUser.uid,
+                name: this.currentUser.displayName }}
+            this.databaseRef.ref('notifications').push(notification)
           })}
 
         this.contribution = ''
