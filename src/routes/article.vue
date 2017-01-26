@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="hidden" :class="{ fadeIn: dataLoaded }">
     <!-- Article header -->
     <grid-block columns="12">
 
@@ -127,7 +127,8 @@
         articleCourses: [],
         articleConcepts: [],
         articleContributions: [],
-        modalVisible: false
+        modalVisible: false,
+        dataLoaded: null
       }
     },
     computed: {
@@ -153,12 +154,14 @@
         this.databaseRef.ref('articles').on('value', (snapshot) => {
           const data = snapshot.val()
           for ( let article in data ) { if ( article === this.$route.params.articleId ) this.article = data[article] }
+
         })
       },
       fetchOtherData() {
         this.articleCourses = this.fetchDataRelatedToData('courses', this.article.courses)
         this.articleConcepts = this.fetchDataRelatedToData('concepts', this.article.concepts)
         this.articleContributions = this.fetchDataRelatedToData('contributions', this.article.contributions, true)
+        this.dataLoaded = true
       },
       toggleArticleFinished() {
         const articleId = this.$route.params.articleId

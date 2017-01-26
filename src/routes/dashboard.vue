@@ -1,5 +1,5 @@
 <template>
-  <div class="position-relative">
+  <div class="position-relative hidden" :class="{ fadeIn: dataLoaded }">
 
     <div v-bind:class="{ shown: allRead }" id="particles"></div>
 
@@ -60,7 +60,8 @@
         totalPages: 0,
         userFullName: this.currentUser.displayName,
         notifications: [],
-        notificationsRefetchInterval: null
+        notificationsRefetchInterval: null,
+        dataLoaded: null
       }
     },
     computed: {
@@ -202,6 +203,7 @@
             }
           }
         })
+        this.dataLoaded = true
       },
       fetchNotifications() {
         this.databaseRef.ref('notifications').limitToLast(5).on('value', (snapshot) => {
