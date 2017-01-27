@@ -228,6 +228,7 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 // Animation
 .fadeIn 					{ animation: fadeIn 600ms ease-out forwards; }
 .fadeInFast				{ animation: fadeIn 300ms ease-out forwards; }
+.fadeInWithDelay	{ animation: fadeIn 300ms 600ms ease-out forwards; }
 .fadeOut 					{ animation: fadeOut 600ms $animationBezier forwards; }
 .slideIn 					{ animation: slideIn 600ms $animationBezier forwards; }
 .transition 			{	transition: all 600ms $animationBezier !important; }

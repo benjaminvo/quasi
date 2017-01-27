@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <div v-if="!dataLoaded" class="fadeIn">
+    <div v-if="!dataLoaded" class="hidden fadeInWithDelay">
       <grid-block>
         <h1 class="color-base-lighter-4">Dashboard on it's way!</h1>
       </grid-block>
