@@ -66,7 +66,7 @@
             <h4 class="margin-bottom-2-1">Concepts</h4>
             <ul class="list-unstyled">
               <li v-for="(item, index) in articleConcepts" class="concept">
-                <a :href="item.wikiLink" class="h6 margin-bottom-1-2">{{ item.name }}</a>
+                <a :href="item.wikiLink" target="_blank" class="h6 margin-bottom-1-2">{{ item.name }}</a>
                 <p class="margin-bottom">{{ item.description }}</p>
               </li>
             </ul>
