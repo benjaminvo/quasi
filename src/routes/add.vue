@@ -14,18 +14,18 @@
           </li>
         </ul>
 
-        <h4 class="subtitle">Add course</h4>
+        <h2 class="subtitle">Add course</h2>
         <form v-on:submit.prevent="addData('name', 'courses', course)">
           <input class="margin-right-2-1" v-model="course.name" type="text" placeholder="Name">
-          <label for="weekday">Weekday:</label>
-          <select class="margin-right-2-1" name="weekday" v-model="course.weekday">
+          <label for="weekday">Weekday</label>
+          <select class="margin-right-2-1 width-full" name="weekday" v-model="course.weekday">
             <option>Monday</option>
             <option>Tuesday</option>
             <option>Wednesday</option>
             <option>Thursday</option>
             <option>Friday</option>
           </select>
-          <button type="submit">Add course</button>
+          <button type="submit" class="margin-top-2-1">Add course</button>
         </form>
       </div>
     </grid-block>
@@ -69,7 +69,7 @@
           </li>
         </ul>
 
-        <h4 class="subtitle">Add article</h4>
+        <h2 class="subtitle">Add article</h2>
         <form v-on:submit.prevent="addData('title', 'articles', article)">
 
           <input v-model="article.title" type="text" placeholder="Title">
@@ -81,7 +81,7 @@
           <input v-model.number="article.pageTo" type="text" placeholder="Page to">
           <input v-model.number="article.citedBy" type="text" placeholder="Cited by (number)">
 
-          <h4 class="margin-top-2-1 margin-bottom color-base-lighter-3">Guide</h4>
+          <h4 class="margin-top-2-1 margin-bottom">Guide</h4>
           <div class="display-flex">
             <div class="flex-1">
               <h6 class="margin-bottom">What</h6>
@@ -100,7 +100,19 @@
             </div>
           </div>
 
-          <button type="submit">Add article</button>
+          <h4 class="margin-top-2-1 margin-bottom">Table of contents</h4>
+          <input v-model="article.tableOfContents.chapter01" type="text" placeholder="Chapter 1">
+          <input v-model="article.tableOfContents.chapter02" type="text" placeholder="Chapter 2">
+          <input v-model="article.tableOfContents.chapter03" type="text" placeholder="Chapter 3">
+          <input v-model="article.tableOfContents.chapter04" type="text" placeholder="Chapter 4">
+          <input v-model="article.tableOfContents.chapter05" type="text" placeholder="Chapter 5">
+          <input v-model="article.tableOfContents.chapter06" type="text" placeholder="Chapter 6">
+          <input v-model="article.tableOfContents.chapter07" type="text" placeholder="Chapter 7">
+          <input v-model="article.tableOfContents.chapter08" type="text" placeholder="Chapter 8">
+          <input v-model="article.tableOfContents.chapter09" type="text" placeholder="Chapter 9">
+          <input v-model="article.tableOfContents.chapter10" type="text" placeholder="Chapter 10">
+
+          <button type="submit" class="margin-top-2-1">Add article</button>
 
         </form>
 
@@ -128,12 +140,12 @@
           <li>{{ concept.name }}</li>
         </ul>
 
-        <h4 class="subtitle">Add concept</h4>
+        <h2 class="subtitle">Add concept</h2>
         <form v-on:submit.prevent="addData('name', 'concepts', concept)">
           <input v-model="concept.name" type="text" placeholder="Name">
           <input v-model="concept.description" type="text" placeholder="Description">
           <input v-model="concept.wikiLink" type="text" placeholder="Wiki link">
-          <button type="submit">Add concept</button>
+          <button type="submit" class="margin-top-2-1">Add concept</button>
         </form>
 
         <h4 class="subtitle">Assign concept to article</h4>
@@ -201,6 +213,18 @@
               title: null,
               text: null
             }
+          },
+          tableOfContents: {
+            chapter01: null,
+            chapter02: null,
+            chapter03: null,
+            chapter04: null,
+            chapter05: null,
+            chapter06: null,
+            chapter07: null,
+            chapter08: null,
+            chapter09: null,
+            chapter10: null
           }
         },
         concept: {
@@ -293,7 +317,7 @@
     button { background: $color-primary; padding: $scale-1-2 $scale; }
   }
 
-  .subtitle { margin: $scale-3-1 0 $scale; }
+  .subtitle { margin: $scale-4-1 0 $scale; }
 
   .delete {
     color: red;
