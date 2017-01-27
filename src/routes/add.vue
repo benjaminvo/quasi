@@ -73,12 +73,12 @@
         <form v-on:submit.prevent="addArticle">
           <input v-model="article.title" type="text" placeholder="Title">
           <input v-model="article.author" type="text" placeholder="Author">
-          <input v-model="article.year" type="text" placeholder="Year">
+          <input v-model.number="article.year" type="text" placeholder="Year">
           <input v-model="article.journal" type="text" placeholder="Journal">
           <input v-model="article.publisher" type="text" placeholder="Publisher">
-          <input v-model="article.pageFrom" type="text" placeholder="Page from">
-          <input v-model="article.pageTo" type="text" placeholder="Page to">
-          <input v-model="article.citedBy" type="text" placeholder="Cited by (number)">
+          <input v-model.number="article.pageFrom" type="text" placeholder="Page from">
+          <input v-model.number="article.pageTo" type="text" placeholder="Page to">
+          <input v-model.number="article.citedBy" type="text" placeholder="Cited by (number)">
           <button type="submit">Add article</button>
         </form>
 
