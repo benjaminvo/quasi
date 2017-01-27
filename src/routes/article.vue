@@ -56,14 +56,14 @@
           <div class="article_introduction span-9 card card-2">
 
             <h2 class="margin-bottom-4-1">Reading guide</h2>
-            <ul class="list-unstyled">
+            <ul class="margin-bottom-8-1 list-unstyled">
               <li v-for="(item, key, index) in article.guide" v-if="key !== 'concepts'" class="margin-bottom">
                 <h4 class="margin-bottom-1-2">{{ item.title }}</h4>
                 <p class="margin-bottom-3-1">{{ item.text }}</p>
               </li>
             </ul>
 
-            <h4 class="margin-bottom">Concepts</h4>
+            <h4 class="margin-bottom-2-1">Concepts</h4>
             <ul class="list-unstyled">
               <li v-for="(item, index) in articleConcepts" class="concept">
                 <a :href="item.wikiLink" class="h6 margin-bottom-1-2">{{ item.name }}</a>

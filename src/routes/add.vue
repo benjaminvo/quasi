@@ -96,11 +96,41 @@
       </div>
     </grid-block>
 
+    <hr>
+
+    <grid-block columns="12">
+      <div class="span-12">
+
+        <h4 class="subtitle">Add concept</h4>
+        <form v-on:submit.prevent="addConcept">
+          <input v-model="concept.name" type="text" placeholder="Name">
+          <input v-model="concept.description" type="text" placeholder="Description">
+          <input v-model="concept.wikiLink" type="text" placeholder="Wiki link">
+          <button type="submit">Add concept</button>
+        </form>
+
+        <h4 class="subtitle">Assign concept to article</h4>
+        <form v-on:submit.prevent="assignConceptToArticle">
+          <label for="article">Concept ID:</label>
+          <select class="margin-right-2-1" name="concept" v-model="assignConceptToArticle.conceptId">
+            <option v-for="(concept, index) in concepts">{{ concept.id }}</option>
+          </select>
+          <label for="course">Article ID:</label>
+          <select class="margin-right-2-1" name="article" v-model="assignConceptToArticle.articleId">
+            <option v-for="(article, index) in articles">{{ article.id }}</option>
+          </select>
+          <button type="submit">Assign concept</button>
+        </form>
+
+      </div>
+    </grid-block>
+
   </div>
 </template>
 
 <script>
   import GridBlock from 'components/GridBlock'
+  import { fetchDataToArray } from 'utils/fetchDataToArray'
   export default {
     name: 'AddRoute',
     components: {
@@ -109,11 +139,13 @@
     props: {
       databaseRef: { type: Object },
     },
+    mixins: [fetchDataToArray],
     data() {
       return {
         courses: [],
         users: [],
         articles: [],
+        concepts: [],
         course: {
           name: null,
           weekday: null
@@ -129,6 +161,11 @@
             from: null
           }
         },
+        concept: {
+          name: null,
+          description: null,
+          wikiLink: null
+        },
         assignUserToCourse: {
           userId: null,
           courseId: null
@@ -136,51 +173,20 @@
         assignArticleToCourse: {
           articleId: null,
           courseId: null
+        },
+        assignConceptToArticle: {
+          conceptId: null,
+          articleId: null
         }
       }
     },
     created() {
-      this.fetchCourses()
-      this.fetchUsers()
-      this.fetchArticles()
+      this.courses = this.fetchDataToArray('courses', true)
+      this.users = this.fetchDataToArray('users', true)
+      this.articles = this.fetchDataToArray('articles', true)
+      this.concepts = this.fetchDataToArray('concepts', true)
     },
     methods: {
-      fetchCourses() {
-        this.databaseRef.ref('courses/').on('value', (snapshot) => {
-          let coursesArray = []
-          const courses = snapshot.val()
-          for (let course in courses) {
-            const courseObj = courses[course]
-            courseObj.id = course
-            coursesArray.push(courseObj)
-          }
-          this.courses = coursesArray
-        })
-      },
-      fetchUsers() {
-        this.databaseRef.ref('users/').on('value', (snapshot) => {
-          let usersArray = []
-          const users = snapshot.val()
-          for (let user in users) {
-            const userObj = users[user]
-            userObj.id = user
-            usersArray.push(userObj)
-          }
-          this.users = usersArray
-        })
-      },
-      fetchArticles() {
-        this.databaseRef.ref('articles/').on('value', (snapshot) => {
-          let articlesArray = []
-          const articles = snapshot.val()
-          for (let article in articles) {
-            const articleObj = articles[article]
-            articleObj.id = article
-            articlesArray.push(articleObj)
-          }
-          this.articles = articlesArray
-        })
-      },
       addCourse() {
         if ( this.course.name != '' ) {
           this.databaseRef.ref('courses/').push({
@@ -269,6 +275,18 @@
           })
         }
       },
+      addConcept() {
+        if ( this.concept.name != '' ) {
+          this.databaseRef.ref('concepts').push({
+            name: this.concept.name,
+            description: this.concept.description,
+            wikiLink: this.concept.wikiLink
+          })
+          this.concept.name = ''
+          this.concept.description = ''
+          this.concept.wikiLink = ''
+        }
+      },
       assignUserToCourse() {
         if (confirm('Assign ' + this.assignUserToCourse.userId + ' to ' + this.assignUserToCourse.courseId + '?') ) {
           this.databaseRef.ref('courses/' + this.assignUserToCourse.courseId + '/students/' + this.assignUserToCourse.userId).set(true)
@@ -283,6 +301,14 @@
           this.databaseRef.ref('articles/' + this.assignArticleToCourse.articleId + '/courses/' + this.assignArticleToCourse.courseId).set(true)
           this.assignArticleToCourse.articleId = ''
           this.assignArticleToCourse.courseId = ''
+        }
+      },
+      assignConceptToArticle() {
+        if (confirm('Assign ' + this.assignConceptToArticle.conceptId + ' to ' + this.assignConceptToArticle.articleId + '?') ) {
+          this.databaseRef.ref('articles/' + this.assignConceptToArticle.articleId + '/concepts/' + this.assignConceptToArticle.conceptId).set(true)
+          this.databaseRef.ref('concepts/' + this.assignConceptToArticle.conceptId + '/articles/' + this.assignConceptToArticle.articleId).set(true)
+          this.assignConceptToArticle.conceptId = ''
+          this.assignConceptToArticle.articleId = ''
         }
       }
     }
