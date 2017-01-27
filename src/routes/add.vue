@@ -15,7 +15,7 @@
         </ul>
 
         <h4 class="subtitle">Add course</h4>
-        <form v-on:submit.prevent="addCourse">
+        <form v-on:submit.prevent="addData('name', 'courses', course)">
           <input class="margin-right-2-1" v-model="course.name" type="text" placeholder="Name">
           <label for="weekday">Weekday:</label>
           <select class="margin-right-2-1" name="weekday" v-model="course.weekday">
@@ -70,7 +70,7 @@
         </ul>
 
         <h4 class="subtitle">Add article</h4>
-        <form v-on:submit.prevent="addArticle">
+        <form v-on:submit.prevent="addData('title', 'articles', article)">
           <input v-model="article.title" type="text" placeholder="Title">
           <input v-model="article.author" type="text" placeholder="Author">
           <input v-model.number="article.year" type="text" placeholder="Year">
@@ -107,7 +107,7 @@
         </ul>
 
         <h4 class="subtitle">Add concept</h4>
-        <form v-on:submit.prevent="addConcept">
+        <form v-on:submit.prevent="addData('name', 'concepts', concept)">
           <input v-model="concept.name" type="text" placeholder="Name">
           <input v-model="concept.description" type="text" placeholder="Description">
           <input v-model="concept.wikiLink" type="text" placeholder="Wiki link">
@@ -136,6 +136,7 @@
 <script>
   import GridBlock from 'components/GridBlock'
   import { fetchDataToArray } from 'utils/fetchDataToArray'
+  import { addData } from 'utils/addData'
   import { assignDataToData } from 'utils/assignDataToData'
   export default {
     name: 'AddRoute',
@@ -145,7 +146,7 @@
     props: {
       databaseRef: { type: Object },
     },
-    mixins: [fetchDataToArray, assignDataToData],
+    mixins: [fetchDataToArray, addData, assignDataToData],
     data() {
       return {
         courses: [],
@@ -192,12 +193,6 @@
       this.concepts = this.fetchDataToArray('concepts', true)
     },
     methods: {
-      addCourse() {
-        if ( this.course.name != '' ) {
-          this.databaseRef.ref('courses').push(this.course)
-          for ( let prop in this.course ) this.course[prop] = '' // Reset input fields
-        }
-      },
       deleteCourse(id) {
         if ( confirm('Are you sure?') ) {
           // Delete from courses ref
@@ -226,12 +221,6 @@
           })
         }
       },
-      addArticle() {
-        if ( this.article.title != '' ) {
-          this.databaseRef.ref('articles').push(this.article)
-          for ( let prop in this.article ) this.article[prop] = '' // Reset input fields
-        }
-      },
       deleteArticle(id) {
         if ( confirm('Are you sure?') ) {
           // Delete from articles ref
@@ -247,18 +236,6 @@
               }
             }
           })
-        }
-      },
-      addConcept() {
-        if ( this.concept.name != '' ) {
-          this.databaseRef.ref('concepts').push({
-            name: this.concept.name,
-            description: this.concept.description,
-            wikiLink: this.concept.wikiLink
-          })
-          this.concept.name = ''
-          this.concept.description = ''
-          this.concept.wikiLink = ''
         }
       }
     }
