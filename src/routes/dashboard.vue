@@ -1,30 +1,40 @@
 <template>
-  <div class="position-relative hidden" :class="{ fadeIn: dataLoaded }">
+  <div>
 
-    <div v-bind:class="{ shown: allRead }" id="particles"></div>
+    <div v-if="!dataLoaded" class="fadeIn">
+      <grid-block>
+        <h1 class="color-base-lighter-4">Dashboard on it's way!</h1>
+      </grid-block>
+    </div>
 
-    <grid-block columns="12">
-      <h1 class="dashboard_message span-8 offset-2 margin-bottom-4-1" v-html="this.renderMotivationMessage()" /> <!-- Height = 3 lines of text -->
-    </grid-block>
+    <div class="position-relative hidden" :class="{ fadeIn: dataLoaded }">
 
-    <notification-ticker
-      :currentUser="currentUser"
-      :notifications="notifications" />
+      <div v-bind:class="{ shown: allRead }" id="particles"></div>
 
-    <day-block
-      :currentUser="currentUser"
-      :toggleArticleFinished="toggleArticleFinished"
-      v-for="(dayBlock, key, index) in dayBlocks"
-      :day="key"
-      :courses="dayBlock.courses"
-      :numOfUsers="numOfUsers" />
+      <grid-block columns="12">
+        <h1 class="dashboard_message span-8 offset-2 margin-bottom-4-1" v-html="this.renderMotivationMessage()" /> <!-- Height = 3 lines of text -->
+      </grid-block>
 
-    <modal
-      v-if="modalVisible"
-      v-on:close="closeModal"
-      :currentUser="currentUser"
-      :databaseRef="databaseRef"
-      :articleId="clickedArticleId" />
+      <notification-ticker
+        :currentUser="currentUser"
+        :notifications="notifications" />
+
+      <day-block
+        :currentUser="currentUser"
+        :toggleArticleFinished="toggleArticleFinished"
+        v-for="(dayBlock, key, index) in dayBlocks"
+        :day="key"
+        :courses="dayBlock.courses"
+        :numOfUsers="numOfUsers" />
+
+      <modal
+        v-if="modalVisible"
+        v-on:close="closeModal"
+        :currentUser="currentUser"
+        :databaseRef="databaseRef"
+        :articleId="clickedArticleId" />
+
+    </div>
 
   </div>
 </template>
