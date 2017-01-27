@@ -12,7 +12,7 @@
       <div v-bind:class="{ shown: allRead }" id="particles"></div>
 
       <grid-block columns="12">
-        <h1 class="dashboard_message span-8 offset-2 margin-bottom-4-1" v-html="this.renderMotivationMessage()" /> <!-- Height = 3 lines of text -->
+        <h1 class="dashboard_message span-8 offset-2 margin-bottom-4-1" v-html="motivationMessage" /> <!-- Height = 3 lines of text -->
       </grid-block>
 
       <notification-ticker
@@ -100,14 +100,34 @@
       },
       numOfReadArticles() {
         let numOfReadArticles = 0
-        this.databaseRef.ref('users/' + this.currentUser.uid + '/articlesFinished').on('value', (snapshot) => {
-          const articlesFinished = snapshot.val()
-          for (let article in articlesFinished) if ( articlesFinished[article] === true ) numOfReadArticles += 1
-        })
+        if (this.numOfArticles > 0) {
+          this.databaseRef.ref('users/' + this.currentUser.uid + '/articlesFinished').on('value', (snapshot) => {
+            const articlesFinished = snapshot.val()
+            for (let article in articlesFinished) if ( articlesFinished[article] === true ) numOfReadArticles += 1
+          })
+        }
         return numOfReadArticles
       },
       allRead() {
         if ( this.numOfReadArticles !== 0 ) return this.numOfArticles - this.numOfReadArticles === 0
+      },
+      motivationMessage() {
+        const initialMessage = `This week features ${ this.numOfArticles } ${ this.articleDuplicates ? 'unique' : '' } article${(this.numOfArticles > 1) ? 's' : '' } with a total of ${ this.totalPages } pages. Enjoy!`
+
+        const articlesLeft = this.numOfArticles - this.numOfReadArticles
+
+        if (this.numOfArticles > 0) {
+          switch (articlesLeft) {
+            case 0:
+              return "You've finished! &#127881;"
+              break
+            case 1:
+              return '1 to go!'
+              break
+            default:
+              return initialMessage
+          }
+        }
       }
     },
     created() {
@@ -120,6 +140,7 @@
       this.fetchNotifications()
     },
     beforeDestroy() {
+      this.numOfReadArticles = null
       this.databaseRef.ref('users/').off()
       this.databaseRef.ref('courses/').off()
       this.databaseRef.ref('articles/').off()
@@ -140,22 +161,6 @@
             }
           }
         })
-      },
-      renderMotivationMessage() {
-        const initialMessage = `This week features ${ this.numOfArticles } ${ this.articleDuplicates ? 'unique' : '' } article${(this.numOfArticles > 1) ? 's' : '' } with a total of ${ this.totalPages } pages. Enjoy!`
-
-        if ( this.numOfArticles !== 0 ) {
-          switch(this.numOfArticles - this.numOfReadArticles) {
-            case 0:
-              return "You've finished! &#127881;"
-              break
-            case 1:
-              return '1 to go!'
-              break
-            default:
-              return initialMessage
-          }
-        } else return initialMessage
       },
       fetchCoursesAndCreateDayblocks() {
 
