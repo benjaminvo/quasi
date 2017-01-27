@@ -90,9 +90,9 @@
       },
       numOfReadArticles() {
         let numOfReadArticles = 0
-        this.databaseRef.ref('users/' + this.currentUser.uid + '/articles').on('value', (snapshot) => {
-          const articles = snapshot.val()
-          for (let article in articles) if ( articles[article].finished === true ) numOfReadArticles += 1
+        this.databaseRef.ref('users/' + this.currentUser.uid + '/articlesFinished').on('value', (snapshot) => {
+          const articlesFinished = snapshot.val()
+          for (let article in articlesFinished) if ( articlesFinished[article] === true ) numOfReadArticles += 1
         })
         return numOfReadArticles
       },
@@ -108,6 +108,11 @@
       this.setUserNameOnDatabase()
       this.particlesInit()
       this.fetchNotifications()
+    },
+    updated() {
+      console.log(this.allRead);
+      console.log(this.numOfArticles, 'numof');
+      console.log(this.numOfReadArticles, 'numofread');
     },
     beforeDestroy() {
       this.databaseRef.ref('users/').off()
@@ -134,7 +139,7 @@
       renderMotivationMessage() {
         const initialMessage = `This week features ${ this.numOfArticles } ${ this.articleDuplicates ? 'unique' : '' } article${(this.numOfArticles > 1) ? 's' : '' } with a total of ${ this.totalPages } pages. Enjoy!`
 
-        if ( this.numOfArticles !== 0 && this.numOfArticles !== 1 ) {
+        if ( this.numOfArticles !== 0 ) {
           switch(this.numOfArticles - this.numOfReadArticles) {
             case 0:
               return "You've finished! &#127881;"
@@ -342,6 +347,7 @@
     z-index: -1;
     opacity: 0;
     transition: opacity 400ms ease;
+    pointer-events: none;
   }
 
 </style>
