@@ -43,7 +43,7 @@
         </ul>
 
         <h4 class="subtitle">Assign user to course</h4>
-        <form v-on:submit.prevent="assignUserToCourse">
+        <form v-on:submit.prevent="assignDataToData(assignUserToCourse.userId, 'users', assignUserToCourse.courseId, 'courses')">
           <label for="user">User ID:</label>
           <select class="margin-right-2-1" name="user" v-model="assignUserToCourse.userId">
             <option v-for="(user, index) in users">{{ user.id }}</option>
@@ -82,7 +82,7 @@
         </form>
 
         <h4 class="subtitle">Assign article to course</h4>
-        <form v-on:submit.prevent="assignArticleToCourse">
+        <form v-on:submit.prevent="assignDataToData(assignArticleToCourse.articleId, 'articles', assignArticleToCourse.courseId, 'courses')">
           <label for="article">Article ID:</label>
           <select class="margin-right-2-1" name="article" v-model="assignArticleToCourse.articleId">
             <option v-for="(article, index) in articles">{{ article.id }}</option>
@@ -100,6 +100,10 @@
 
     <grid-block columns="12">
       <div class="span-12">
+        <h1 class="margin-bottom">Concepts</h1>
+        <ul class="list-unstyled border-bottom" v-for="(concept, index) in concepts">
+          <li><b>{{ concept.name }}</b></li>
+        </ul>
 
         <h4 class="subtitle">Add concept</h4>
         <form v-on:submit.prevent="addConcept">
@@ -110,7 +114,7 @@
         </form>
 
         <h4 class="subtitle">Assign concept to article</h4>
-        <form v-on:submit.prevent="assignConceptToArticle">
+        <form v-on:submit.prevent="assignDataToData(assignConceptToArticle.conceptId, 'concepts', assignConceptToArticle.articleId, 'articles')">
           <label for="article">Concept ID:</label>
           <select class="margin-right-2-1" name="concept" v-model="assignConceptToArticle.conceptId">
             <option v-for="(concept, index) in concepts">{{ concept.id }}</option>
@@ -131,6 +135,7 @@
 <script>
   import GridBlock from 'components/GridBlock'
   import { fetchDataToArray } from 'utils/fetchDataToArray'
+  import { assignDataToData } from 'utils/assignDataToData'
   export default {
     name: 'AddRoute',
     components: {
@@ -139,7 +144,7 @@
     props: {
       databaseRef: { type: Object },
     },
-    mixins: [fetchDataToArray],
+    mixins: [fetchDataToArray, assignDataToData],
     data() {
       return {
         courses: [],
@@ -250,25 +255,14 @@
       deleteArticle(id) {
         if ( confirm('Are you sure?') ) {
           // Delete from articles ref
-          this.databaseRef.ref('articles/' + id).remove()
+          this.databaseRef.ref('articles' + id).remove()
           // Delete it from all courses in which the article is referenced
-          this.databaseRef.ref('courses/').on('value', (snapshot) => {
+          this.databaseRef.ref('courses').on('value', (snapshot) => {
             const courseObjs = snapshot.val()
             for (let courseObj in courseObjs) {
               for (let articleId in courseObjs[courseObj].articles) {
                 if ( articleId === id ) {
                   this.databaseRef.ref('courses/' + courseObj + '/articles/' + articleId ).remove()
-                }
-              }
-            }
-          }),
-          // Delete it from all users in which the article is referenced
-          this.databaseRef.ref('users/').on('value', (snapshot) => {
-            const userObjs = snapshot.val()
-            for (let userObj in userObjs) {
-              for (let articleId in userObjs[userObj].articles) {
-                if ( articleId === id ) {
-                  this.databaseRef.ref('users/' + userObj + '/articles/' + articleId ).remove()
                 }
               }
             }
@@ -285,30 +279,6 @@
           this.concept.name = ''
           this.concept.description = ''
           this.concept.wikiLink = ''
-        }
-      },
-      assignUserToCourse() {
-        if (confirm('Assign ' + this.assignUserToCourse.userId + ' to ' + this.assignUserToCourse.courseId + '?') ) {
-          this.databaseRef.ref('courses/' + this.assignUserToCourse.courseId + '/students/' + this.assignUserToCourse.userId).set(true)
-          this.databaseRef.ref('users/' + this.assignUserToCourse.userId + '/courses/' + this.assignUserToCourse.courseId).set(true)
-          this.assignUserToCourse.userId = ''
-          this.assignUserToCourse.courseId = ''
-        }
-      },
-      assignArticleToCourse() {
-        if (confirm('Assign ' + this.assignArticleToCourse.articleId + ' to ' + this.assignArticleToCourse.courseId + '?') ) {
-          this.databaseRef.ref('courses/' + this.assignArticleToCourse.courseId + '/articles/' + this.assignArticleToCourse.articleId).set(true)
-          this.databaseRef.ref('articles/' + this.assignArticleToCourse.articleId + '/courses/' + this.assignArticleToCourse.courseId).set(true)
-          this.assignArticleToCourse.articleId = ''
-          this.assignArticleToCourse.courseId = ''
-        }
-      },
-      assignConceptToArticle() {
-        if (confirm('Assign ' + this.assignConceptToArticle.conceptId + ' to ' + this.assignConceptToArticle.articleId + '?') ) {
-          this.databaseRef.ref('articles/' + this.assignConceptToArticle.articleId + '/concepts/' + this.assignConceptToArticle.conceptId).set(true)
-          this.databaseRef.ref('concepts/' + this.assignConceptToArticle.conceptId + '/articles/' + this.assignConceptToArticle.articleId).set(true)
-          this.assignConceptToArticle.conceptId = ''
-          this.assignConceptToArticle.articleId = ''
         }
       }
     }

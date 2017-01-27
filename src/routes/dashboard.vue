@@ -176,9 +176,9 @@
         this.databaseRef.ref('courses/').once('value', (snapshot) => {
           const courses = snapshot.val()
           for (let course in courses) { // For each course
-            const courseHasGotStudents = courses[course].students // If there is students
+            const courseHasGotStudents = courses[course].users // If there is users
             if (courseHasGotStudents) {
-              if (courses[course].students[this.currentUser.uid]) { // If this user is assigned to course
+              if (courses[course].users[this.currentUser.uid]) { // If this user is assigned to course
                 const courseObj = {
                   course: courses[course].name,
                   articles: courses[course].articles
