@@ -71,6 +71,7 @@
 
         <h4 class="subtitle">Add article</h4>
         <form v-on:submit.prevent="addData('title', 'articles', article)">
+
           <input v-model="article.title" type="text" placeholder="Title">
           <input v-model="article.author" type="text" placeholder="Author">
           <input v-model.number="article.year" type="text" placeholder="Year">
@@ -79,7 +80,28 @@
           <input v-model.number="article.pageFrom" type="text" placeholder="Page from">
           <input v-model.number="article.pageTo" type="text" placeholder="Page to">
           <input v-model.number="article.citedBy" type="text" placeholder="Cited by (number)">
+
+          <h4 class="margin-top-2-1 margin-bottom color-base-lighter-3">Guide</h4>
+          <div class="display-flex">
+            <div class="flex-1">
+              <h6 class="margin-bottom">What</h6>
+              <input v-model="article.guide.what.title" type="text" placeholder="Title">
+              <textarea v-model="article.guide.what.text" type="text" placeholder="Text"></textarea>
+            </div>
+            <div class="margin-left-2-1 flex-1">
+              <h6 class="margin-bottom">Where</h6>
+              <input v-model="article.guide.where.title" type="text" placeholder="Title">
+              <textarea v-model="article.guide.where.text" type="text" placeholder="Text"></textarea>
+            </div>
+            <div class="margin-left-2-1 flex-1">
+              <h6 class="margin-bottom">Why</h6>
+              <input v-model="article.guide.why.title" type="text" placeholder="Title">
+              <textarea v-model="article.guide.why.text" type="text" placeholder="Text"></textarea>
+            </div>
+          </div>
+
           <button type="submit">Add article</button>
+
         </form>
 
         <h4 class="subtitle">Assign article to course</h4>
@@ -165,7 +187,21 @@
           publisher: null,
           pageFrom: null,
           pageTo: null,
-          citedBy: null
+          citedBy: null,
+          guide: {
+            what: {
+              title: null,
+              text: null
+            },
+            where: {
+              title: null,
+              text: null
+            },
+            why: {
+              title: null,
+              text: null
+            }
+          }
         },
         concept: {
           name: null,
