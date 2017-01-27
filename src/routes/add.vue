@@ -62,9 +62,9 @@
     <grid-block columns="12">
       <div class="span-12">
         <h1 class="margin-bottom">Articles</h1>
-        <ul class="list-unstyled border-bottom" v-for="(article, index) in articles">
+        <ul class="list-unstyled" v-for="(article, index) in articles">
           <li>
-            <b>{{ article.title }}</b>, {{ article.id }}, {{ article.author }} ({{ article.year }})
+            <b>{{ article.title }}</b> ({{ article.year }}), {{ article.author }}, {{ article.id }}
             <span class="delete" @click="deleteArticle(article.id)">Delete</span>
           </li>
         </ul>
@@ -101,8 +101,8 @@
     <grid-block columns="12">
       <div class="span-12">
         <h1 class="margin-bottom">Concepts</h1>
-        <ul class="list-unstyled border-bottom" v-for="(concept, index) in concepts">
-          <li><b>{{ concept.name }}</b></li>
+        <ul class="list-unstyled" v-for="(concept, index) in concepts">
+          <li>{{ concept.name }}</li>
         </ul>
 
         <h4 class="subtitle">Add concept</h4>
