@@ -46,11 +46,11 @@
         <form v-on:submit.prevent="assignDataToData(assignUserToCourse.userId, 'users', assignUserToCourse.courseId, 'courses')">
           <label for="user">User ID:</label>
           <select class="margin-right-2-1" name="user" v-model="assignUserToCourse.userId">
-            <option v-for="(user, index) in users">{{ user.id }}</option>
+            <option v-for="(user, index) in users" :value="user.id">{{ user.firstName }} {{ user.lastName }}</option>
           </select>
           <label for="course">Course ID:</label>
           <select class="margin-right-2-1" name="course" v-model="assignUserToCourse.courseId">
-            <option v-for="(course, index) in courses">{{ course.id }}</option>
+            <option v-for="(course, index) in courses" :value="course.id">{{ course.name }}</option>
           </select>
           <button type="submit">Assign user</button>
         </form>
@@ -85,11 +85,11 @@
         <form v-on:submit.prevent="assignDataToData(assignArticleToCourse.articleId, 'articles', assignArticleToCourse.courseId, 'courses')">
           <label for="article">Article ID:</label>
           <select class="margin-right-2-1" name="article" v-model="assignArticleToCourse.articleId">
-            <option v-for="(article, index) in articles">{{ article.id }}</option>
+            <option v-for="(article, index) in articles" :value="article.id">{{ article.title }} ({{ article.author }})</option>
           </select>
           <label for="course">Course ID:</label>
           <select class="margin-right-2-1" name="course" v-model="assignArticleToCourse.courseId">
-            <option v-for="(course, index) in courses">{{ course.id }}</option>
+            <option v-for="(course, index) in courses" :value="course.id">{{ course.name }}</option>
           </select>
           <button type="submit">Assign article</button>
         </form>
@@ -117,11 +117,11 @@
         <form v-on:submit.prevent="assignDataToData(assignConceptToArticle.conceptId, 'concepts', assignConceptToArticle.articleId, 'articles')">
           <label for="article">Concept ID:</label>
           <select class="margin-right-2-1" name="concept" v-model="assignConceptToArticle.conceptId">
-            <option v-for="(concept, index) in concepts">{{ concept.id }}</option>
+            <option v-for="(concept, index) in concepts" :value="concept.id">{{ concept.name }}</option>
           </select>
           <label for="course">Article ID:</label>
           <select class="margin-right-2-1" name="article" v-model="assignConceptToArticle.articleId">
-            <option v-for="(article, index) in articles">{{ article.id }}</option>
+            <option v-for="(article, index) in articles" :value="article.id">{{ article.title }} ({{ article.author }})</option>
           </select>
           <button type="submit">Assign concept</button>
         </form>
