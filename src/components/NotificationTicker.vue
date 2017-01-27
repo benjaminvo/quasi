@@ -16,10 +16,7 @@
 
           <div v-if="notification.type === 'reactionAdded'" class="notification display-inlineBlock">
             {{ notification.user.id === currentUser.uid ? 'You' : 'Someone' }} reacted with
-            <span v-html="
-              notification.emoji === 'easyRead' ? '&#128526;' :
-              notification.emoji === 'understandable' ? '&#128519;' :
-              notification.emoji === 'interesting' ? '&#129300;' : null" />&nbsp; to <span class="fontWeight-semibold">{{ notification.article.title }}</span>
+            <span v-html="renderEmoji(notification.emoji)" />&nbsp; to <span class="fontWeight-semibold">{{ notification.article.title }}</span>
           </div>
 
           <div class="fontSize-small color-base-lighter-3">{{ moment(notification.timestamp).fromNow() }}</div>
@@ -56,7 +53,12 @@
       }
     },
     methods: {
-      moment(timestamp) { return moment(timestamp) }
+      moment(timestamp) { return moment(timestamp) },
+      renderEmoji(emoji) {
+        if ( emoji == 'easyRead' ) return '&#128526;'
+        else if ( emoji == 'understandable' ) return '&#128519;'
+        else if ( emoji == 'interesting' ) return '&#129300;'
+      }
     },
   }
 </script>

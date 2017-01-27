@@ -109,11 +109,6 @@
       this.particlesInit()
       this.fetchNotifications()
     },
-    updated() {
-      console.log(this.allRead);
-      console.log(this.numOfArticles, 'numof');
-      console.log(this.numOfReadArticles, 'numofread');
-    },
     beforeDestroy() {
       this.databaseRef.ref('users/').off()
       this.databaseRef.ref('courses/').off()
