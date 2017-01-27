@@ -78,6 +78,7 @@
           <input v-model="article.publisher" type="text" placeholder="Publisher">
           <input v-model="article.pageFrom" type="text" placeholder="Page from">
           <input v-model="article.pageTo" type="text" placeholder="Page to">
+          <input v-model="article.citedBy" type="text" placeholder="Cited by (number)">
           <button type="submit">Add article</button>
         </form>
 
@@ -161,10 +162,9 @@
           year: null,
           journal: null,
           publisher: null,
-          pages: {
-            to: null,
-            from: null
-          }
+          pageFrom: null,
+          pageTo: null,
+          citedBy: null
         },
         concept: {
           name: null,
@@ -194,12 +194,8 @@
     methods: {
       addCourse() {
         if ( this.course.name != '' ) {
-          this.databaseRef.ref('courses/').push({
-            name: this.course.name,
-            weekday: this.course.weekday
-          })
-          this.course.name = ''
-          this.course.weekday = ''
+          this.databaseRef.ref('courses').push(this.course)
+          for ( let prop in this.course ) this.course[prop] = '' // Reset input fields
         }
       },
       deleteCourse(id) {
@@ -207,7 +203,7 @@
           // Delete from courses ref
           this.databaseRef.ref('courses/' + id).remove()
           // Delete it from all articles in which the course is referenced
-          this.databaseRef.ref('articles/').on('value', (snapshot) => {
+          this.databaseRef.ref('articles').on('value', (snapshot) => {
             const articleObjs = snapshot.val()
             for (let articleObj in articleObjs) {
               for (let courseId in articleObjs[articleObj].courses) {
@@ -232,30 +228,14 @@
       },
       addArticle() {
         if ( this.article.title != '' ) {
-          this.databaseRef.ref('articles/').push({
-            title: this.article.title,
-            author: this.article.author,
-            year: this.article.year,
-            journal: this.article.journal,
-            publisher: this.article.publisher,
-            pages: {
-              to: this.article.pageTo,
-              from: this.article.pageFrom
-            }
-          })
-          this.article.title = ''
-          this.article.author = ''
-          this.article.year = ''
-          this.article.journal = ''
-          this.article.publisher = ''
-          this.article.pageFrom = ''
-          this.article.pageTo = ''
+          this.databaseRef.ref('articles').push(this.article)
+          for ( let prop in this.article ) this.article[prop] = '' // Reset input fields
         }
       },
       deleteArticle(id) {
         if ( confirm('Are you sure?') ) {
           // Delete from articles ref
-          this.databaseRef.ref('articles' + id).remove()
+          this.databaseRef.ref('articles/' + id).remove()
           // Delete it from all courses in which the article is referenced
           this.databaseRef.ref('courses').on('value', (snapshot) => {
             const courseObjs = snapshot.val()
