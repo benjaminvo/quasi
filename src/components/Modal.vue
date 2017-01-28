@@ -3,12 +3,15 @@
 
     <img src="~assets/checkmark-on-blue.svg" width="600" class="modal_illustration" />
 
-    <div class="modal_inner">
-      <div class="modal_header">
-        <h1 class="margin-top-2-1 margin-bottom">{{ randomEncouragement }}, {{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }}!</h1>
-      </div>
+    <a @click="close" class="modal_close">
+      <img src="~assets/cross.svg" width="16" />
+    </a>
 
-      <form v-on:submit.prevent="handleSubmit">
+    <div class="modal_inner">
+
+      <h1 class="margin-top-3-1">{{ randomEncouragement }}, {{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }}!</h1>
+
+      <form v-on:submit.prevent="handleSubmit" class="margin-top-3-1">
 
         <p class="textAlign-center">How was it to read?</p>
         <div class="margin-top-4-1 margin-bottom-6-1 display-flex justifyContent-center">
@@ -32,6 +35,7 @@
         </div>
 
       </form>
+
     </div>
   </div>
 </template>
@@ -188,11 +192,13 @@
     opacity: 0;
     animation: fadeIn 200ms 200ms $animationBezier forwards;
 
+    &_close {
+      position: absolute;
+      top: $scale;
+      right: $scale;
+    }
+
     &_illustration {
-      display: block;
-      // position: relative;
-      // top: 0;
-      // margin-bottom: $scale-4-1;
       transform: translate3d(0, -100vh, 0);
       animation: slideDown 1200ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
     }
@@ -207,19 +213,6 @@
       opacity: 0;
       animation: fadeIn 100ms 200ms $animationBezier, scaleUp 300ms 400ms ease-out;
       animation-fill-mode: forwards;
-    }
-
-    &_header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      margin-bottom: $scale-3-1;
-
-      p {
-        max-width: 80%;
-        text-align: center;
-      }
     }
 
     &_form {

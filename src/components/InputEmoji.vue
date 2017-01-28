@@ -1,5 +1,5 @@
 <template>
-  <div class="inputEmoji margin-right-3-1 display-flex flexDirection-column alignItems-center">
+  <div class="inputEmoji margin-right-2-1 display-flex flexDirection-column alignItems-center">
 
     <input
       class="inputEmoji_input"
@@ -64,9 +64,9 @@
     &:hover { transform: scale(1.5);
     &:active { transform: scale(1); }}}
 
-  .inputEmoji_label:hover:after, .inputEmoji_input:checked + label:after { @extend .tooltip; border-radius: 1px; letter-spacing: 0.2px; font-size: 5px; padding: 2px 3px; }
-  .inputEmoji_label-1:hover:after, .inputEmoji_input:checked + label.inputEmoji_label-1:after { content: 'Easy read' }
-  .inputEmoji_label-2:hover:after, .inputEmoji_input:checked + label.inputEmoji_label-2:after { content: 'Understandable' }
-  .inputEmoji_label-3:hover:after, .inputEmoji_input:checked + label.inputEmoji_label-3:after { content: 'Interesting' }
+  .inputEmoji_label:hover:after { @extend .tooltip; border-radius: 1px; letter-spacing: 0.2px; font-size: 5px; padding: 2px 3px; }
+  .inputEmoji_label-1:hover:after { content: 'Easy read' }
+  .inputEmoji_label-2:hover:after { content: 'Understandable' }
+  .inputEmoji_label-3:hover:after { content: 'Interesting' }
 
 </style>
