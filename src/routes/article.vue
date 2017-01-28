@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <div v-if="!dataLoaded" class="hidden fadeInWithDelay">
+    <div v-if="!dataLoaded" class="hidden fadeInWithDelay margin-top-3-1">
       <grid-block>
         <h1 class="color-base-lighter-4">Article on its way!</h1>
       </grid-block>
