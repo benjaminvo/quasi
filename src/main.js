@@ -60,6 +60,12 @@ window.addEventListener('load', function () {
         created_at: timestamp
       })
 
+      // Script for Fullstory
+      FS.identify(user.uid, {
+        displayName: user.displayName,
+        email: user.email
+      });
+
     } else {
     	authenticated = false
       window.location.href = 'auth.html'

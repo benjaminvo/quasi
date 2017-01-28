@@ -3,9 +3,9 @@ import firebase from 'firebase'
 export function fireInit(func) {
 
 	const config = {
-    apiKey: "AIzaSyAUxfsOXV74HSo9OAuWeh0-EtfAr0IlmAU",
-    authDomain: "quasi-d6c39.firebaseapp.com",
-    databaseURL: "https://quasi-d6c39.firebaseio.com",
+    apiKey:        "AIzaSyAUxfsOXV74HSo9OAuWeh0-EtfAr0IlmAU",
+    authDomain:    "quasi-d6c39.firebaseapp.com",
+    databaseURL:   "https://quasi-d6c39.firebaseio.com",
     storageBucket: "quasi-d6c39.appspot.com",
 	}
 	firebase.initializeApp(config)
