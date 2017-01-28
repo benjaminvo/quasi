@@ -1,10 +1,10 @@
-export const assignDataToData = {
+export const unassignDataFromData = {
   methods: {
-    assignDataToData(idToAssign, idToAssignEndpoint, idAssignedTo, idAssignedToEndpoint, dontConfirm = false) {
+    unassignDataFromData(idToAssign, idToAssignEndpoint, idAssignedTo, idAssignedToEndpoint, dontConfirm = false) {
 
       const assign = (idToAssign, idToAssignEndpoint, idAssignedTo, idAssignedToEndpoint) => {
-        this.databaseRef.ref(idAssignedToEndpoint + '/' + idAssignedTo + '/' + idToAssignEndpoint + '/' + idToAssign).set(true)
-        this.databaseRef.ref(idToAssignEndpoint + '/' + idToAssign + '/' + idAssignedToEndpoint + '/' + idAssignedTo).set(true)
+        this.databaseRef.ref(idAssignedToEndpoint + '/' + idAssignedTo + '/' + idToAssignEndpoint + '/' + idToAssign).set(false)
+        this.databaseRef.ref(idToAssignEndpoint + '/' + idToAssign + '/' + idAssignedToEndpoint + '/' + idAssignedTo).set(false)
       }
 
       if ( dontConfirm ) { assign(idToAssign, idToAssignEndpoint, idAssignedTo, idAssignedToEndpoint) }

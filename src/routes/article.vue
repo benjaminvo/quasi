@@ -3,7 +3,7 @@
 
     <div v-if="!dataLoaded" class="hidden fadeInWithDelay">
       <grid-block>
-        <h1 class="color-base-lighter-4">Article on it's way!</h1>
+        <h1 class="color-base-lighter-4">Article on its way!</h1>
       </grid-block>
     </div>
 
@@ -31,8 +31,8 @@
               <toggle-checkmark
                 small
                 class="margin-right-2-1"
-                :toggleArticleFinished="toggleArticleFinished"
-                :finished="article.finishedBy ? article.finishedBy[currentUser.uid] : null" />
+                :click="toggleArticleFinished"
+                :checked="article.finishedBy ? article.finishedBy[currentUser.uid] : null" />
               <p class="display-inlineBlock fontSize-small color-dark" v-for="(course, index) in this.articleCourses">Due {{ course.weekday }}</p>
             </div>
 
@@ -164,7 +164,6 @@
         this.databaseRef.ref('articles').on('value', (snapshot) => {
           const data = snapshot.val()
           for ( let article in data ) { if ( article === this.$route.params.articleId ) this.article = data[article] }
-
         })
       },
       fetchOtherData() {

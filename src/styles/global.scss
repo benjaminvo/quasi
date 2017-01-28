@@ -110,7 +110,15 @@ button {
   &:hover { opacity: 0.9; }
 
   &.withInput { border-top-left-radius: 0; border-bottom-left-radius: 0; border: 1px solid $color-primary; }
-  &.submit { background-color: $color-primary; }
+  &.submit {
+    background-color: $color-primary;
+
+    &.disabled {
+      background-color: $color-base-lighter-5;
+      color: $color-base-lighter-3;
+      pointer-events: none;
+    }
+  }
 
   &.toggle {
     background-color: transparent;

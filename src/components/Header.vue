@@ -22,10 +22,9 @@
       </div>
 
       <div class="span-3 textAlign-right display-flex alignItems-center justifyContent-flexEnd">
-        <h6>
-          <span class="margin-right-3-1 fontWeight-medium">Hi, {{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }}</span>
+          <p class="h6 fontWeight-medium">Hi,&nbsp;</p>
+          <router-link tag="a" class="a h6 margin-right-2-1" :to="{ name: 'settings' }">{{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }} </router-link>
           <a class="h6 fontWeight-semibold" v-on:click="logout()">Sign out</a>
-        </h6>
       </div>
 
     </grid-block>

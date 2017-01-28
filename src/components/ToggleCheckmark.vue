@@ -2,13 +2,13 @@
   <div
     class="toggleCheckmark"
     v-bind:class="{
-      finished: finished,
+      checked: checked,
       disabled: disabled,
       small: small
     }"
-    @click.stop="toggleArticleFinished">
+    @click.stop="click">
 
-    <img v-if="finished" src="~assets/checkmark.svg" class="toggleCheckmark_checkmark" alt="checkmark">
+    <img v-if="checked" src="~assets/checkmark.svg" class="toggleCheckmark_checkmark" alt="checkmark">
   </div>
 </template>
 
@@ -16,10 +16,10 @@
   export default {
     name: 'ToggleCheckmark',
     props: {
-      toggleArticleFinished: { type: Function },
-      finished: { type: Boolean },
-      disabled: { type: Boolean },
-      small: { type: Boolean },
+      click: Function,
+      checked: Boolean,
+      disabled: Boolean,
+      small: Boolean
     }
   }
 </script>
@@ -58,7 +58,7 @@
         background-color: $color-base-lighter-6; }
     }
 
-    &.finished {
+    &.checked {
       background-color: $color-primary;
       border: none;
 

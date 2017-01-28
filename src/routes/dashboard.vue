@@ -3,7 +3,7 @@
 
     <div v-if="!dataLoaded" class="hidden fadeInWithDelay">
       <grid-block>
-        <h1 class="color-base-lighter-4">Dashboard on it's way!</h1>
+        <h1 class="color-base-lighter-4">Dashboard on its way!</h1>
       </grid-block>
     </div>
 

@@ -7,8 +7,8 @@
 
     <div class="articleListItem_upper">
       <toggle-checkmark
-        :toggleArticleFinished="toggleArticleFinished"
-        :finished="finished"
+        :click="toggleArticleFinished"
+        :checked="finished"
         class="margin-right-3-1 articleListItem_toggle" />
 
       <div class="articleListItem_info">
