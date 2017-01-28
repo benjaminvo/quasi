@@ -217,9 +217,8 @@
 </script>
 
 <style lang="scss">
-
-  @import '~styles/global';
-  @import '~styles/card';
+  @import '~styles/vars';
+  @import '~styles/breakpoints';
 
   .article {
 

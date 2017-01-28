@@ -170,9 +170,8 @@
   }
 </script>
 
-<style lang="scss" scoped>
-
-  @import '~styles/global';
+<style lang="scss">
+  @import '~styles/vars';
 
   .modal {
     width: 100%;

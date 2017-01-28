@@ -53,8 +53,8 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  @import '~styles/global';
+<style lang="scss">
+  @import '~styles/vars';
 
   .header {
     height: 96px;

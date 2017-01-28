@@ -1,0 +1,24 @@
+.tooltip {
+	position: absolute;
+	top: 80%;
+	left: 50%;
+	transform: translateX( -50% );
+	text-align: center;
+	background-color: $color-dark;
+	color: $color-light;
+	border-radius: 2px;
+	white-space: nowrap;
+	padding: $scale-1-2 $scale;
+	font-family: $fontFamily-sans;
+	font-weight: bold;
+	font-size: 8px;
+	text-transform: uppercase;
+}
+
+// Message to show when something is not implemented yet
+.showNoFunctionMessage {
+	&:after {
+		content: 'Not functional yet';
+		@extend .tooltip;
+	}
+}

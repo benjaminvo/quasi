@@ -42,9 +42,10 @@
   }
 </script>
 
-<style lang="scss" scoped>
-
-  @import '~styles/global';
+<style lang="scss">
+  @import '~styles/vars';
+  @import '~styles/breakpoints';
+  @import '~styles/tooltip';
 
   .inputEmoji { position: relative; width: 48px;
 

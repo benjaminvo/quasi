@@ -19,7 +19,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   @import '~styles/vars';
   @import '~styles/breakpoints';
 
