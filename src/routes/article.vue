@@ -45,7 +45,7 @@
               <li class="margin-bottom-1-2 fontSize-small">{{ article.publisher }}</li>
             </ul>
 
-            <h6 class="margin-top-6-1 margin-bottom-2-1 color-base-lighter-2 fontWeight-bold">Table of Contents</h6>
+            <h6 class="margin-top-4-1 margin-bottom-2-1 color-base-lighter-2 fontWeight-bold">Table of Contents</h6>
             <ul class="list-unstyled color-base-lighter-2">
               <li v-for="(item, key, index) in article.tableOfContents" class="margin-bottom-1-2 fontSize-small">{{ item }}</li>
             </ul>
