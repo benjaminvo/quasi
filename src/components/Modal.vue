@@ -1,15 +1,16 @@
 <template>
   <div class="modal">
+
+    <img src="~assets/checkmark-on-blue.svg" width="600" class="modal_illustration" />
+
     <div class="modal_inner">
       <div class="modal_header">
-        <toggle-checkmark finished disabled class="margin-bottom-2-1" />
-        <h1 class="margin-bottom-3-1">{{ randomEncouragement }}, {{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }}!</h1>
+        <h1 class="margin-top-2-1 margin-bottom">{{ randomEncouragement }}, {{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }}!</h1>
       </div>
 
       <form v-on:submit.prevent="handleSubmit">
 
-        <h6 class="textAlign-center">How was it to read?</h6>
-
+        <p class="textAlign-center">How was it to read?</p>
         <div class="margin-top-4-1 margin-bottom-6-1 display-flex justifyContent-center">
           <input-emoji
             v-for="(reaction, key, index) in article.reactions"
@@ -20,7 +21,7 @@
             v-bind:checked="reactions.includes(key)" />
         </div>
 
-        <h6 class="textAlign-center">Any thoughts on the text? Frustrations, aha-moments etc.</h6>
+        <p class="textAlign-center">Any thoughts on the text? Frustrations, aha-moments etc.</p>
         <textarea class="modal_form_input margin-top-2-1 margin-bottom border border-nearWhite backgroundColor-light" v-model="contribution" type="text" rows="3"></textarea>
 
         <div class="modal_form_footer">
@@ -179,18 +180,27 @@
     left: 0;
     background: rgba(white, 0.97);
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    flex-direction: column;
     z-index: 1001;
 
     opacity: 0;
     animation: fadeIn 200ms 200ms $animationBezier forwards;
 
+    &_illustration {
+      display: block;
+      // position: relative;
+      // top: 0;
+      // margin-bottom: $scale-4-1;
+      transform: translate3d(0, -100vh, 0);
+      animation: slideDown 1200ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    }
+
     &_inner {
       position: relative;
       max-width: 600px;
       min-width: 400px;
-      margin-top: -5%;
       padding: $scale-2-1 0 0;
 
       transform: scale(0);
