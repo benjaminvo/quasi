@@ -31,7 +31,7 @@
               <toggle-checkmark
                 small
                 class="margin-right-2-1"
-                :click="toggleArticleFinished"
+                :click="toggleArticleFinished.bind(this, this.$route.params.articleId, article.title, currentUser.uid, currentUser.displayName, 'articleFinished')"
                 :checked="article.finishedBy ? article.finishedBy[currentUser.uid] : null" />
               <p class="display-inlineBlock fontSize-small color-dark" v-for="(course, index) in this.articleCourses">Due {{ course.weekday }}</p>
             </div>
@@ -121,6 +121,7 @@
   import ContributionBlock from 'components/ContributionBlock'
   import ToggleCheckmark from 'components/ToggleCheckmark'
   import ArticleFinished from 'components/ArticleFinished'
+  import { toggleArticleFinished } from 'utils/toggleArticleFinished'
   import { fetchDataRelatedToData } from 'utils/fetchDataRelatedToData'
   export default {
     name: 'ArticleRoute',
@@ -135,7 +136,7 @@
       currentUser: Object,
       databaseRef: Object
     },
-    mixins: [fetchDataRelatedToData],
+    mixins: [toggleArticleFinished, fetchDataRelatedToData],
     data() {
       return {
         article: {},
@@ -178,42 +179,6 @@
         this.articleConcepts = this.fetchDataRelatedToData('concepts', this.article.concepts)
         this.articleContributions = this.fetchDataRelatedToData('contributions', this.article.contributions, true)
         this.dataLoaded = true
-      },
-      toggleArticleFinished() {
-        const articleId = this.$route.params.articleId
-        const articleFinishedByPath = 'articles/' + articleId + '/finishedBy/'
-        const articleFinishedPath = 'users/' + this.currentUser.uid + '/articlesFinished/' + articleId
-
-        this.databaseRef.ref(articleFinishedPath).once('value', (snapshot) => {
-          const data = snapshot.val()
-          if (data === false || data === null || !data) {
-            this.databaseRef.ref(articleFinishedPath).set(true)
-            this.databaseRef.ref(articleFinishedByPath + '/' + this.currentUser.uid).set(true)
-            this.modalArticleFinishedVisible = true
-
-            // Add notification about finished article to notifications node on database
-            this.databaseRef.ref('articles/' + articleId).once('value', (snapshot) => {
-              const notification = {
-                type: 'articleFinished',
-                timestamp: new Date().getTime(),
-                article: {
-                  id: articleId,
-                  title: snapshot.val().title
-                },
-                user: {
-                  id: this.currentUser.uid,
-                  name: this.currentUser.displayName
-                }
-              }
-              this.databaseRef.ref('notifications').push(notification)
-            })
-
-          } else {
-            this.databaseRef.ref(articleFinishedPath).set(false)
-            this.databaseRef.ref(articleFinishedByPath + '/' + this.currentUser.uid).set(false)
-          }
-        })
-        this.setArticle()
       },
       close(modal) {
         this.modalsVisible[modal] = false

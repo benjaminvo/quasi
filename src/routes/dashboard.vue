@@ -21,7 +21,7 @@
 
       <day-block
         :currentUser="currentUser"
-        :toggleArticleFinished="toggleArticleFinished"
+        :toggleArticleFinished="getArticleDataAndToggleArticleFinished"
         v-for="(dayBlock, key, index) in dayBlocks"
         :day="key"
         :courses="dayBlock.courses"
@@ -68,6 +68,7 @@
   import DayBlock from 'components/DayBlock'
   import Modal from 'components/Modal'
   import ArticleFinished from 'components/ArticleFinished'
+  import { toggleArticleFinished } from 'utils/toggleArticleFinished'
   import AssignCourses from 'components/AssignCourses'
   import NotificationTicker from 'components/NotificationTicker'
   export default {
@@ -80,7 +81,7 @@
       'assign-courses': AssignCourses,
       'notification-ticker': NotificationTicker
     },
-    mixins: [particlesInit],
+    mixins: [particlesInit, toggleArticleFinished],
     props: {
       currentUser: { type: Object },
       databaseRef: { type: Object }
@@ -215,6 +216,12 @@
       decideIfAssignCoursesModalShouldShow() {
         if ( this.currentUsersCourseIdsArray.length === 0 ) this.modalsVisible.assignCourses = true // Show course assign modal on load if user has no courses
       },
+      getArticleDataAndToggleArticleFinished(e) {
+        this.clickedArticleId = e.currentTarget.parentNode.parentNode.id
+        let articleTitle = null
+        this.databaseRef.ref('articles/' + this.clickedArticleId).once('value', (snapshot) => { articleTitle = snapshot.val().title })
+        this.toggleArticleFinished(this.clickedArticleId, articleTitle, this.currentUser.uid, this.currentUser.displayName, 'articleFinished')
+      },
       createDayblocks() {
 
         let dayBlocks = {
@@ -253,46 +260,6 @@
                   this.dayBlocks[dayBlock].courses[i].articles[dayblockArticleId] = this.articles[articleId] // Set the id to holde the full article object (instead of just 'true')
         }}}}}
         this.dataLoaded = true
-      },
-      toggleArticleFinished(e) {
-        this.clickedArticleId = e.currentTarget.parentNode.parentNode.id
-        const articleFinishedByPath = 'articles/' + this.clickedArticleId + '/finishedBy/'
-        const articleFinishedPath = 'users/' + this.currentUser.uid + '/articlesFinished/' + this.clickedArticleId
-
-        this.databaseRef.ref(articleFinishedPath).once('value', (snapshot) => {
-
-          const data = snapshot.val()
-
-          if (data === false || data === null || !data) {
-            this.databaseRef.ref(articleFinishedPath).set(true)
-            this.databaseRef.ref(articleFinishedByPath + '/' + this.currentUser.uid).set(true)
-            this.modalsVisible.articleFinished = true
-
-            // Add notification about finished article to notifications node on database
-            this.databaseRef.ref('articles/' + this.clickedArticleId).once('value', (snapshot) => {
-              const notification = {
-                type: 'articleFinished',
-                timestamp: new Date().getTime(),
-                article: {
-                  id: this.clickedArticleId,
-                  title: snapshot.val().title
-                },
-                user: {
-                  id: this.currentUser.uid,
-                  name: this.currentUser.displayName
-                }
-              }
-              this.databaseRef.ref('notifications').push(notification)
-            })
-
-          } else if (data === true) {
-
-            this.databaseRef.ref(articleFinishedPath).set(false)
-            this.databaseRef.ref(articleFinishedByPath + '/' + this.currentUser.uid).set(false)
-
-          }
-        })
-        this.fetchArticlesPerCourse()
       }
     }
   }
