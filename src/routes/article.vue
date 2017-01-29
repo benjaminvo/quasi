@@ -101,11 +101,14 @@
       </div>
 
       <modal
-        v-if="modalVisible"
-        v-on:close="closeModal"
-        :currentUser="currentUser"
-        :databaseRef="databaseRef"
-        :articleId="this.$route.params.articleId" />
+        v-if="modalsVisible.articleFinished"
+        v-on:close="close('articleFinished')">
+        <article-finished
+          v-on:close="close('articleFinished')"
+          :currentUser="currentUser"
+          :databaseRef="databaseRef"
+          :articleId="this.$route.params.articleId" />
+      </modal>
 
     </div>
 
@@ -114,17 +117,19 @@
 
 <script>
   import GridBlock from 'components/GridBlock'
+  import Modal from 'components/Modal'
   import ContributionBlock from 'components/ContributionBlock'
   import ToggleCheckmark from 'components/ToggleCheckmark'
-  import Modal from 'components/Modal'
+  import ArticleFinished from 'components/ArticleFinished'
   import { fetchDataRelatedToData } from 'utils/fetchDataRelatedToData'
   export default {
     name: 'ArticleRoute',
     components: {
       'grid-block': GridBlock,
+      modal: Modal,
       'contribution-block': ContributionBlock,
       'toggle-checkmark': ToggleCheckmark,
-      'modal': Modal
+      'article-finished': ArticleFinished
     },
     props: {
       currentUser: Object,
@@ -137,7 +142,9 @@
         articleCourses: [],
         articleConcepts: [],
         articleContributions: [],
-        modalVisible: false,
+        modalsVisible: {
+          articleFinished: false,
+        },
         dataLoaded: null
       }
     },
@@ -182,7 +189,7 @@
           if (data === false || data === null || !data) {
             this.databaseRef.ref(articleFinishedPath).set(true)
             this.databaseRef.ref(articleFinishedByPath + '/' + this.currentUser.uid).set(true)
-            this.modalVisible = true
+            this.modalArticleFinishedVisible = true
 
             // Add notification about finished article to notifications node on database
             this.databaseRef.ref('articles/' + articleId).once('value', (snapshot) => {
@@ -208,8 +215,8 @@
         })
         this.setArticle()
       },
-      closeModal() {
-        this.modalVisible = false
+      close(modal) {
+        this.modalsVisible[modal] = false
         this.setArticle()
       }
     }
