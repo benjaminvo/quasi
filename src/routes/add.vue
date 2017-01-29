@@ -303,7 +303,7 @@
 </script>
 
 <style lang="scss">
-  @import '~styles/global';
+  @import '~styles/vars';
 
   .addPage {
     background-color: $color-light;

@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <div v-if="!dataLoaded" class="hidden fadeInWithDelay">
+    <div v-if="!dataLoaded" class="hidden fadeInWithDelay margin-top-3-1">
       <grid-block>
         <h1 class="color-base-lighter-4">Article on its way!</h1>
       </grid-block>
@@ -45,7 +45,7 @@
               <li class="margin-bottom-1-2 fontSize-small">{{ article.publisher }}</li>
             </ul>
 
-            <h6 class="margin-top-6-1 margin-bottom-2-1 color-base-lighter-2 fontWeight-bold">Table of Contents</h6>
+            <h6 class="margin-top-4-1 margin-bottom-2-1 color-base-lighter-2 fontWeight-bold">Table of Contents</h6>
             <ul class="list-unstyled color-base-lighter-2">
               <li v-for="(item, key, index) in article.tableOfContents" class="margin-bottom-1-2 fontSize-small">{{ item }}</li>
             </ul>
@@ -224,9 +224,8 @@
 </script>
 
 <style lang="scss">
-
-  @import '~styles/global';
-  @import '~styles/card';
+  @import '~styles/vars';
+  @import '~styles/breakpoints';
 
   .article {
 

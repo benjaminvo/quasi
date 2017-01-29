@@ -63,8 +63,8 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  @import '~styles/global';
+<style lang="scss">
+  @import '~styles/vars';
 
   .notificationTicker {
     background-color: rgba(255,255,255,.92);

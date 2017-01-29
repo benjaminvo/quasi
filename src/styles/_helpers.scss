@@ -200,35 +200,10 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 		&-1-2 		{ border-radius: $borderRadius / 2; }}
 }
 
-.tooltip {
-	position: absolute;
-	top: 80%;
-	left: 50%;
-	transform: translateX( -50% );
-	text-align: center;
-	background-color: $color-dark;
-	color: $color-light;
-	border-radius: 2px;
-	white-space: nowrap;
-	padding: $scale-1-2 $scale;
-	font-family: $fontFamily-sans;
-	font-weight: bold;
-	font-size: 8px;
-	text-transform: uppercase;
-}
-
-// Message to show when something is not implemented yet
-.showNoFunctionMessage {
-	&:after {
-		content: 'Not functional yet';
-		@extend .tooltip;
-	}
-}
-
 // Animation
 .fadeIn 					{ animation: fadeIn 600ms ease-out forwards; }
 .fadeInFast				{ animation: fadeIn 300ms ease-out forwards; }
-.fadeInWithDelay	{ animation: fadeIn 300ms 600ms ease-out forwards; }
+.fadeInWithDelay	{ animation: fadeIn 300ms 1000ms ease-out forwards; }
 .fadeOut 					{ animation: fadeOut 600ms $animationBezier forwards; }
 .slideIn 					{ animation: slideIn 600ms $animationBezier forwards; }
 .transition 			{	transition: all 600ms $animationBezier !important; }

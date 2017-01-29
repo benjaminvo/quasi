@@ -89,9 +89,7 @@
 </script>
 
 <style lang="scss" scoped>
-
-  @import '~styles/global';
-  @import '~styles/card';
+  @import '~styles/vars';
 
   .articleListItem {
     cursor: pointer;

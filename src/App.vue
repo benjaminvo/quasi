@@ -24,8 +24,7 @@
 </script>
 
 <style lang="scss">
-
-  @import './styles/global';
+  @import './styles/main';
 
   .app {
     height: 100%;

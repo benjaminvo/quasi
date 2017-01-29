@@ -38,10 +38,9 @@
 </script>
 
 <style lang="scss">
-  @import '~styles/global';
+  @import '~styles/vars';
 
   .dayBlock {
     background-color: $color-base-lighter-6;
   }
-
 </style>

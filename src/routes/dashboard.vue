@@ -295,8 +295,8 @@
 </script>
 
 <style lang="scss">
-
-  @import '~styles/global';
+  @import '~styles/vars';
+  @import '~styles/breakpoints';
 
   .dashboard {
     &_message {
