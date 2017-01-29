@@ -164,9 +164,8 @@
   }
 </script>
 
-<style lang="scss" scoped>
-
-  @import '~styles/global';
+<style lang="scss">
+  @import '~styles/vars';
 
   .illustration {
     transform: translate3d(0, -100vh, 0);
