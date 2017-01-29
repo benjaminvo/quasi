@@ -40,8 +40,8 @@
 
     &_close {
       position: absolute;
-      top: $scale;
-      right: $scale;
+      top: $scale-5-1;
+      right: $scale-5-1;
     }
   }
 
