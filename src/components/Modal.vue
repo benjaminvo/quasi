@@ -1,7 +1,7 @@
 <template>
   <div class="modal">
 
-    <a @click="close" class="modal_close">
+    <a v-if="!notDismissable" @click="close" class="modal_close">
       <img src="~assets/cross.svg" width="16" />
     </a>
 
@@ -13,6 +13,7 @@
 <script>
   export default {
     name: 'Modal',
+    props: { notDismissable: Boolean },
     methods: {
       close() { this.$emit('close') }
     }

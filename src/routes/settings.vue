@@ -66,9 +66,5 @@
 </script>
 
 <style lang="scss">
-
-  .settings {
-    min-height: calc(100% - (96px + 83px)) // Header and footer
-  }
-
+  .settings { min-height: calc(100% - (96px + 83px)) } // Header and footer
 </style>

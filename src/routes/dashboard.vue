@@ -38,6 +38,7 @@
       </modal>
 
       <modal
+        notDismissable
         v-if="modalsVisible.assignCourses"
         v-on:close="modalsVisible.assignCourses = false"
         class="padding-top-8-1">
@@ -49,7 +50,10 @@
           :databaseRef="databaseRef"
           :user="user"
           :courses="courses" />
-        <button class="button submit" @click="modalsVisible.assignCourses = false">Go to your weekly overview</button>
+        <button
+          class="button submit"
+          :class="{ disabled: currentUsersCourseIdsArray.length === 0 }"
+          @click="modalsVisible.assignCourses = false">Go to your weekly overview</button>
       </modal>
 
     </div>
@@ -295,7 +299,6 @@
 </script>
 
 <style lang="scss">
-  @import '~styles/vars';
   @import '~styles/breakpoints';
 
   .dashboard {
