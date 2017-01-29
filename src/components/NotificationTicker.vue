@@ -7,15 +7,15 @@
         <li class="margin-bottom-3-1 display-block" v-else v-for="(notification, index) in notifications">
 
           <div v-if="notification.type === 'articleFinished'" class="notification display-inlineBlock">
-            {{ notification.user.id === currentUser.uid ? 'You' : 'Someone' }} finished  <span class="fontWeight-semibold">{{ notification.article.title }}</span>
+            {{ notification.user.id === currentUser.uid ? 'You' : notification.user.name.split(' ')[0] }} finished  <span class="fontWeight-semibold">{{ notification.article.title }}</span>
           </div>
 
           <div v-if="notification.type === 'contributionAdded'" class="notification display-inlineBlock">
-            {{ notification.user.id === currentUser.uid ? 'You' : 'Someone' }} added a contribution to <span class="fontWeight-semibold">{{ notification.article.title }}</span>
+            {{ notification.user.id === currentUser.uid ? 'You' : notification.user.name.split(' ')[0] }} added a contribution to <span class="fontWeight-semibold">{{ notification.article.title }}</span>
           </div>
 
           <div v-if="notification.type === 'reactionAdded'" class="notification display-inlineBlock">
-            {{ notification.user.id === currentUser.uid ? 'You' : 'Someone' }} reacted with
+            {{ notification.user.id === currentUser.uid ? 'You' : notification.user.name.split(' ')[0] }} reacted with
             <span v-html="renderEmoji(notification.emoji)" />&nbsp; to <span class="fontWeight-semibold">{{ notification.article.title }}</span>
           </div>
 
