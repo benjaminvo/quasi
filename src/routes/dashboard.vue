@@ -17,7 +17,7 @@
 
       <notification-ticker
         :currentUser="currentUser"
-        :notifications="notifications" />
+        :notifications="notificationsArray" />
 
       <day-block
         :currentUser="currentUser"
@@ -25,14 +25,32 @@
         v-for="(dayBlock, key, index) in dayBlocks"
         :day="key"
         :courses="dayBlock.courses"
-        :numOfUsers="numOfUsers" />
+        :numOfUsers="usersArray.length" />
 
       <modal
-        v-if="modalVisible"
-        v-on:close="closeModal"
-        :currentUser="currentUser"
-        :databaseRef="databaseRef"
-        :articleId="clickedArticleId" />
+        v-if="modalsVisible.articleFinished"
+        v-on:close="modalsVisible.articleFinished = false">
+        <article-finished
+          v-on:close="modalsVisible.articleFinished = false"
+          :currentUser="currentUser"
+          :databaseRef="databaseRef"
+          :articleId="clickedArticleId" />
+      </modal>
+
+      <modal
+        v-if="modalsVisible.assignCourses"
+        v-on:close="modalsVisible.assignCourses = false"
+        class="padding-top-8-1">
+        <h1 class="margin-bottom">Hi, {{ userFirstName }}!</h1>
+        <h3 class="margin-bottom-4-1">To get started, just pick your courses here</h3>
+        <assign-courses
+          class="margin-bottom-4-1"
+          :currentUser="currentUser"
+          :databaseRef="databaseRef"
+          :user="user"
+          :courses="courses" />
+        <button class="button submit" @click="modalsVisible.assignCourses = false">Go to your weekly overview</button>
+      </modal>
 
     </div>
 
@@ -41,82 +59,95 @@
 
 <script>
   import Particles from 'particles.js'
+  import { particlesInit } from 'utils/vendor/particlesInit'
   import GridBlock from 'components/GridBlock'
   import DayBlock from 'components/DayBlock'
   import Modal from 'components/Modal'
+  import ArticleFinished from 'components/ArticleFinished'
+  import AssignCourses from 'components/AssignCourses'
   import NotificationTicker from 'components/NotificationTicker'
   export default {
     name: 'DashboardRoute',
     components: {
       'grid-block': GridBlock,
       'day-block': DayBlock,
-      'modal': Modal,
+      modal: Modal,
+      'article-finished': ArticleFinished,
+      'assign-courses': AssignCourses,
       'notification-ticker': NotificationTicker
     },
+    mixins: [particlesInit],
     props: {
       currentUser: { type: Object },
       databaseRef: { type: Object }
     },
     data() {
       return {
-        modalVisible: false,
-        clickedArticleId: null,
+        courses: {},
         articles: {},
         users: {},
-        dayBlocks: {},
-        coursesFetched: false,
-        uniqueArticles: [],
-        articleDuplicates: 0,
-        totalPages: 0,
+
+        user: {},
         userFullName: this.currentUser.displayName,
-        notifications: [],
+
+        dayBlocks: {},
+        totalPages: 0,
+
+        notifications: {},
+        notificationsArray: [],
         notificationsRefetchInterval: null,
+
+        clickedArticleId: null,
+
+        modalsVisible: {
+          articleFinished: false,
+          assignCourses: false
+        },
+
         dataLoaded: null
       }
     },
     computed: {
-      userFirstName() { return this.currentUser.displayName.split(' ')[0] },
-      userLastName() { return this.currentUser.displayName.substr(this.currentUser.displayName.indexOf(' ') + 1) },
-      numOfUsers() {
+      userFirstName() { return this.userFullName.split(' ')[0] },
+      userLastName() { return this.userFullName.substr(this.userFullName.indexOf(' ') + 1) },
+      currentUsersCourseIdsArray() {
+        let currentUsersCourseIdsArray = []
+        for ( let courseId in this.user.courses ) if ( this.user.courses[courseId] === true ) currentUsersCourseIdsArray.push( courseId )
+        return currentUsersCourseIdsArray
+      },
+      currentUsersReadArticleIdsArray() {
+        let currentUsersReadArticleIdsArray = []
+        for ( let articleId in this.user.articlesFinished ) if ( this.user.articlesFinished[articleId] === true ) currentUsersReadArticleIdsArray.push( articleId )
+        return currentUsersReadArticleIdsArray
+      },
+      currentUsersArticlesArray() {
+        let currentUsersArticlesArray = []
+        for ( let article in this.articles ) {
+          for ( let articlesCourseId in this.articles[article].courses ) {
+            for ( let usersCourseId in this.user.courses ) {
+              if ( this.user.courses[usersCourseId] === true ) {
+                if ( articlesCourseId === usersCourseId ) currentUsersArticlesArray.push( this.articles[article] )
+        }}}} return currentUsersArticlesArray
+      },
+      usersArray() {
         let usersArray = []
-        for ( let user in this.users ) usersArray.push(user)
-        return usersArray.length
+        for ( let user in this.users ) usersArray.push( this.users[user] )
+        return usersArray
       },
-      numOfArticles() {
-        const articleIds = []
-        const allArticleIds = []
-        for (let day in this.dayBlocks) {
-          for (let i = 0; i < this.dayBlocks[day].courses.length; i++) {
-            for (let article in this.dayBlocks[day].courses[i].articles) {
-              allArticleIds.push(article)
-              if (!articleIds.includes(article)) {
-                articleIds.push(article)
-              }
-            }
-          }
-        }
-        this.articleDuplicates = allArticleIds.length - articleIds.length
-        return articleIds.length
-      },
-      numOfReadArticles() {
-        let numOfReadArticles = 0
-        if (this.numOfArticles > 0) {
-          this.databaseRef.ref('users/' + this.currentUser.uid + '/articlesFinished').on('value', (snapshot) => {
-            const articlesFinished = snapshot.val()
-            for (let article in articlesFinished) if ( articlesFinished[article] === true ) numOfReadArticles += 1
-          })
-        }
-        return numOfReadArticles
+      notificationsArray() {
+        let notificationsArray = []
+        for ( let notification in this.notifications) notificationsArray.unshift( this.notifications[notification] )
+        return notificationsArray
       },
       allRead() {
-        if ( this.numOfReadArticles !== 0 ) return this.numOfArticles - this.numOfReadArticles === 0
+        if ( this.currentUsersReadArticleIdsArray.length !== 0 ) return this.currentUsersArticlesArray.length - this.currentUsersReadArticleIdsArray.length === 0
       },
       motivationMessage() {
-        const initialMessage = `This week features ${ this.numOfArticles } ${ this.articleDuplicates ? 'unique' : '' } article${(this.numOfArticles > 1) ? 's' : '' } with a total of ${ this.totalPages } pages. Enjoy!`
+        const initialMessage = `This week features ${ this.currentUsersArticlesArray.length } article${(this.currentUsersArticlesArray.length > 1) ? 's' : '' } with a total of ${ this.totalPages } pages. Enjoy!`
 
-        const articlesLeft = this.numOfArticles - this.numOfReadArticles
+        const articlesLeft = this.currentUsersArticlesArray.length - this.currentUsersReadArticleIdsArray.length
 
-        if (this.numOfArticles > 0) {
+        if (this.currentUsersArticlesArray.length > 0) {
           switch (articlesLeft) {
             case 0:
               return "You've finished! &#127881;"
@@ -134,35 +165,53 @@
       window.Intercom( 'update' )
     },
     mounted() {
-      this.fetchCoursesAndCreateDayblocks()
-      this.setUserNameOnDatabase()
       this.particlesInit()
-      this.fetchNotifications()
+      this.setUserNameOnDatabase()
+      this.databaseRef.ref('users').on('value', (snapshot) => { this.users = snapshot.val() })
+      this.databaseRef.ref('courses').on('value', (snapshot) => { this.courses = snapshot.val() })
+      this.databaseRef.ref('articles').on('value', (snapshot) => { this.articles = snapshot.val() })
+      this.databaseRef.ref('notifications').limitToLast(5).on('value', (snapshot) => { this.notifications = snapshot.val() })
+      this.notificationsRefetchInterval = setInterval( this.fetchNotifications, 30000 ) // Refetch every half minute to update 'X minutes ago'
     },
     beforeDestroy() {
-      this.numOfReadArticles = null
-      this.databaseRef.ref('users/').off()
-      this.databaseRef.ref('courses/').off()
-      this.databaseRef.ref('articles/').off()
-      clearTimeout(this.notificationsRefetchInterval)
+      this.databaseRef.ref('users').off()
+      this.databaseRef.ref('courses').off()
+      this.databaseRef.ref('articles').off()
+      clearInterval(this.notificationsRefetchInterval)
     },
     watch: {
-      uniqueArticles: 'getTotalPages',
-      coursesFetched: 'fetchRelevantArticlesPerCourse'
+      users: 'setUser',
+      currentUsersArticlesArray: 'setTotalPages',
+      courses: 'createDayblocks',
+      dayBlocks: 'fetchArticlesPerCourse',
+      articles: 'fetchArticlesPerCourse',
+      currentUsersCourseIdsArray: 'decideIfAssignCoursesModalShouldShow'
     },
     methods: {
       setUserNameOnDatabase() {
-        this.databaseRef.ref('users/').once('value', (snapshot) => {
-          this.users = snapshot.val()
-          for (let user in this.users) {
-            if (user === this.currentUser.uid) {
-              this.databaseRef.ref('users/' + user + '/firstName').set(this.userFirstName)
-              this.databaseRef.ref('users/' + user + '/lastName').set(this.userLastName)
-            }
-          }
-        })
+        this.databaseRef.ref('users/' + this.currentUser.uid + '/firstName').set(this.userFirstName)
+        this.databaseRef.ref('users/' + this.currentUser.uid + '/lastName').set(this.userLastName)
       },
-      fetchCoursesAndCreateDayblocks() {
+      setUser() {
+        for ( let user in this.users ) if ( user === this.currentUser.uid ) this.user = this.users[user]
+      },
+      setTotalPages() {
+        if ( this.totalPages === 0 ) {
+          let totalPages = 0
+          for (let i = 0; i < this.currentUsersArticlesArray.length; i++) {
+            const articlePageNum = this.currentUsersArticlesArray[i].pageTo - this.currentUsersArticlesArray[i].pageFrom
+            totalPages = totalPages + articlePageNum
+          }
+          this.totalPages = totalPages
+        }
+      },
+      fetchNotifications() {
+        this.databaseRef.ref('notifications').limitToLast(5).once('value', (snapshot) => { this.notifications = snapshot.val() }) // Notice it's .once()
+      },
+      decideIfAssignCoursesModalShouldShow() {
+        if ( this.currentUsersCourseIdsArray.length === 0 ) this.modalsVisible.assignCourses = true // Show course assign modal on load if user has no courses
+      },
+      createDayblocks() {
 
         let dayBlocks = {
           Monday: { courses: [] },
@@ -173,75 +222,33 @@
         }
 
         // Checking if user has got the couse and adding a course object with name of course + articles if so
-        this.databaseRef.ref('courses/').once('value', (snapshot) => {
-          const courses = snapshot.val()
-          for (let course in courses) { // For each course
-            const courseHasGotStudents = courses[course].users // If there is users
-            if (courseHasGotStudents) {
-              if (courses[course].users[this.currentUser.uid]) { // If this user is assigned to course
-                const courseObj = {
-                  course: courses[course].name,
-                  articles: courses[course].articles
-                }
-                switch(courses[course].weekday) { // Add courseObj to dayBlocks object based on the day of the course
-                  case 'Monday': { dayBlocks.Monday.courses.push(courseObj); break; }
-                  case 'Tuesday': { dayBlocks.Tuesday.courses.push(courseObj); break; }
-                  case 'Wednesday': { dayBlocks.Wednesday.courses.push(courseObj); break; }
-                  case 'Thursday': { dayBlocks.Thursday.courses.push(courseObj); break; }
-                  case 'Friday': { dayBlocks.Friday.courses.push(courseObj); break; }
-                }
-              }
-            }
-          }
-        })
+        for (let course in this.courses) { // For each course
+          const courseHasGotStudents = this.courses[course].users // If there is users
+          if (courseHasGotStudents) {
+            if (this.courses[course].users[this.currentUser.uid]) { // If this user is assigned to course
 
-        this.dayBlocks = dayBlocks
-        this.coursesFetched = true
+              const courseObj = {}
+              courseObj['course'] = this.courses[course].name
+              courseObj['articles'] = this.courses[course].articles
+
+              switch( this.courses[course].weekday ) { // Add courseObj to dayBlocks object based on the day of the course
+                case 'Monday': { dayBlocks.Monday.courses.push(courseObj); break; }
+                case 'Tuesday': { dayBlocks.Tuesday.courses.push(courseObj); break; }
+                case 'Wednesday': { dayBlocks.Wednesday.courses.push(courseObj); break; }
+                case 'Thursday': { dayBlocks.Thursday.courses.push(courseObj); break; }
+                case 'Friday': { dayBlocks.Friday.courses.push(courseObj); break; }
+
+        }}}} this.dayBlocks = dayBlocks
       },
-      fetchRelevantArticlesPerCourse() {
-        // Swapping the article id placeholder out with actual article object in dayBlocks object created above
-        this.databaseRef.ref('articles/').once('value', (snapshot) => {
-          const articleObjs = snapshot.val()
-          this.articles = articleObjs
-          for (let dayBlock in this.dayBlocks) { // Loop through the newly created this.dayBlocks object
-            for (let i = 0; i < this.dayBlocks[dayBlock].courses.length; i++) { // For length of the courses array under each day in this.dayBlocks
-              for (let article in this.dayBlocks[dayBlock].courses[i].articles) { // And each articleId in each articles array in each course
-                for (let articleObj in articleObjs) { // The articleObj fetched from database to compare with the articleId
-                  if (articleObj == article) { // If objectObj and articleId in the this.dayBlocks object matches
-                    this.dayBlocks[dayBlock].courses[i].articles[article] = articleObjs[articleObj] // Set the id to holde the full article object (instead of just 'true')
-                    if (!this.uniqueArticles.includes(articleObjs[articleObj])) {
-                      this.uniqueArticles.push(articleObjs[articleObj]) // Push all unique articles to array for eg. fetching their num of pages
-                    }
-                  }
-                }
-              }
-            }
-          }
-        })
+      fetchArticlesPerCourse() { // Swapping the article id placeholder out with actual article object in dayBlocks object created above
+        for (let dayBlock in this.dayBlocks) { // Loop through the newly created this.dayBlocks object
+          for (let i = 0; i < this.dayBlocks[dayBlock].courses.length; i++) { // For length of the courses array under each day in this.dayBlocks
+            for (let dayblockArticleId in this.dayBlocks[dayBlock].courses[i].articles) { // And each articleId in each articles array in each course
+              for (let articleId in this.articles) { // The articleId of article fetched from database in mounted() to compare with the articleId
+                if (articleId === dayblockArticleId) { // If articleId and dayblockArticleId in the this.dayBlocks object matches
+                  this.dayBlocks[dayBlock].courses[i].articles[dayblockArticleId] = this.articles[articleId] // Set the id to holde the full article object (instead of just 'true')
+        }}}}}
         this.dataLoaded = true
-      },
-      fetchNotifications() {
-        this.databaseRef.ref('notifications').limitToLast(5).on('value', (snapshot) => {
-          let notificationsArray = []
-          const notifications = snapshot.val()
-          for ( let notification in notifications) notificationsArray.unshift(notifications[notification])
-          this.notifications = notificationsArray
-        })
-        this.notificationsRefetchInterval = setTimeout(this.fetchNotifications, 30000) // Refetch every half minute to update 'X minutes ago'
-      },
-      closeModal() {
-        this.modalVisible = false
-        this.fetchRelevantArticlesPerCourse()
-      },
-      getTotalPages() {
-        if ( this.totalPages === 0 ) {
-          let totalPages = 0
-          for (let i = 0; i < this.uniqueArticles.length; i++) {
-            const articlePageNum = this.uniqueArticles[i].pageTo - this.uniqueArticles[i].pageFrom
-            totalPages = totalPages + articlePageNum
-          }
-          this.totalPages = totalPages
-        }
       },
       toggleArticleFinished(e) {
         this.clickedArticleId = e.currentTarget.parentNode.parentNode.id
@@ -255,7 +262,7 @@
           if (data === false || data === null || !data) {
             this.databaseRef.ref(articleFinishedPath).set(true)
             this.databaseRef.ref(articleFinishedByPath + '/' + this.currentUser.uid).set(true)
-            this.modalVisible = true
+            this.modalsVisible.articleFinished = true
 
             // Add notification about finished article to notifications node on database
             this.databaseRef.ref('articles/' + this.clickedArticleId).once('value', (snapshot) => {
@@ -281,56 +288,7 @@
 
           }
         })
-        this.fetchRelevantArticlesPerCourse()
-      },
-      particlesInit() {
-        particlesJS("particles", {
-          "particles": {
-            "number": {
-              "value": 60
-            },
-            "shape": {
-              "type": "circle"
-            },
-            "size": {
-              "value": 6,
-              "random": true
-            },
-            "line_linked": {
-              "enable": false
-            },
-            "color": {
-              "value": "#2962FF"
-            },
-            "opacity": {
-              "value": 1,
-              "random": true,
-              "anim": {
-                "enable": false,
-                "opacity_min": 0.2
-              }
-            },
-            "move": {
-              "enable": true,
-              "speed": .5,
-              "direction": "bottom",
-              "straight": false
-            }
-          },
-          "interactivity": {
-            "detect_on": "canvas",
-            "events": {
-              "onhover": {
-                "enable": false
-              }
-            },
-            "modes": {
-              "push": {
-                "particles_nb": 12
-              }
-            }
-          }
-        })
+        this.fetchArticlesPerCourse()
       }
     }
   }
