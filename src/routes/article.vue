@@ -31,7 +31,7 @@
               <toggle-checkmark
                 small
                 class="margin-right-2-1"
-                :click="toggleArticleFinished"
+                :click="toggleArticleFinished.bind(this, this.$route.params.articleId, article.title, currentUser.uid, currentUser.displayName, 'articleFinished')"
                 :checked="article.finishedBy ? article.finishedBy[currentUser.uid] : null" />
               <p class="display-inlineBlock fontSize-small color-dark" v-for="(course, index) in this.articleCourses">Due {{ course.weekday }}</p>
             </div>
@@ -101,11 +101,14 @@
       </div>
 
       <modal
-        v-if="modalVisible"
-        v-on:close="closeModal"
-        :currentUser="currentUser"
-        :databaseRef="databaseRef"
-        :articleId="this.$route.params.articleId" />
+        v-if="modalsVisible.articleFinished"
+        v-on:close="close('articleFinished')">
+        <article-finished
+          v-on:close="close('articleFinished')"
+          :currentUser="currentUser"
+          :databaseRef="databaseRef"
+          :articleId="this.$route.params.articleId" />
+      </modal>
 
     </div>
 
@@ -114,30 +117,35 @@
 
 <script>
   import GridBlock from 'components/GridBlock'
+  import Modal from 'components/Modal'
   import ContributionBlock from 'components/ContributionBlock'
   import ToggleCheckmark from 'components/ToggleCheckmark'
-  import Modal from 'components/Modal'
+  import ArticleFinished from 'components/ArticleFinished'
+  import { toggleArticleFinished } from 'utils/toggleArticleFinished'
   import { fetchDataRelatedToData } from 'utils/fetchDataRelatedToData'
   export default {
     name: 'ArticleRoute',
     components: {
       'grid-block': GridBlock,
+      modal: Modal,
       'contribution-block': ContributionBlock,
       'toggle-checkmark': ToggleCheckmark,
-      'modal': Modal
+      'article-finished': ArticleFinished
     },
     props: {
       currentUser: Object,
       databaseRef: Object
     },
-    mixins: [fetchDataRelatedToData],
+    mixins: [toggleArticleFinished, fetchDataRelatedToData],
     data() {
       return {
         article: {},
         articleCourses: [],
         articleConcepts: [],
         articleContributions: [],
-        modalVisible: false,
+        modalsVisible: {
+          articleFinished: false,
+        },
         dataLoaded: null
       }
     },
@@ -172,44 +180,8 @@
         this.articleContributions = this.fetchDataRelatedToData('contributions', this.article.contributions, true)
         this.dataLoaded = true
       },
-      toggleArticleFinished() {
-        const articleId = this.$route.params.articleId
-        const articleFinishedByPath = 'articles/' + articleId + '/finishedBy/'
-        const articleFinishedPath = 'users/' + this.currentUser.uid + '/articlesFinished/' + articleId
-
-        this.databaseRef.ref(articleFinishedPath).once('value', (snapshot) => {
-          const data = snapshot.val()
-          if (data === false || data === null || !data) {
-            this.databaseRef.ref(articleFinishedPath).set(true)
-            this.databaseRef.ref(articleFinishedByPath + '/' + this.currentUser.uid).set(true)
-            this.modalVisible = true
-
-            // Add notification about finished article to notifications node on database
-            this.databaseRef.ref('articles/' + articleId).once('value', (snapshot) => {
-              const notification = {
-                type: 'articleFinished',
-                timestamp: new Date().getTime(),
-                article: {
-                  id: articleId,
-                  title: snapshot.val().title
-                },
-                user: {
-                  id: this.currentUser.uid,
-                  name: this.currentUser.displayName
-                }
-              }
-              this.databaseRef.ref('notifications').push(notification)
-            })
-
-          } else {
-            this.databaseRef.ref(articleFinishedPath).set(false)
-            this.databaseRef.ref(articleFinishedByPath + '/' + this.currentUser.uid).set(false)
-          }
-        })
-        this.setArticle()
-      },
-      closeModal() {
-        this.modalVisible = false
+      close(modal) {
+        this.modalsVisible[modal] = false
         this.setArticle()
       }
     }
