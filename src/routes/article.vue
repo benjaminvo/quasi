@@ -8,6 +8,9 @@
     </div>
 
     <div class="hidden" :class="{ fadeIn: dataLoaded }">
+
+      <div v-bind:class="{ shown: articleFinished }" id="particles"></div>
+
       <!-- Article header -->
       <grid-block columns="12">
 
@@ -116,6 +119,8 @@
 </template>
 
 <script>
+  import Particles from 'particles.js'
+  import { particlesInit } from 'utils/vendor/particlesInit'
   import GridBlock from 'components/GridBlock'
   import Modal from 'components/Modal'
   import ContributionBlock from 'components/ContributionBlock'
@@ -132,11 +137,11 @@
       'toggle-checkmark': ToggleCheckmark,
       'article-finished': ArticleFinished
     },
+    mixins: [particlesInit, toggleArticleFinished, fetchDataRelatedToData],
     props: {
       currentUser: Object,
       databaseRef: Object
     },
-    mixins: [toggleArticleFinished, fetchDataRelatedToData],
     data() {
       return {
         article: {},
@@ -151,11 +156,13 @@
     },
     computed: {
       pagesTotal() { return parseInt(this.article.pageTo, 10) - parseInt(this.article.pageFrom, 10) },
+      articleFinished() { return this.article.finishedBy ? this.article.finishedBy[this.currentUser.uid] : null }
     },
     created() {
       window.Intercom( 'update' )
     },
     mounted() {
+      this.particlesInit()
       this.setArticle()
     },
     beforeDestroy() {
