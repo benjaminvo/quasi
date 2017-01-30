@@ -134,7 +134,8 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 .hidden { opacity: 0 !important; }
 .shown { opacity: 1 !important; }
 .hide { display: none !important;
-	&-mobile { @include breakpoint( 'mobile' ) { display: none !important; } } }
+	&-mobile { @include breakpoint( 'mobile' ) { display: none !important; }}
+	&-tablet { @include breakpoint( 'tablet' ) { display: none !important; }}}
 .show { display: block !important; }
 
 .float {

@@ -3,7 +3,8 @@
     class="gridBlock gridBlock-columns"
     :class="[
       this.columns ? 'gridBlock-columns-' + this.columns : null,
-      {'gridBlock-noPadding': this.noPadding}
+      {'gridBlock-noPadding': noPadding},
+      {'gridBlock-noWrap': noWrap}
     ]">
     <slot />
   </div>
@@ -13,8 +14,9 @@
   export default {
     name: 'GridBlock',
     props: {
-      columns: { type: String },
-      noPadding: { type: Boolean }
+      columns: String,
+      noPadding: Boolean,
+      noWrap: Boolean
     }
   }
 </script>
@@ -32,6 +34,8 @@
     &-noPadding { padding: 0;
       @include breakpoint( 'tablet' )        { padding: 0 $scale-2-1 !important; }
     }
+
+    &-noWrap { flex-wrap: nowrap !important; }
 
     & > * { padding: 0 $scale-2-1; }
 
