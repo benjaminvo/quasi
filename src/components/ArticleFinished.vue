@@ -86,8 +86,6 @@
         const articleContributionsPath = 'articles/' + this.articleId + '/contributions/'
         const userContributionsPath = 'users/' + this.currentUser.uid + '/contributions/'
 
-        const articleReactionsPath = 'articles/' + this.articleId + '/reactions/'
-
         // Set contribution on Firebase
         if ( this.contribution ) {
 
@@ -116,13 +114,13 @@
 
         }
 
+        const articleReactionsPath = 'articles/' + this.articleId + '/reactions/'
+
         // Set reactions on Firebase
         if ( this.reactions.length ) {
           for ( let i = 0; i < this.reactions.length; i++ ) {
 
             const reactionPath = this.databaseRef.ref(articleReactionsPath + this.reactions[i])
-            const reactionCountPath = reactionPath.child('count')
-            const reactionReactedByPath = reactionPath.child('reactedBy')
 
             reactionPath.once( 'value', (snapshot) => {
               const reaction = snapshot.val()
