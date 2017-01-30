@@ -25,12 +25,12 @@
       </grid-block>
 
       <div class="backgroundColor-light border-top border-lightGrey">
-        <grid-block columns="12">
+        <grid-block columns="12" class="flexDirection-columnReverse-tablet">
 
           <!-- Left column -->
           <div class="article_details span-3">
 
-            <div class="display-flex alignItems-center margin-top margin-bottom-6-1">
+            <div class="display-flex alignItems-center margin-top margin-bottom-6-1 margin-none-tablet">
               <toggle-checkmark
                 small
                 class="margin-right-2-1"
@@ -39,7 +39,7 @@
               <p class="display-inlineBlock fontSize-small color-dark" v-for="(course, index) in this.articleCourses">Due {{ course.weekday }}</p>
             </div>
 
-            <h6 class="margin-top-8-1 margin-bottom-2-1 color-base-lighter-2 fontWeight-bold">Details</h6>
+            <h6 class="margin-top-4-1 margin-bottom-2-1 color-base-lighter-2 fontWeight-bold">Details</h6>
             <ul class="list-unstyled color-base-lighter-2">
               <li class="margin-bottom-1-2 fontSize-small">{{ article.author }} ({{ article.year }})</li>
               <li class="margin-bottom-1-2 fontSize-small">{{ pagesTotal }} pages ({{ article.pageFrom }} - {{ article.pageTo }})</li>

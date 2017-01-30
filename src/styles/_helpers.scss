@@ -40,7 +40,8 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 
 .margin-none  { margin: 0 !important;
 	&-top 	    { margin-top: 0 !important; }
-	&-bottom    { margin-bottom: 0 !important; }}
+	&-bottom    { margin-bottom: 0 !important; }
+	&-tablet    { @include breakpoint('tablet') { margin: 0 !important; }}}
 
 .center {
 	margin-left: auto !important;
@@ -168,7 +169,13 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 .flexDirection {
 	&-row 		 { flex-direction: row; }
 	&-column 	 { flex-direction: column;
-		&-mobile { @include breakpoint( 'mobile' ) { flex-direction: column; }}}}
+		&-mobile { @include breakpoint( 'mobile' ) { flex-direction: column; }}
+		&-tablet { @include breakpoint( 'tablet' ) { flex-direction: column; }}
+		&Reverse { flex-direction: column-reverse;
+			&-tablet { @include breakpoint( 'tablet' ) { flex-direction: column-reverse; }}
+		}
+	}
+}
 
 .flipHorizontal { transform: scaleX(-1); }
 .flipVertical 	{ transform: scaleY(-1); }
