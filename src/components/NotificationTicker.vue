@@ -3,7 +3,7 @@
     <grid-block columns="12" noPadding>
 
       <ul class="span-8 offset-2 notificationTicker_list list-unstyled padding-bottom">
-        <li class="margin-top color-base-lighter-3" v-if="notifications.length === 0">Loading...</li>
+        <li class="margin-top color-base-lighter-3" v-if="notifications.length === 0">No recent activity...</li>
         <li class="margin-bottom-3-1 display-block" v-else v-for="(notification, index) in notifications">
 
           <div v-if="notification.type === 'articleFinished'" class="notification display-inlineBlock">
@@ -26,6 +26,7 @@
 
       <div class="span-2">
         <span
+          v-if="notifications.length > 1"
           class="h6 a float-right margin-top-2-1"
           style="z-index: 1;"
           @click="notificationTickerExpanded = !notificationTickerExpanded" >
