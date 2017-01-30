@@ -36,8 +36,10 @@
 </template>
 
 <script>
+  import { notification } from 'utils/notification'
   export default {
     name: 'ContributionBlock',
+    mixins: [notification],
     props: {
       currentUser: Object,
       databaseRef: Object,
@@ -67,17 +69,9 @@
             const newContributionId = snapshot.key
             this.databaseRef.ref('users/' + this.currentUser.uid + '/contributions/' + newContributionId).set(true)
             this.databaseRef.ref('articles/' + this.$route.params.articleId + '/contributions/' + newContributionId).set(true)
+
             // Add notification about added contribution to notifications node on database
-            const notification = {
-              type: 'contributionAdded',
-              timestamp: new Date().getTime(),
-              article: {
-                id: this.$route.params.articleId,
-                title: this.article.title },
-              user: {
-                id: this.currentUser.uid,
-                name: this.currentUser.displayName }}
-            this.databaseRef.ref('notifications').push(notification)
+            this.notification('contributionAdded', this.$route.params.articleId, this.article.title, this.currentUser.uid, this.currentUser.displayName)
           })}
 
         this.contribution = ''
