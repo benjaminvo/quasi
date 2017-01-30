@@ -68,7 +68,7 @@ window.addEventListener('load', function () {
 
     } else {
     	authenticated = false
-      window.location.href = 'auth.html'
+      window.location.href = '/auth.html'
     }
   }
 })
