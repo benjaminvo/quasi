@@ -9,7 +9,7 @@
 
     <div class="modal_inner">
 
-      <h1 class="margin-top-3-1 textAlign-center">{{ randomEncouragement }}, {{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }}!</h1>
+      <h1 class="margin-top-3-1">{{ randomEncouragement }}, {{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }}!</h1>
 
       <form v-on:submit.prevent="handleSubmit" class="margin-top-3-1">
 
