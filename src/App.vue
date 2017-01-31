@@ -1,5 +1,5 @@
 <template>
-  <div class="appContainer" :authenticated="authenticated">
+  <div id="app" class="appContainer" :authenticated="authenticated">
     <app-header :currentUser="currentUser" />
     <router-view :databaseRef="database" :currentUser="currentUser" />
     <app-footer />
