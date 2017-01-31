@@ -22,21 +22,25 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 	&-bottom    { padding-bottom: 0 !important; }}
 
 @each $position in $positions {
-	.margin#{$position}-8-1 { margin#{$position}: $scale-8-1 !important; }
-	.margin#{$position}-7-1 { margin#{$position}: $scale-7-1 !important; }
-	.margin#{$position}-6-1 { margin#{$position}: $scale-6-1 !important; }
-	.margin#{$position}-5-1 { margin#{$position}: $scale-5-1 !important; }
-	.margin#{$position}-4-1 { margin#{$position}: $scale-4-1 !important; }
-	.margin#{$position}-3-1 { margin#{$position}: $scale-3-1 !important; }
-	.margin#{$position}-2-1 { margin#{$position}: $scale-2-1 !important; }
-	.margin#{$position} 		{ margin#{$position}: $scale !important; }
-	.margin#{$position}-1-2 { margin#{$position}: $scale-1-2 !important; }
-	.margin#{$position}-1-3 { margin#{$position}: $scale-1-3 !important; }
-	.margin#{$position}-1-4 { margin#{$position}: $scale-1-4 !important; }
-	.margin#{$position}-1-5 { margin#{$position}: $scale-1-5 !important; }
-	.margin#{$position}-1-6 { margin#{$position}: $scale-1-6 !important; }
-	.margin#{$position}-1-7 { margin#{$position}: $scale-1-7 !important; }
-	.margin#{$position}-1-8 { margin#{$position}: $scale-1-8 !important; }}
+	.margin#{$position}-12-1 { margin#{$position}: $scale-12-1 !important; }
+	.margin#{$position}-11-1 { margin#{$position}: $scale-11-1 !important; }
+	.margin#{$position}-10-1 { margin#{$position}: $scale-10-1 !important; }
+	.margin#{$position}-9-1  { margin#{$position}: $scale-9-1 !important; }
+	.margin#{$position}-8-1  { margin#{$position}: $scale-8-1 !important; }
+	.margin#{$position}-7-1  { margin#{$position}: $scale-7-1 !important; }
+	.margin#{$position}-6-1  { margin#{$position}: $scale-6-1 !important; }
+	.margin#{$position}-5-1  { margin#{$position}: $scale-5-1 !important; }
+	.margin#{$position}-4-1  { margin#{$position}: $scale-4-1 !important; }
+	.margin#{$position}-3-1  { margin#{$position}: $scale-3-1 !important; }
+	.margin#{$position}-2-1  { margin#{$position}: $scale-2-1 !important; }
+	.margin#{$position} 		 { margin#{$position}: $scale !important; }
+	.margin#{$position}-1-2  { margin#{$position}: $scale-1-2 !important; }
+	.margin#{$position}-1-3  { margin#{$position}: $scale-1-3 !important; }
+	.margin#{$position}-1-4  { margin#{$position}: $scale-1-4 !important; }
+	.margin#{$position}-1-5  { margin#{$position}: $scale-1-5 !important; }
+	.margin#{$position}-1-6  { margin#{$position}: $scale-1-6 !important; }
+	.margin#{$position}-1-7  { margin#{$position}: $scale-1-7 !important; }
+	.margin#{$position}-1-8  { margin#{$position}: $scale-1-8 !important; }}
 
 .margin-none  { margin: 0 !important;
 	&-top 	    { margin-top: 0 !important; }
