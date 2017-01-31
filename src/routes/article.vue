@@ -210,23 +210,20 @@
       border-top: 1px solid #f1f1f1;
       margin-top: -$scale-12-1;
       background: white;
-      padding: $scale-5-1 $scale-6-1 !important;
+      padding: $scale-5-1 $scale-6-1 $scale-4-1 !important;
       overflow: hidden;
-      padding-bottom: $scale-6-1 !important;
 
       @include breakpoint('tablet') {
         margin-top: -$scale-6-1;
         margin-left: 0;
         margin-bottom: $scale-4-1;
         padding: $scale-4-1 !important;
-        padding-bottom: $scale-6-1 !important;
       }
 
       &_lower {
         background: $color-base-lighter-7;
         border-top: 1px solid $color-base-lighter-6;
         padding: inherit;
-        padding-bottom: 0;
         margin-top: $scale-6-1;
         margin-left: -$scale-6-1;
         margin-bottom: -$scale-6-1;

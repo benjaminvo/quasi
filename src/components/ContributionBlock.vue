@@ -1,7 +1,7 @@
 <template>
   <div class="contributionBlock">
 
-    <form v-on:submit.prevent="handleContributionSubmit">
+    <form v-on:submit.prevent="handleContributionSubmit" class="margin-bottom-4-1">
       <label for="contributionInput">Any thoughts on the text? Frustrations, aha-moments etc.</label>
       <div class="display-flex margin-top">
         <input
@@ -13,7 +13,7 @@
       </div>
     </form>
 
-    <ul class="list-unstyled margin-top-4-1">
+    <ul class="list-unstyled">
       <li v-for="(contribution, index) in contributionsReversed" :id="contribution.id" class="contribution">
         {{ contribution.text }}
         <div class="display-flex alignItems-center margin-top">
@@ -126,8 +126,7 @@
 
   .contribution {
     width: calc( 100% + #{$scale-12-1} );
-    padding: $scale-2-1 $scale-6-1;
-    padding-bottom: $scale-2-1 + 4px;
+    padding: $scale-3-1 $scale-6-1 $scale-4-1;
     margin-left: -$scale-6-1;
     border-top: 1px solid $color-base-lighter-6;
   }
