@@ -226,6 +226,7 @@
         background: $color-base-lighter-7;
         border-top: 1px solid $color-base-lighter-6;
         padding: inherit;
+        padding-bottom: $scale;
         margin-top: $scale-6-1;
         margin-left: -$scale-6-1;
         margin-bottom: -$scale-6-1;
@@ -233,7 +234,6 @@
         display: block;
 
         @include breakpoint('tablet') {
-          padding-bottom: $scale-4-1;
           margin-left: -$scale-4-1;
           width: calc(100% + #{$scale-8-1});
         }

@@ -14,7 +14,7 @@
     </form>
 
     <ul class="list-unstyled margin-top-4-1">
-      <li v-for="(contribution, index) in contributionsReversed" :id="contribution.id" class="backgroundColor-white padding-2-1 borderRadius-1-2 margin-top-2-1 border border-nearWhite">
+      <li v-for="(contribution, index) in contributionsReversed" :id="contribution.id" class="contribution">
         {{ contribution.text }}
         <div class="display-flex alignItems-center margin-top">
           <button class="toggle margin-right" v-bind:class="{ active: contribution.agreedBy && contribution.agreedBy[currentUser.uid] ? contribution.agreedBy[currentUser.uid] : null }">
@@ -121,4 +121,15 @@
   }
 </script>
 
-<style></style>
+<style lang="scss">
+  @import '~styles/vars';
+
+  .contribution {
+    width: calc( 100% + #{$scale-12-1} );
+    padding: $scale-2-1 $scale-6-1;
+    padding-bottom: $scale-2-1 + 4px;
+    margin-left: -$scale-6-1;
+    border-top: 1px solid $color-base-lighter-6;
+  }
+
+</style>
