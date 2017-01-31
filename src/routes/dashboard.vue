@@ -12,7 +12,7 @@
       <div v-bind:class="{ shown: allRead }" id="particles"></div>
 
       <grid-block columns="12">
-        <h1 class="dashboard_message span-8 offset-2 margin-bottom-4-1" v-html="motivationMessage" /> <!-- Height = 3 lines of text -->
+        <h1 class="dashboard_message span-8 offset-2 margin-bottom-8-1" v-html="motivationMessage" /> <!-- Height = 3 lines of text -->
       </grid-block>
 
       <notification-ticker
@@ -276,14 +276,6 @@
 
 <style lang="scss">
   @import '~styles/breakpoints';
-
-  .dashboard {
-    &_message {
-      min-height: 194px;
-      @include breakpoint( 'tablet' ) { min-height: 108px; }
-      @include breakpoint( 'mobile' ) { min-height: 81px; }
-    }
-  }
 
   #particles {
     height: 100vh;
