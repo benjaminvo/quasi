@@ -24,7 +24,7 @@
         <textarea class="form_input margin-top-2-1 margin-bottom border border-nearWhite backgroundColor-light" v-model="contribution" type="text" rows="3"></textarea>
 
         <div class="form_footer">
-          <p class="form_footer_text color-base-lighter-3">Everything is anonymous</p>
+          <p class="form_footer_text color-base-lighter-3">Your comment is anonymous</p>
           <div class="form_footer_actions">
             <button class="button submit" type="submit">Go</button>
           </div>
