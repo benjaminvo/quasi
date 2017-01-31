@@ -13,7 +13,10 @@
 <script>
   export default {
     name: 'Modal',
-    props: { notDismissable: Boolean },
+    props: {
+      notDismissable: Boolean,
+      opaque: Boolean
+    },
     methods: {
       close() { this.$emit('close') }
     }
