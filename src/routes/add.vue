@@ -76,6 +76,8 @@
           <input v-model="article.author" type="text" placeholder="Author">
           <input v-model.number="article.year" type="text" placeholder="Year">
           <input v-model="article.journal" type="text" placeholder="Journal">
+          <input v-model="article.book" type="text" placeholder="Book">
+          <input v-model.number="article.chapter" type="text" placeholder="Chapter (number)">
           <input v-model="article.publisher" type="text" placeholder="Publisher">
           <input v-model.number="article.pageFrom" type="text" placeholder="Page from">
           <input v-model.number="article.pageTo" type="text" placeholder="Page to">
@@ -85,17 +87,14 @@
           <div class="display-flex">
             <div class="flex-1">
               <h6 class="margin-bottom">What</h6>
-              <input v-model="article.guide.what.title" type="text" placeholder="Title">
               <textarea v-model="article.guide.what.text" type="text" placeholder="Text"></textarea>
             </div>
             <div class="margin-left-2-1 flex-1">
               <h6 class="margin-bottom">Where</h6>
-              <input v-model="article.guide.where.title" type="text" placeholder="Title">
               <textarea v-model="article.guide.where.text" type="text" placeholder="Text"></textarea>
             </div>
             <div class="margin-left-2-1 flex-1">
               <h6 class="margin-bottom">Why</h6>
-              <input v-model="article.guide.why.title" type="text" placeholder="Title">
               <textarea v-model="article.guide.why.text" type="text" placeholder="Text"></textarea>
             </div>
           </div>
@@ -196,6 +195,8 @@
           author: null,
           year: null,
           journal: null,
+          book: null,
+          chapter: null,
           publisher: null,
           pageFrom: null,
           pageTo: null,
@@ -219,15 +220,12 @@
           },
           guide: {
             what: {
-              title: null,
               text: null
             },
             where: {
-              title: null,
               text: null
             },
             why: {
-              title: null,
               text: null
             }
           },
