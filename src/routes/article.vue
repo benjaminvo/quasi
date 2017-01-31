@@ -226,7 +226,7 @@
         background: $color-base-lighter-7;
         border-top: 1px solid $color-base-lighter-6;
         padding: inherit;
-        padding-bottom: $scale;
+        padding-bottom: 0;
         margin-top: $scale-6-1;
         margin-left: -$scale-6-1;
         margin-bottom: -$scale-6-1;
