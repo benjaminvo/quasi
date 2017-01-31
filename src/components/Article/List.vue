@@ -13,7 +13,7 @@
       :year="article.year"
       :finishedBy="article.finishedBy"
       :reactions="article.reactions"
-      :numOfUsers="numOfUsers" />
+      :users="users" />
   </ul>
 </template>
 
@@ -27,11 +27,11 @@
       'article-list-item': ArticleListItem
     },
     props: {
-      currentUser: { type: Object },
-      articles: { type: Object },
-      courseName: { type: String },
-      toggleArticleFinished: { type: Function },
-      numOfUsers: { type: Number }
+      currentUser: Object,
+      articles: Object,
+      courseName: String,
+      toggleArticleFinished: Function,
+      users: Object
     }
   }
 </script>

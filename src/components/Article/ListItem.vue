@@ -21,7 +21,7 @@
     </div>
 
     <div class="articleListItem_lower">
-      <span class="articleListItem_readers fontSize-xsmall">{{ articleFinishedByNum }} out of {{ numOfUsers }} have read this</span>
+      <span class="articleListItem_readers fontSize-xsmall">{{ articleFinishedByNum }} out of {{ usersArray.length }} have read this</span>
 
       <div class="articleListItem_reactions fontSize-xsmall">
           <span
@@ -47,17 +47,17 @@
     name: 'ArticleListItem',
     components: { 'toggle-checkmark': ToggleCheckmark },
     props: {
-      currentUser: { type: Object },
-      articleId: { type: String },
-      finished: { type: Boolean },
-      title: { type: String },
-      author: { type: String },
-      pageNum: { type: Number },
-      year: { type: Number },
-      finishedBy: { type: Object },
-      reactions: { type: Object },
-      toggleArticleFinished: { type: Function },
-      numOfUsers: { type: Number }
+      currentUser: Object,
+      articleId: String,
+      finished: Boolean,
+      title: String,
+      author: String,
+      pageNum: Number,
+      year: Number,
+      finishedBy: Object,
+      reactions: Object,
+      toggleArticleFinished: Function,
+      users: Object
     },
     computed: {
       articleFinishedByNum() {
@@ -66,6 +66,11 @@
           if ( this.finishedBy[finisher] === true ) finishers.push(finisher)
         }
         return finishers.length
+      },
+      usersArray() {
+        let usersArray = []
+        for ( let user in this.users ) usersArray.push( this.users[user] )
+        return usersArray
       },
       easyReadCount() { return this.reactions && this.reactions.easyRead ? this.reactions.easyRead.count : null },
       easyReadReactedByCurrentUser() { return this.reactionReactedByUser('easyRead') },

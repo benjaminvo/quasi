@@ -12,7 +12,7 @@
           :toggleArticleFinished="toggleArticleFinished"
           :courseName="course.course"
           :articles="course.articles"
-          :numOfUsers="numOfUsers" />
+          :users="course.users" />
       </div>
     </grid-block>
   </div>
@@ -28,11 +28,11 @@
       'article-list': ArticleList
     },
     props: {
-      currentUser: { type: Object },
-      day: { type: String },
-      courses: { type: Array },
-      toggleArticleFinished: { type: Function },
-      numOfUsers: { type: Number }
+      currentUser: Object,
+      day: String,
+      courses: Array,
+      toggleArticleFinished: Function,
+      users: Object
     }
   }
 </script>

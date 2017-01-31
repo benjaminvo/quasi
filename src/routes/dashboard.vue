@@ -24,8 +24,7 @@
         :toggleArticleFinished="getArticleDataAndToggleArticleFinished"
         v-for="(dayBlock, key, index) in dayBlocks"
         :day="key"
-        :courses="dayBlock.courses"
-        :numOfUsers="usersArray.length" />
+        :courses="dayBlock.courses" />
 
       <modal
         v-if="modalsVisible.articleFinished"
@@ -134,11 +133,6 @@
               if ( this.user.courses[usersCourseId] === true ) {
                 if ( articlesCourseId === usersCourseId ) currentUsersArticlesArray.push( this.articles[article] )
         }}}} return currentUsersArticlesArray
-      },
-      usersArray() {
-        let usersArray = []
-        for ( let user in this.users ) usersArray.push( this.users[user] )
-        return usersArray
       },
       notificationsArray() {
         let notificationsArray = []
@@ -256,6 +250,7 @@
               const courseObj = {}
               courseObj['course'] = this.courses[course].name
               courseObj['articles'] = this.courses[course].articles
+              courseObj['users'] = this.courses[course].users
 
               switch( this.courses[course].weekday ) { // Add courseObj to dayBlocks object based on the day of the course
                 case 'Monday': { dayBlocks.Monday.courses.push(courseObj); break; }
