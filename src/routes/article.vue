@@ -80,10 +80,9 @@
 
               <div class="float-right">
                 <p class="display-inlineBlock color-base-lighter-3 fontSize-xlarge margin-left-2-1"
-                  v-if="article.reactions"
-                  v-for="reaction in article.reactions">
-                  <span class="fontSize-xsmall">{{ reaction.count }}</span>
-                  <span v-html="reaction.emoji"></span>
+                  v-for="reaction in article.reactions"
+                  v-if="reaction.count && reaction.count > 0">
+                  <span class="fontSize-xsmall margin-right-1-2">{{ reaction.count }}</span><span v-html="reaction.emoji" />
                 </p>
               </div>
 
