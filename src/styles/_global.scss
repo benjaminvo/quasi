@@ -60,8 +60,10 @@ a, .a {
   color: $color-primary;
   cursor: pointer;
   text-decoration: none;
+  opacity: 1;
+  transition: opacity 50ms ease;
 
-  &:hover { opacity: 0.5; }
+  &:hover { opacity: 0.7; }
 }
 
 input, textarea, button {

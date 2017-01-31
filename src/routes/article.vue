@@ -14,13 +14,11 @@
       <!-- Article header -->
       <grid-block columns="12">
 
-        <!-- Breadcrumb -->
-        <ul class="span-12 margin-bottom fontFamily-body fontSize-base list-unstyled">
-          <router-link :to="{ name: 'dashboard' }" tag="li" class="a fontSize-xsmall display-inlineBlock">Dashboard</router-link>
-          <li class="fontSize-xsmall display-inlineBlock"><span class="color-base-lighter-3">/ </span><span class="color-base-lighter-1">article</span></li>
-        </ul>
-
-        <h1 class="span-12 margin-bottom-8-1">{{ article.title }}</h1>
+        <!-- Article title (and subtitle) -->
+        <div class="span-12 margin-bottom-12-1">
+          <h1 class="margin-none-bottom">{{ article.title }}</h1>
+          <h5 v-if="article.book" class="color-base margin-top-2-1 margin-none-bottom">Ch. {{ article.chapter }} in <i>{{ article.book }}</i></h5>
+        </div>
 
       </grid-block>
 
@@ -208,7 +206,7 @@
 
     &_introduction {
       border-top: 1px solid #f1f1f1;
-      margin-top: -$scale-12-1;
+      margin-top: -112px;
       background: white;
       padding: $scale-5-1 $scale-6-1 $scale-4-1 !important;
       overflow: hidden;
