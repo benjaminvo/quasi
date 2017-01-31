@@ -1,7 +1,7 @@
 <template>
-  <div class="app">
-    <app-header :currentUser="currentUser" :authenticated="authenticated" />
-    <router-view :databaseRef="database" :currentUser="currentUser" :authenticated="authenticated"></router-view>
+  <div class="appContainer" :authenticated="authenticated">
+    <app-header :currentUser="currentUser" />
+    <router-view :databaseRef="database" :currentUser="currentUser" />
     <app-footer />
   </div>
 </template>
@@ -26,7 +26,7 @@
 <style lang="scss">
   @import './styles/main';
 
-  .app {
+  .appContainer {
     height: 100%;
     width: 100%;
   }

@@ -38,7 +38,7 @@
   export default {
     name: 'Header',
     components: { 'grid-block': GridBlock },
-    props: { currentUser: { type: Object } },
+    props: { currentUser: Object },
     mixins: [showNoFunctionMessageThenHide],
     methods: {
       logout() {
