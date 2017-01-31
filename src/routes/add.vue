@@ -200,6 +200,23 @@
           pageFrom: null,
           pageTo: null,
           citedBy: null,
+          reactions: {
+            easyRead: {
+              emoji: '&#128526;',
+              name: 'Easy read',
+              type: 'characteristic'
+            },
+            interesting: {
+              emoji: '&#129300;',
+              name: 'Interesting',
+              type: 'characteristic'
+            },
+            understandable: {
+              emoji: '&#128519;',
+              name: 'Understandable',
+              type: 'characteristic'
+            },
+          },
           guide: {
             what: {
               title: null,
