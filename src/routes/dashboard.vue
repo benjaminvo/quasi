@@ -152,7 +152,7 @@
 
         const articlesLeft = this.currentUsersArticlesArray.length - this.currentUsersReadArticleIdsArray.length
 
-        if (this.currentUsersArticlesArray.length > 0) {
+        if (this.currentUsersArticlesArray.length > 0 && this.currentUsersReadArticleIdsArray.length > 0) {
           switch (articlesLeft) {
             case 0:
               return "You're done! &#127870; &#127881; ... no, really – you're done."
@@ -172,7 +172,7 @@
             default:
               return initialMessage
           }
-        }
+        } else return initialMessage
       }
     },
     created() {
