@@ -152,18 +152,27 @@
 
         const articlesLeft = this.currentUsersArticlesArray.length - this.currentUsersReadArticleIdsArray.length
 
-        if (this.currentUsersArticlesArray.length > 0) {
+        if (this.currentUsersArticlesArray.length > 0 && this.currentUsersReadArticleIdsArray.length > 0) {
           switch (articlesLeft) {
             case 0:
-              return "You've finished! &#127881;"
+              return "You're done! &#127870; &#127881; ... no, really – you're done."
               break
             case 1:
-              return '1 to go!'
+              return '1 to go! This is so little you might actually just get it over with now...'
+              break
+            case 2:
+              return 'It\'s only 1 more than 1 now. <em>Pretty</em> close to the finish line.'
+              break
+            case 3:
+              return '3. Simple, yet powerful. Has it\'s own <a href="https://en.wikipedia.org/wiki/Rule_of_three_(writing)" target="_blank" style="display: inline-block;"><h1>rule</h1></a>. You\'re getting closer!'
+              break
+            case 4:
+              return 'You\'re progressing well! Good job. Only 4 left.'
               break
             default:
               return initialMessage
           }
-        }
+        } else return initialMessage
       }
     },
     created() {

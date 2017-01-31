@@ -17,13 +17,14 @@
       firebase.initializeApp(config);
     </script>
 
-    <script src="https://www.gstatic.com/firebasejs/ui/live/0.4/firebase-ui-auth.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/live/0.4/firebase-ui-auth.css" />
+    <script src="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/1.0.0/firebaseui.css" />
     <script type="text/javascript">
       // FirebaseUI config.
       var uiConfig = {
         'signInSuccessUrl': '/',
         'signInOptions': [ firebase.auth.EmailAuthProvider.PROVIDER_ID ],
+        'credentialHelper': firebaseui.auth.CredentialHelper.NONE
         // Terms of service url
         // 'tosUrl': 'tos.html',
       };
@@ -33,16 +34,120 @@
       ui.start('#firebaseui-auth-container', uiConfig);
     </script>
     <style>
-      .auth-wrapper {
-         width: 350px;
-         margin: 0 auto;
-         text-align: center;
+      @font-face {
+      	font-family: 'Copernicus';
+      	src: url('./auth/fonts/Copernicus-Bold.woff') format('woff');
+      	font-weight: bold;
+      	font-style: normal;
       }
+
+      body {
+        /*background-color: #eceff1;*/
+        background-color: #f5f7f8;
+      }
+
+      .auth-wrapper {
+        max-width: 600px;
+        margin: 64px auto 32px;
+        text-align: center;
+      }
+
+      .auth-wrapper > h1 {
+        font-family: 'Copernicus', 'serif' !important;
+        color: #2962FF;
+        margin: 0;
+        /*margin-bottom: 16px;*/
+        font-size: 60px;
+      }
+
+      a { color: #2962FF !important; }
+      a:hover {
+        opacity: 0.5 !important;
+        text-decoration: none !important;
+      }
+
+      h1, p, label, input, button {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto" !important;
+      }
+
+      .firebaseui-text {
+        font-size: 14px;
+        color: #90a4ae;
+      }
+
+      input {
+        font-size: 20px !important;
+        border: 1px solid #eceff1 !important;
+        border-radius: 4px !important;
+        background: white !important;
+        padding: 16px !important;
+        display: block !important;
+        width: calc( 100% - 32px ) !important;
+        /*width: auto !important;*/
+      }
+
+      .mdl-textfield {
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 !important;
+      }
+
+      .mdl-textfield__label,
+      .mdl-textfield__label.firebaseui-label {
+        position: relative !important;
+        bottom: auto !important;
+        top: auto !important;
+        left: auto !important;
+        font-size: 14px !important;
+        margin-bottom: 8px !important;
+        /*width: auto !important;*/
+      }
+
+      .mdl-textfield--floating-label.is-focused .mdl-textfield__label,
+      .mdl-textfield--floating-label.is-dirty .mdl-textfield__label {
+        font-size: 14px !important; }
+
+      input:active,
+      input:focus,
+      .mdl-textfield.is-focused { outline: none !important; outline-color: transparent !important; }
+
+      .firebaseui-input-floating-button {
+        right: 16px !important;
+        top: 42px !important;
+      }
+
+      button {
+        background: #2962FF !important;
+        border-radius: 4px !important;
+        font-size: 14px !important;
+        box-shadow: none !important;
+        transition: background 300ms ease-in;
+      }
+
+      button:focus,
+      button:active { box-shadow: none !important; }
+      button:hover { opacity: 0.9; }
+
+      .mdl-card {
+        max-width: inherit;
+        /*padding: 16px 32px;*/
+        border-radius: 8px;
+        /*background: #f5f7f8;*/
+        background: transparent;
+        /*box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);*/
+        box-shadow: none;
+        overflow: visible !important;
+      }
+
+      .firebaseui-card-header { border-bottom: none; }
+      .firebaseui-title { font-size: 16px; display: none; }
+
     </style>
   </head>
   <body>
     <div class="auth-wrapper">
-      <h1>Log ind på Quasi</h1>
+      <h1>Quasi</h1>
       <div id="firebaseui-auth-container"></div>
     </div>
   </body>

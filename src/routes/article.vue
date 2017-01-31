@@ -8,6 +8,9 @@
     </div>
 
     <div class="hidden" :class="{ fadeIn: dataLoaded }">
+
+      <div v-bind:class="{ shown: articleFinished }" id="particles"></div>
+
       <!-- Article header -->
       <grid-block columns="12">
 
@@ -22,12 +25,12 @@
       </grid-block>
 
       <div class="backgroundColor-light border-top border-lightGrey">
-        <grid-block columns="12">
+        <grid-block columns="12" class="flexDirection-columnReverse-tablet">
 
           <!-- Left column -->
           <div class="article_details span-3">
 
-            <div class="display-flex alignItems-center margin-top margin-bottom-6-1">
+            <div class="display-flex alignItems-center margin-top margin-bottom-6-1 margin-none-tablet">
               <toggle-checkmark
                 small
                 class="margin-right-2-1"
@@ -36,7 +39,7 @@
               <p class="display-inlineBlock fontSize-small color-dark" v-for="(course, index) in this.articleCourses">Due {{ course.weekday }}</p>
             </div>
 
-            <h6 class="margin-top-8-1 margin-bottom-2-1 color-base-lighter-2 fontWeight-bold">Details</h6>
+            <h6 class="margin-top-4-1 margin-bottom-2-1 color-base-lighter-2 fontWeight-bold">Details</h6>
             <ul class="list-unstyled color-base-lighter-2">
               <li class="margin-bottom-1-2 fontSize-small">{{ article.author }} ({{ article.year }})</li>
               <li class="margin-bottom-1-2 fontSize-small">{{ pagesTotal }} pages ({{ article.pageFrom }} - {{ article.pageTo }})</li>
@@ -77,10 +80,9 @@
 
               <div class="float-right">
                 <p class="display-inlineBlock color-base-lighter-3 fontSize-xlarge margin-left-2-1"
-                  v-if="article.reactions"
-                  v-for="reaction in article.reactions">
-                  <span class="fontSize-xsmall">{{ reaction.count }}</span>
-                  <span v-html="reaction.emoji"></span>
+                  v-for="reaction in article.reactions"
+                  v-if="reaction.count && reaction.count > 0">
+                  <span class="fontSize-xsmall margin-right-1-2">{{ reaction.count }}</span><span v-html="reaction.emoji" />
                 </p>
               </div>
 
@@ -116,6 +118,8 @@
 </template>
 
 <script>
+  import Particles from 'particles.js'
+  import { particlesInit } from 'utils/vendor/particlesInit'
   import GridBlock from 'components/GridBlock'
   import Modal from 'components/Modal'
   import ContributionBlock from 'components/ContributionBlock'
@@ -132,11 +136,11 @@
       'toggle-checkmark': ToggleCheckmark,
       'article-finished': ArticleFinished
     },
+    mixins: [particlesInit, toggleArticleFinished, fetchDataRelatedToData],
     props: {
       currentUser: Object,
       databaseRef: Object
     },
-    mixins: [toggleArticleFinished, fetchDataRelatedToData],
     data() {
       return {
         article: {},
@@ -151,11 +155,13 @@
     },
     computed: {
       pagesTotal() { return parseInt(this.article.pageTo, 10) - parseInt(this.article.pageFrom, 10) },
+      articleFinished() { return this.article.finishedBy ? this.article.finishedBy[this.currentUser.uid] : null }
     },
     created() {
       window.Intercom( 'update' )
     },
     mounted() {
+      this.particlesInit()
       this.setArticle()
     },
     beforeDestroy() {
@@ -220,6 +226,7 @@
         background: $color-base-lighter-7;
         border-top: 1px solid $color-base-lighter-6;
         padding: inherit;
+        padding-bottom: 0;
         margin-top: $scale-6-1;
         margin-left: -$scale-6-1;
         margin-bottom: -$scale-6-1;
@@ -227,7 +234,6 @@
         display: block;
 
         @include breakpoint('tablet') {
-          padding-bottom: $scale-4-1;
           margin-left: -$scale-4-1;
           width: calc(100% + #{$scale-8-1});
         }

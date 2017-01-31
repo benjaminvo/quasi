@@ -1,12 +1,12 @@
 <template>
   <header class="header">
-    <grid-block columns="12" noPadding class="height-full">
+    <grid-block columns="12" noPadding noWrap class="height-full">
 
       <div class="span-3 display-flex alignItems-center">
         <router-link tag="a" class="h2 fontWeight-bold" :to="{ name: 'dashboard' }">Quasi</router-link>
       </div>
 
-      <div class="span-6 display-flex alignItems-center justifyContent-center">
+      <div class="span-6 display-flex alignItems-center justifyContent-center hide-tablet">
         <div class="display-flex alignItems-center">
           <div class="arrowWrap" @click="showNoFunctionMessageThenHide">
             <div class="arrow arrow-left"></div>
@@ -24,7 +24,7 @@
       <div class="span-3 textAlign-right display-flex alignItems-center justifyContent-flexEnd">
           <p class="h6 fontWeight-medium">Hi,&nbsp;</p>
           <router-link tag="a" class="a h6 margin-right-2-1" :to="{ name: 'settings' }">{{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }} </router-link>
-          <a class="h6 fontWeight-semibold" v-on:click="logout()">Sign out</a>
+          <a class="h6 fontWeight-semibold whiteSpace-noWrap" v-on:click="logout()">Sign out</a>
       </div>
 
     </grid-block>
@@ -38,7 +38,7 @@
   export default {
     name: 'Header',
     components: { 'grid-block': GridBlock },
-    props: { currentUser: { type: Object } },
+    props: { currentUser: Object },
     mixins: [showNoFunctionMessageThenHide],
     methods: {
       logout() {

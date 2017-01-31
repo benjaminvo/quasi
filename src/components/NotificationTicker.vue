@@ -2,31 +2,30 @@
   <div class="notificationTicker border-top border-nearWhite padding-top-2-1 padding-bottom-2-1" :class="{ 'notificationTicker-expanded': notificationTickerExpanded }">
     <grid-block columns="12" noPadding>
 
-      <ul class="span-8 offset-2 notificationTicker_list list-unstyled padding-bottom">
-        <li class="margin-top color-base-lighter-3" v-if="notifications.length === 0">Loading...</li>
-        <li class="margin-bottom-3-1 display-block" v-else v-for="(notification, index) in notifications">
+      <div class="span-8 offset-2 display-flex justifyContent-spaceBetween">
+        <ul class="notificationTicker_list list-unstyled padding-bottom">
+          <li class="margin-top color-base-lighter-3" v-if="notifications.length === 0">No recent activity...</li>
+          <li class="notification margin-bottom-3-1 display-block" v-else v-for="(notification, index) in notifications">
 
-          <div v-if="notification.type === 'articleFinished'" class="notification display-inlineBlock">
-            {{ notification.user.id === currentUser.uid ? 'You' : notification.user.name.split(' ')[0] }} finished  <span class="fontWeight-semibold">{{ notification.article.title }}</span>
-          </div>
+            <!-- WHO -->
+            {{ notification.user.id === currentUser.uid ? 'You' : notification.user.name.split(' ')[0] }}
 
-          <div v-if="notification.type === 'contributionAdded'" class="notification display-inlineBlock">
-            {{ notification.user.id === currentUser.uid ? 'You' : notification.user.name.split(' ')[0] }} added a contribution to <span class="fontWeight-semibold">{{ notification.article.title }}</span>
-          </div>
+            <!-- EVENT -->
+            {{ notification.type === 'articleFinished' ? 'finished' :
+               notification.type === 'contributionAdded' ? 'wrote a contribution to' : null }}
+            <div v-if="notification.type === 'reactionAdded'" class="display-inlineBlock"> reacted with <span v-html="renderEmoji(notification.emoji)" />&nbsp; to </div>
 
-          <div v-if="notification.type === 'reactionAdded'" class="notification display-inlineBlock">
-            {{ notification.user.id === currentUser.uid ? 'You' : notification.user.name.split(' ')[0] }} reacted with
-            <span v-html="renderEmoji(notification.emoji)" />&nbsp; to <span class="fontWeight-semibold">{{ notification.article.title }}</span>
-          </div>
+            <!-- ARTICLE -->
+            <span class="fontWeight-semibold">{{ notification.article.title }}</span>
 
-          <div class="fontSize-small color-base-lighter-3">{{ moment(notification.timestamp).fromNow() }}</div>
+            <div class="fontSize-small color-base-lighter-3 margin-top-1-2">{{ moment(notification.timestamp).fromNow() }}</div>
 
-        </li>
-      </ul>
+          </li>
+        </ul>
 
-      <div class="span-2">
         <span
-          class="h6 a float-right margin-top-2-1"
+          v-if="notifications.length > 1"
+          class="h6 a float-right margin-top-2-1 whiteSpace-noWrap"
           style="z-index: 1;"
           @click="notificationTickerExpanded = !notificationTickerExpanded" >
           {{ this.notificationTickerExpanded ? 'Close' : 'View recent' }}
@@ -81,7 +80,7 @@
     }
   }
   .notification {
-    max-width: 100%;
+    // max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

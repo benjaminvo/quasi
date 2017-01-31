@@ -39,9 +39,11 @@
 
 <script>
   import InputEmoji from 'components/InputEmoji'
+  import { notification } from 'utils/notification'
   export default {
     name: 'ModalArticleFinished',
     components: { 'input-emoji': InputEmoji },
+    mixins: [notification],
     props: {
       currentUser: Object,
       databaseRef: Object,
@@ -83,12 +85,10 @@
         this.databaseRef.ref('articles/' + this.articleId).once('value', (snapshot) => { this.article = snapshot.val() })
       },
       handleSubmit() {
+        // Set contribution on Firebase
         const articleContributionsPath = 'articles/' + this.articleId + '/contributions/'
         const userContributionsPath = 'users/' + this.currentUser.uid + '/contributions/'
 
-        const articleReactionsPath = 'articles/' + this.articleId + '/reactions/'
-
-        // Set contribution on Firebase
         if ( this.contribution ) {
 
           this.databaseRef.ref('contributions')
@@ -101,28 +101,20 @@
           .then( (snapshot) => {
             this.databaseRef.ref(userContributionsPath + snapshot.key).set(true)
             this.databaseRef.ref(articleContributionsPath + snapshot.key).set(true)
+
             // Add notification about added contribution to notifications node on database
-            const notification = {
-              type: 'contributionAdded',
-              timestamp: new Date().getTime(),
-              article: {
-                id: this.articleId,
-                title: this.article.title },
-              user: {
-                id: this.currentUser.uid,
-                name: this.currentUser.displayName }}
-            this.databaseRef.ref('notifications').push(notification)
+            this.notification('contributionAdded', this.articleId, this.article.title, this.currentUser.uid, this.currentUser.displayName)
           })
 
         }
 
         // Set reactions on Firebase
+        const articleReactionsPath = 'articles/' + this.articleId + '/reactions/'
+
         if ( this.reactions.length ) {
           for ( let i = 0; i < this.reactions.length; i++ ) {
 
             const reactionPath = this.databaseRef.ref(articleReactionsPath + this.reactions[i])
-            const reactionCountPath = reactionPath.child('count')
-            const reactionReactedByPath = reactionPath.child('reactedBy')
 
             reactionPath.once( 'value', (snapshot) => {
               const reaction = snapshot.val()
@@ -135,28 +127,14 @@
                 newReactionObj.reactedBy[this.currentUser.uid] = true
               }
               reactionPath.update(newReactionObj) // Update database with the new object
-            })
-
-            .then( () => {
-              // Add notification about added emoji reaction to notifications node on database
-              const notification = {
-                type: 'reactionAdded',
-                timestamp: new Date().getTime(),
-                emoji: this.reactions[i],
-                article: {
-                  id: this.articleId,
-                  title: this.article.title },
-                user: {
-                  id: this.currentUser.uid,
-                  name: this.currentUser.displayName }}
-              this.databaseRef.ref('notifications').push(notification)
+            }).then( () => { // Add notification about added emoji reaction to notifications node on database
+              this.notification('reactionAdded', this.articleId, this.article.title, this.currentUser.uid, this.currentUser.displayName, this.reactions[i])
             })
 
           }
         }
 
-        // Reset inputs
-        this.contribution = ''
+        this.contribution = '' // Reset inputs
 
         this.$emit('close')
       }
