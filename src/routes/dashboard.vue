@@ -99,7 +99,6 @@
         totalPages: 0,
 
         notifications: {},
-        notificationsArray: [],
         notificationsRefetchInterval: null,
 
         clickedArticleId: null,
