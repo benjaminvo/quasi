@@ -38,6 +38,7 @@
       </modal>
 
       <modal
+        opaque
         notDismissable
         v-if="modalsVisible.assignCourses"
         v-on:close="modalsVisible.assignCourses = false"
