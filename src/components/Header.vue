@@ -72,6 +72,11 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    transition: border-color 150ms ease;
+
+    &:hover {
+      border-color: $color-base-lighter-4;
+    }
   }
 
   .arrow {
