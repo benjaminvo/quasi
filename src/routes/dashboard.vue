@@ -3,7 +3,7 @@
 
     <div v-if="!dataLoaded" class="hidden fadeInWithDelay">
       <grid-block>
-        <h1 class="color-base-lighter-4 center margin-top-6-1">Your dashboard is on its way</h1>
+        <h1 class="color-base-lighter-4">Dashboard on its way!</h1>
       </grid-block>
     </div>
 
@@ -54,7 +54,7 @@
         <button
           class="button submit"
           :class="{ disabled: currentUsersCourseIdsArray.length === 0 }"
-          @click="completeInitialAssignCourses">Go to your weekly overview</button>
+          @click="modalsVisible.assignCourses = false">Go to your weekly overview</button>
       </modal>
 
     </div>
@@ -225,10 +225,6 @@
       },
       decideIfAssignCoursesModalShouldShow() {
         if ( this.currentUsersCourseIdsArray.length === 0 ) this.modalsVisible.assignCourses = true // Show course assign modal on load if user has no courses
-      },
-      completeInitialAssignCourses() {
-        this.modalsVisible.assignCourses = false
-        window.Intercom( 'trackEvent', 'onboarding_completed' )
       },
       getArticleDataAndToggleArticleFinished(e) {
         this.clickedArticleId = e.currentTarget.parentNode.parentNode.id
