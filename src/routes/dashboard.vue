@@ -53,7 +53,7 @@
         <button
           class="button submit"
           :class="{ disabled: currentUsersCourseIdsArray.length === 0 }"
-          @click="modalsVisible.assignCourses = false">Go to your weekly overview</button>
+          @click="completeInitialAssignCourses">Go to your weekly overview</button>
       </modal>
 
     </div>
@@ -224,6 +224,10 @@
       },
       decideIfAssignCoursesModalShouldShow() {
         if ( this.currentUsersCourseIdsArray.length === 0 ) this.modalsVisible.assignCourses = true // Show course assign modal on load if user has no courses
+      },
+      completeInitialAssignCourses() {
+        this.modalsVisible.assignCourses = false
+        window.Intercom( 'trackEvent', 'onboarding_completed' )
       },
       getArticleDataAndToggleArticleFinished(e) {
         this.clickedArticleId = e.currentTarget.parentNode.parentNode.id
