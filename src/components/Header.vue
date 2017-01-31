@@ -12,7 +12,7 @@
             <div class="arrow arrow-left"></div>
           </div>
           <div class="h6 textAlign-center margin-left-4-1 margin-right-4-1">
-            <div class="margin-bottom fontWeight-semibold">Week 6, 2017</div>
+            <div class="margin-bottom fontWeight-semibold">Week 2</div>
             <div class="color-base-lighter-2 fontWeight-medium">Feb 6 – Feb 10</div>
           </div>
           <div class="arrowWrap" @click="showNoFunctionMessageThenHide">

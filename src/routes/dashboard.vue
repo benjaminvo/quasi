@@ -226,6 +226,11 @@
       decideIfAssignCoursesModalShouldShow() {
         if ( this.currentUsersCourseIdsArray.length === 0 ) this.modalsVisible.assignCourses = true // Show course assign modal on load if user has no courses
       },
+      completeInitialAssignCourses() {
+        this.modalsVisible.assignCourses = false
+        window.Intercom( 'trackEvent', 'onboarding_completed' )
+        window.Intercom( 'update' ) // Updates Intercom in order to sent onboarding message
+      },
       getArticleDataAndToggleArticleFinished(e) {
         this.clickedArticleId = e.currentTarget.parentNode.parentNode.id
         let articleTitle = null
