@@ -206,7 +206,7 @@
 
     &_introduction {
       border-top: 1px solid #f1f1f1;
-      margin-top: -$scale-12-1;
+      margin-top: -112px;
       background: white;
       padding: $scale-5-1 $scale-6-1 $scale-4-1 !important;
       overflow: hidden;
