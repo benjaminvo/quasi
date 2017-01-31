@@ -1,5 +1,5 @@
 <template>
-  <div class="modal">
+  <div class="modal" :class="{ 'modal-opaque': opaque }">
 
     <a v-if="!notDismissable" @click="close" class="modal_close">
       <img src="~assets/cross.svg" width="16" />
@@ -29,7 +29,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    background: rgba(white, 0.97);
+    background-color: rgba(white, 0.97);
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -37,6 +37,8 @@
 
     opacity: 0;
     animation: fadeIn 200ms 200ms $animationBezier forwards;
+
+    &-opaque { background-color: white; }
 
     &_close {
       position: absolute;
