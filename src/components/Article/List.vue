@@ -1,6 +1,6 @@
 <template>
   <ul class="list-unstyled span-12">
-    <h2 class="margin-bottom-3-1">{{ courseName }}</h2>
+    <h2 class="margin-bottom-4-1">{{ courseName }}</h2>
     <article-list-item
       :currentUser="currentUser"
       v-for="(article, key, index) in articles"
