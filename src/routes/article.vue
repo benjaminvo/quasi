@@ -14,12 +14,6 @@
       <!-- Article header -->
       <grid-block columns="12">
 
-        <!-- Breadcrumb -->
-        <ul class="span-12 margin-bottom fontFamily-body fontSize-base list-unstyled">
-          <router-link :to="{ name: 'dashboard' }" tag="li" class="a fontSize-xsmall display-inlineBlock">Dashboard</router-link>
-          <li class="fontSize-xsmall display-inlineBlock"><span class="color-base-lighter-3">/ </span><span class="color-base-lighter-1">article</span></li>
-        </ul>
-        
         <!-- Article title (and subtitle) -->
         <div class="span-12 margin-bottom-12-1">
           <h1 class="margin-none-bottom">{{ article.title }}</h1>
