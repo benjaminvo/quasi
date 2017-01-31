@@ -228,6 +228,7 @@
       completeInitialAssignCourses() {
         this.modalsVisible.assignCourses = false
         window.Intercom( 'trackEvent', 'onboarding_completed' )
+        window.Intercom( 'update' ) // Updates Intercom in order to sent onboarding message
       },
       getArticleDataAndToggleArticleFinished(e) {
         this.clickedArticleId = e.currentTarget.parentNode.parentNode.id
