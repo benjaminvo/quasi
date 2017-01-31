@@ -24,7 +24,7 @@
 
       <span
         v-if="notifications.length > 1"
-        class="span-2 h6 a float-right margin-top-2-1"
+        class="span-2 h6 a float-right margin-top-2-1 textAlign-right"
         style="z-index: 1;"
         @click="notificationTickerExpanded = !notificationTickerExpanded" >
         {{ this.notificationTickerExpanded ? 'Close' : 'View recent' }}
