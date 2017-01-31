@@ -54,7 +54,7 @@
         <button
           class="button submit"
           :class="{ disabled: currentUsersCourseIdsArray.length === 0 }"
-          @click="modalsVisible.assignCourses = false">Go to your weekly overview</button>
+          @click="completeInitialAssignCourses">Go to your weekly overview</button>
       </modal>
 
     </div>
