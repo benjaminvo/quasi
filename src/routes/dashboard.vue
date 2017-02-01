@@ -144,31 +144,32 @@
         if ( this.currentUsersReadArticleIdsArray.length !== 0 ) return this.currentUsersArticlesArray.length - this.currentUsersReadArticleIdsArray.length === 0
       },
       motivationMessage() {
-        const initialMessage = `This week features ${ this.currentUsersArticlesArray.length } article${(this.currentUsersArticlesArray.length > 1) ? 's' : '' } with a total of ${ this.totalPages } pages. Enjoy!`
+        const articlesTotal = this.currentUsersArticlesArray.length
+        const articlesFinished = this.currentUsersReadArticleIdsArray.length
+        const articlesLeft = articlesTotal - articlesFinished
 
-        const articlesLeft = this.currentUsersArticlesArray.length - this.currentUsersReadArticleIdsArray.length
-
-        if (this.currentUsersArticlesArray.length > 0 && this.currentUsersReadArticleIdsArray.length > 0) {
-          switch (articlesLeft) {
-            case 0:
-              return 'All done! You\'ve worked your way through ' + this.totalPages + ' pages this week. Good job.'
-              break
-            case 1:
-              return '1 to go! This is so little you might actually just get it over with now...'
-              break
-            case 2:
-              return 'It\'s only 1 more than 1 now. <em>Pretty</em> close to the finish line.'
-              break
-            case 3:
-              return '3. Simple, yet powerful. Has it\'s own <a href="https://en.wikipedia.org/wiki/Rule_of_three_(writing)" target="_blank" style="display: inline-block;"><h1>rule</h1></a>. You\'re getting closer!'
-              break
-            case 4:
-              return 'You\'re progressing well! Good job. Only 4 left.'
-              break
-            default:
-              return initialMessage
-          }
-        } else return initialMessage
+        switch (true) {
+          case (articlesTotal == 0):
+            return 'No articles to read this week! You’re off.'
+            break
+          case (articlesLeft == 0):
+            return 'All done! You’ve worked your way through ' + this.totalPages + ' pages. Good job!'
+            break
+          case (articlesLeft == 1):
+            return 'You’re only 1 article from completing this week! So close.'
+            break
+          case (articlesLeft == 2):
+            return 'Doing well – you’re only 2 articles from finishing!'
+            break
+          case (articlesLeft > 2 && articlesLeft < articlesTotal - 1):
+            return 'You’ve finished ' + articlesFinished + ' articles and have ' + articlesLeft + ' more to go.'
+            break
+          case (articlesLeft == articlesTotal - 1):
+            return 'Good start! ' + articlesLeft + ' articles left and still more to learn.'
+            break
+          case (articlesLeft == articlesTotal):
+            return 'This week features ' + articlesTotal + ' articles with a total of ' + this.totalPages + ' pages. Enjoy!'
+        }
       }
     },
     created() {
