@@ -14,10 +14,14 @@
       <!-- Article header -->
       <grid-block columns="12">
 
-        <!-- Article title (and subtitle) -->
         <div class="span-12 margin-bottom-12-1">
+          <!-- Article/chapter title -->
           <h1 class="margin-none-bottom">{{ article.title }}</h1>
-          <h5 v-if="article.book" class="color-base margin-top-2-1 margin-none-bottom">Ch. {{ article.chapter }} in <i>{{ article.book }}</i></h5>
+
+          <!-- Subtitle: "Chapter number"/"Book part" in "Book title" -->
+          <h5 v-if="article.book" class="color-base margin-top-2-1 margin-none-bottom">
+            <span v-if="article.chapter">Ch. {{ article.chapter }}</span><span v-else-if="article.part">{{ article.part }}</span> in <i>{{ article.book }}</i>
+          </h5>
         </div>
 
       </grid-block>
