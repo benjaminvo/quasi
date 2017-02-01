@@ -89,6 +89,10 @@ $positions: '-top' '-right' '-bottom' '-left' ''; // One left blank for the clea
 		&-right  { text-align: right; }}
 }
 
+.lineHeight {
+	&-1 { line-height: 1; }
+}
+
 .whiteSpace {
 	&-noWrap { white-space: nowrap; }}
 

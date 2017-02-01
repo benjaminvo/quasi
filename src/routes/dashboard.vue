@@ -27,6 +27,7 @@
         :courses="dayBlock.courses" />
 
       <modal
+        opaque
         v-if="modalsVisible.articleFinished"
         v-on:close="modalsVisible.articleFinished = false">
         <article-finished

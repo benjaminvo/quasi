@@ -12,13 +12,14 @@
         <p class="textAlign-center">Any positive reactions?</p>
         <div class="margin-top-4-1 margin-bottom-6-1 display-flex justifyContent-center">
           <input-emoji
-            class="margin-right-7-1"
+            class="margin-right-2-1"
             v-for="(reaction, key, index) in article.reactions"
             :id="key"
-            :label="reaction.emoji"
+            :label="reaction.symbol"
             :value="reaction.name"
+            :symbolPath="'/dist/' + reaction.symbol + '.svg'"
             v-on:idEmit="toggleReaction"
-            v-bind:checked="reactions.includes(key)" />
+            v-bind:checked="userReactions.includes(key)" />
         </div>
 
         <p class="textAlign-center">Anything else you'd like to share?</p>
@@ -61,16 +62,16 @@
       }
     },
     computed: {
-      reactions() {
-        let reactions = []
+      userReactions() {
+        let userReactions = []
         if ( this.article.reactions ) {
           for ( let reaction in this.article.reactions ) {
             if ( this.article.reactions[reaction].reactedBy && this.article.reactions[reaction].reactedBy[this.currentUser.uid] ) {
-              reactions.push(reaction)
+              userReactions.push(reaction)
             }
           }
         }
-        return reactions
+        return userReactions
       },
       randomEncouragement() {
         return this.encouragements[Math.floor(Math.random() * this.encouragements.length)]
@@ -81,9 +82,9 @@
     },
     methods: {
       toggleReaction(id) {
-        const idIndex = this.reactions.indexOf(id)
-        if (idIndex > -1) this.reactions.splice(idIndex, 1)
-        else this.reactions.push(id)
+        const idIndex = this.userReactions.indexOf(id)
+        if (idIndex > -1) this.userReactions.splice(idIndex, 1)
+        else this.userReactions.push(id)
       },
       setArticle() {
         this.databaseRef.ref('articles/' + this.articleId).once('value', (snapshot) => { this.article = snapshot.val() })
@@ -112,13 +113,13 @@
 
         }
 
-        // Set reactions on Firebase
+        // Set userReactions on Firebase
         const articleReactionsPath = 'articles/' + this.articleId + '/reactions/'
 
-        if ( this.reactions.length ) {
-          for ( let i = 0; i < this.reactions.length; i++ ) {
+        if ( this.userReactions.length ) {
+          for ( let i = 0; i < this.userReactions.length; i++ ) {
 
-            const reactionPath = this.databaseRef.ref(articleReactionsPath + this.reactions[i])
+            const reactionPath = this.databaseRef.ref(articleReactionsPath + this.userReactions[i])
 
             reactionPath.once( 'value', (snapshot) => {
               const reaction = snapshot.val()
@@ -132,7 +133,7 @@
               }
               reactionPath.update(newReactionObj) // Update database with the new object
             }).then( () => { // Add notification about added emoji reaction to notifications node on database
-              this.notification('reactionAdded', this.articleId, this.article.title, this.currentUser.uid, this.currentUser.displayName, this.reactions[i])
+              this.notification('reactionAdded', this.articleId, this.article.title, this.currentUser.uid, this.currentUser.displayName, this.userReactions[i])
             })
 
           }

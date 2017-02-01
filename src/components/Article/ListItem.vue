@@ -23,18 +23,19 @@
     <div class="articleListItem_lower">
       <span class="articleListItem_readers fontSize-xsmall">{{ articleFinishedByNum }} out of {{ usersArray.length }} have read this</span>
 
-      <div class="articleListItem_reactions fontSize-xsmall">
-          <span
-            v-if="easyReadCount > 0"
-            :class="{ 'color-primary': easyReadReactedByCurrentUser }">{{ easyReadCount }} &#128526;</span>
-          <span
-            v-if="understandableCount > 0"
-            class="margin-left"
-            :class="{ 'color-primary': understandableReactedByCurrentUser }">{{ understandableCount }} &#128519;</span>
-          <span
-            v-if="interestingCount > 0"
-            class="margin-left"
-            :class="{ 'color-primary': interestingReactedByCurrentUser }">{{ interestingCount }} &#129300;</span>
+      <div class="display-flex fontSize-xsmall">
+        <div v-if="easyReadCount > 0" class="display-flex alignItems-center">
+          <span class="margin-right-1-2" :class="{ 'color-primary': easyReadReactedByCurrentUser }">{{ easyReadCount }}</span>
+          <img src="/dist/emoji_easy-read.svg" title="Easy read" width="12" />
+        </div>
+        <div v-if="interestingCount > 0" class="display-flex alignItems-center margin-left">
+          <span class="margin-right-1-2" :class="{ 'color-primary': interestingReactedByCurrentUser }">{{ interestingCount }}</span>
+          <img src="/dist/emoji_interesting.svg" title="Understandable" width="12" />
+        </div>
+        <div v-if="understandableCount > 0" class="display-flex alignItems-center margin-left">
+          <span class="margin-right-1-2" :class="{ 'color-primary': understandableReactedByCurrentUser }">{{ understandableCount }}</span>
+          <img src="/dist/emoji_understandable.svg" title="Interesting" width="12" />
+        </div>
       </div>
     </div>
 

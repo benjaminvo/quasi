@@ -11,15 +11,9 @@
       ref="inputEmoji"
       v-on:change="emitId" />
 
-    <label
-      class="inputEmoji_label"
-      :class="{
-        'inputEmoji_label-1': this.id === 'easyRead',
-        'inputEmoji_label-2': this.id === 'understandable',
-        'inputEmoji_label-3': this.id === 'interesting'
-      }"
-      :for="id"
-      v-html="this.label">
+    <label class="inputEmoji_label" :for="id">
+      <img :src="symbolPath" :title="value" width="24" height="24" class="display-inlineBlock margin-right" />
+      <p class="display-inlineBlock whiteSpace-noWrap margin-right-1-2">{{ value }}</p>
     </label>
 
   </div>
@@ -29,10 +23,11 @@
   export default {
     name: 'InputEmoji',
     props: {
-      id: { type: String },
-      label: { type: String },
-      value: { type: String },
-      checked: { type: Boolean }
+      id: String,
+      label: String,
+      value: String,
+      checked: Boolean,
+      symbolPath: String
     },
     methods: {
       emitId() {
@@ -47,27 +42,25 @@
   @import '~styles/breakpoints';
   @import '~styles/tooltip';
 
-  .inputEmoji { position: relative; width: 48px;
-
+  .inputEmoji {
     &_label {
-      position: absolute;
-      top: -10px;
-      font-size: 32px;
-      line-height: 1;
-      transform: translateY(0px) scale(1);
-      transition: transform 150ms ease-out;
+      display: flex;
+      margin-top: -20px;
       cursor: pointer;
+      background: $color-base-lighter-6;
+      border-radius: 18px;
+      transition: background-color 150ms ease-out;
+      padding: 6px 9px;
 
-      &:hover:active { transform: scale(1.4); }}}
+      &:hover { background-color: $color-base-lighter-7; }
+    }
+  }
 
-  .inputEmoji_input:checked + label,
-  .inputEmoji_input:checked + label:active { transform: scale(1.4); transition: transform 150ms ease-out;
-    &:hover { transform: scale(1.5);
-    &:active { transform: scale(1); }}}
+  .inputEmoji_input:checked + label {
+    background-color: $color-base-darker-4;
+    color: white;
 
-  .inputEmoji_label:after { @extend .tooltip; border-radius: 1px; letter-spacing: 0.2px; font-size: 6px; padding: 2px 3px; width: 70px; }
-  .inputEmoji_label-1:after { content: 'Easy read' }
-  .inputEmoji_label-2:after { content: 'Understandable' }
-  .inputEmoji_label-3:after { content: 'Interesting' }
+    &:hover { background-color: $color-base-darker-3; }
+  }
 
 </style>
