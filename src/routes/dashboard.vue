@@ -207,7 +207,7 @@
         if ( this.totalPages === 0 ) {
           let totalPages = 0
           for (let i = 0; i < this.currentUsersArticlesArray.length; i++) {
-            const articlePageNum = this.currentUsersArticlesArray[i].pageTo - this.currentUsersArticlesArray[i].pageFrom
+            const articlePageNum = this.currentUsersArticlesArray[i].pageTo - this.currentUsersArticlesArray[i].pageFrom + 1
             totalPages = totalPages + articlePageNum
           }
           this.totalPages = totalPages

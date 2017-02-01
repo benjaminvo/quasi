@@ -153,6 +153,7 @@
     },
     computed: {
       pagesTotal() { return parseInt(this.article.pageTo, 10) - parseInt(this.article.pageFrom, 10) },
+      pagesTotal() { return parseInt(this.article.pageTo, 10) - parseInt(this.article.pageFrom, 10) + 1 }, // + 1 to include last page
       articleFinished() { return this.article.finishedBy ? this.article.finishedBy[this.currentUser.uid] : null }
     },
     created() {

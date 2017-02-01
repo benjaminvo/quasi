@@ -9,7 +9,7 @@
       :finished="article.finishedBy ? article.finishedBy[currentUser.uid] : null"
       :title="article.title"
       :author="article.author"
-      :pageNum="article.pageTo - article.pageFrom"
+      :pageNum="article.pageTo - article.pageFrom + 1"
       :year="article.year"
       :finishedBy="article.finishedBy"
       :reactions="article.reactions"
