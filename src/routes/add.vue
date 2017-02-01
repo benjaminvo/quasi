@@ -78,6 +78,7 @@
           <input v-model="article.journal" type="text" placeholder="Journal">
           <input v-model="article.book" type="text" placeholder="Book">
           <input v-model.number="article.chapter" type="text" placeholder="Chapter (number)">
+          <input v-model="article.part" type="text" placeholder="Book part (e.g. 'Part 2')">
           <input v-model="article.publisher" type="text" placeholder="Publisher">
           <input v-model.number="article.pageFrom" type="text" placeholder="Page from">
           <input v-model.number="article.pageTo" type="text" placeholder="Page to">
@@ -197,6 +198,7 @@
           journal: null,
           book: null,
           chapter: null,
+          part: null,
           publisher: null,
           pageFrom: null,
           pageTo: null,

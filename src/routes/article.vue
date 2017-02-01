@@ -14,10 +14,14 @@
       <!-- Article header -->
       <grid-block columns="12">
 
-        <!-- Article title (and subtitle) -->
         <div class="span-12 margin-bottom-12-1">
+          <!-- Article/chapter title -->
           <h1 class="margin-none-bottom">{{ article.title }}</h1>
-          <h5 v-if="article.book" class="color-base margin-top-2-1 margin-none-bottom">Ch. {{ article.chapter }} in <i>{{ article.book }}</i></h5>
+
+          <!-- Subtitle: "Chapter number"/"Book part" in "Book title" -->
+          <h5 v-if="article.book" class="color-base margin-top-2-1 margin-none-bottom">
+            <span v-if="article.chapter">Ch. {{ article.chapter }}</span><span v-else-if="article.part">{{ article.part }}</span> in <i>{{ article.book }}</i>
+          </h5>
         </div>
 
       </grid-block>
@@ -45,10 +49,12 @@
               <li v-if="article.citedBy" class="margin-bottom-1-2 fontSize-small">Cited by {{ article.citedBy }}</li>
             </ul>
 
-            <h6 class="margin-top-4-1 margin-bottom-2-1 color-base-lighter-2 fontWeight-bold">Table of Contents</h6>
-            <ul class="list-unstyled color-base-lighter-2">
-              <li v-for="(item, key, index) in article.tableOfContents" class="margin-bottom fontSize-small">{{ item }}</li>
-            </ul>
+            <div v-if="article.tableOfContents">
+              <h6 class="margin-top-4-1 margin-bottom-2-1 color-base-lighter-2 fontWeight-bold">Table of Contents</h6>
+              <ul class="list-unstyled color-base-lighter-2">
+                <li v-for="(item, key, index) in article.tableOfContents" class="margin-bottom fontSize-small">{{ item }}</li>
+              </ul>
+            </div>
 
           </div>
 
