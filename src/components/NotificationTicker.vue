@@ -8,7 +8,7 @@
 
           <!-- WHO -->
           {{ notification.user.id === currentUser.uid ? 'You' :
-             notification.type === 'contributionAdded' ? 'Someone' : notification.user.name.split(' ')[0] }}
+             user.anonymous ? 'Someone' : notification.user.name.split(' ')[0] }}
 
           <!-- EVENT -->
           {{ notification.type === 'articleFinished' ? 'finished' :
@@ -44,8 +44,9 @@
     name: 'NotificationTicker',
     components: { 'grid-block': GridBlock },
     props: {
-      currentUser: { type: Object },
-      notifications: { type: Array }
+      currentUser: Object,
+      user: Object,
+      notifications: Array
     },
     data() {
       return {

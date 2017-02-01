@@ -17,6 +17,7 @@
 
       <notification-ticker
         :currentUser="currentUser"
+        :user="user"
         :notifications="notificationsArray" />
 
       <day-block

@@ -31,10 +31,13 @@
           rows="3"></textarea>
 
         <div class="form_footer">
-          <p class="form_footer_text color-base-lighter-3 fontSize-small">Textinput is anonymous but visible for students and your lecturer.</p>
+          <div class="form_footer_checkbox">
+            <input type="checkbox" id="hideName" v-model="userAnonymous" />
+            <label class="color-base-lighter-3 fontSize-small" for="hideName">Hide my name in notifications</label>
+          </div>
           <button class="button submit" type="submit">Post</button>
         </div>
-
+        
       </form>
 
     </div>
@@ -58,7 +61,8 @@
       return {
         article: {},
         encouragements: ['Good job', 'Way to go', 'Great job', 'Excellent', 'High five'],
-        contribution: null
+        contribution: null,
+        userAnonymous: true
       }
     },
     computed: {
@@ -79,15 +83,19 @@
     },
     created() {
       this.setArticle()
+      this.setAnonymousState()
     },
     methods: {
+      setArticle() {
+        this.databaseRef.ref('articles/' + this.articleId).once('value', (snapshot) => { this.article = snapshot.val() })
+      },
+      setAnonymousState() {
+        this.databaseRef.ref('users/' + this.currentUser.uid + '/anonymous').once('value', (snapshot) => { this.userAnonymous = snapshot.val() })
+      },
       toggleReaction(id) {
         const idIndex = this.userReactions.indexOf(id)
         if (idIndex > -1) this.userReactions.splice(idIndex, 1)
         else this.userReactions.push(id)
-      },
-      setArticle() {
-        this.databaseRef.ref('articles/' + this.articleId).once('value', (snapshot) => { this.article = snapshot.val() })
       },
       handleSubmit() {
         // Set contribution on Firebase
@@ -113,6 +121,8 @@
 
         }
 
+        this.contribution = '' // Reset inputs
+
         // Set userReactions on Firebase
         const articleReactionsPath = 'articles/' + this.articleId + '/reactions/'
 
@@ -137,7 +147,8 @@
           }
         }
 
-        this.contribution = '' // Reset inputs
+        // Set anonymity for user
+        this.databaseRef.ref('users/' + this.currentUser.uid + '/anonymous').set(this.userAnonymous)
 
         this.$emit('close')
       }
@@ -184,7 +195,7 @@
       width: 100%;
       margin-top: $scale;
 
-      &_text { flex: 5; }
+      &_checkbox { flex: 5; }
 
       button {
         flex: 1;
