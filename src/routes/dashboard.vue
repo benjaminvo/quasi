@@ -12,7 +12,7 @@
       <div v-bind:class="{ shown: allRead }" id="particles"></div>
 
       <grid-block columns="12">
-        <h1 class="dashboard_message span-8 offset-2 margin-bottom-8-1" v-html="motivationMessage" /> <!-- Height = 3 lines of text -->
+        <h1 class="dashboard_message span-8 offset-2 margin-bottom-8-1" v-html="motivationMessage" />
       </grid-block>
 
       <notification-ticker
@@ -149,7 +149,7 @@
         if (this.currentUsersArticlesArray.length > 0 && this.currentUsersReadArticleIdsArray.length > 0) {
           switch (articlesLeft) {
             case 0:
-              return "You're done! &#127870; &#127881; ... no, really – you're done."
+              return 'All done! You\'ve worked your way through ' + this.totalPages + ' pages this week. Good job.'
               break
             case 1:
               return '1 to go! This is so little you might actually just get it over with now...'
