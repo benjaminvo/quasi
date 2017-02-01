@@ -132,8 +132,6 @@
                 newReactionObj.reactedBy[this.currentUser.uid] = true
               }
               reactionPath.update(newReactionObj) // Update database with the new object
-            }).then( () => { // Add notification about added emoji reaction to notifications node on database
-              this.notification('reactionAdded', this.articleId, this.article.title, this.currentUser.uid, this.currentUser.displayName, this.userReactions[i])
             })
 
           }
