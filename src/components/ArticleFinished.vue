@@ -31,7 +31,7 @@
 
         <div class="form_footer">
           <p class="form_footer_text color-base-lighter-3 fontSize-small">Textinput is anonymous but visible for students and your lecturer.</p>
-          <button class="button submit" type="submit">Go</button>
+          <button class="button submit" type="submit">Post</button>
         </div>
 
       </form>
