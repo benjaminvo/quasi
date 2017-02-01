@@ -16,7 +16,9 @@
           <div v-if="notification.type === 'reactionAdded'" class="display-inlineBlock"> reacted with <span v-html="renderEmoji(notification.emoji)" />&nbsp; to </div>
 
           <!-- ARTICLE -->
-          <span class="fontWeight-semibold">{{ notification.article.title }}</span>
+          <router-link :to="{ name: 'article', params: { articleId: notification.article.id } }">
+            <span class="color-dark fontWeight-semibold">{{ notification.article.title }}</span>
+          </router-link>
 
           <div class="fontSize-small color-base-lighter-3 margin-top-1-2">{{ moment(notification.timestamp).fromNow() }}</div>
 
