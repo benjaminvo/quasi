@@ -203,16 +203,19 @@
           citedBy: null,
           reactions: {
             easyRead: {
+              symbol: 'emoji_easy-read',
               emoji: '&#128526;',
               name: 'Easy read',
               type: 'characteristic'
             },
             interesting: {
+              symbol: 'emoji_interesting',
               emoji: '&#129300;',
               name: 'Interesting',
               type: 'characteristic'
             },
             understandable: {
+              symbol: 'emoji_understandable',
               emoji: '&#128519;',
               name: 'Understandable',
               type: 'characteristic'
