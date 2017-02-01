@@ -9,7 +9,7 @@
           class="withButton padding-2-1 width-full backgroundColor-white border border-nearWhite"
           v-model="contribution"
           type="text">
-        <button class="button withInput submit" type="submit">Go</button>
+        <button class="button withInput submit" type="submit">Post</button>
       </div>
     </form>
 
