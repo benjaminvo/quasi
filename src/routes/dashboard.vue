@@ -159,7 +159,7 @@
             return 'You’re only 1 article from completing this week! So close.'
             break
           case (articlesLeft == 2):
-            return 'Doing well – you’re only 2 articles from finishing!'
+            return 'You’re doing well – and only 2 articles from finishing!'
             break
           case (articlesLeft > 2 && articlesLeft < articlesTotal - 1):
             return 'You’ve finished ' + articlesFinished + ' articles and have ' + articlesLeft + ' more to go.'
