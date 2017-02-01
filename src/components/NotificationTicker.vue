@@ -7,7 +7,8 @@
         <li class="notification margin-bottom-3-1 display-block" v-else v-for="(notification, index) in notifications">
 
           <!-- WHO -->
-          {{ notification.user.id === currentUser.uid ? 'You' : notification.user.name.split(' ')[0] }}
+          {{ notification.user.id === currentUser.uid ? 'You' :
+             notification.type === 'contributionAdded' ? 'Someone' : notification.user.name.split(' ')[0] }}
 
           <!-- EVENT -->
           {{ notification.type === 'articleFinished' ? 'finished' :
