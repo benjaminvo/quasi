@@ -1,17 +1,18 @@
 <template>
   <div>
 
-    <img src="~assets/checkmark-on-blue.svg" width="600" class="illustration" />
+    <img src="~assets/checkmark-on-blue.svg" class="illustration" />
 
     <div class="inner">
 
-      <h1 class="margin-top-3-1">{{ randomEncouragement }}, {{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }}!</h1>
+      <h1 class="textAlign-center margin-top-3-1">{{ randomEncouragement }}, {{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }}!</h1>
 
-      <form v-on:submit.prevent="handleSubmit" class="margin-top-3-1">
+      <form v-on:submit.prevent="handleSubmit" class="form margin-top-3-1">
 
-        <p class="textAlign-center">How was it to read?</p>
+        <p class="textAlign-center">Any positive reactions?</p>
         <div class="margin-top-4-1 margin-bottom-6-1 display-flex justifyContent-center">
           <input-emoji
+            class="margin-right-7-1"
             v-for="(reaction, key, index) in article.reactions"
             :id="key"
             :label="reaction.emoji"
@@ -20,14 +21,17 @@
             v-bind:checked="reactions.includes(key)" />
         </div>
 
-        <p class="textAlign-center">Any thoughts on the text? Frustrations, aha-moments etc.</p>
-        <textarea class="form_input margin-top-2-1 margin-bottom border border-nearWhite backgroundColor-light" v-model="contribution" type="text" rows="3"></textarea>
+        <p class="textAlign-center">Anything else you'd like to share?</p>
+        <textarea
+          class="form_input margin-top-2-1 margin-bottom border border-nearWhite backgroundColor-light"
+          v-model="contribution"
+          type="text"
+          placeholder="Tips, questions, frustrations etc."
+          rows="3"></textarea>
 
         <div class="form_footer">
-          <p class="form_footer_text color-base-lighter-3">Your comment is anonymous</p>
-          <div class="form_footer_actions">
-            <button class="button submit" type="submit">Go</button>
-          </div>
+          <p class="form_footer_text color-base-lighter-3 fontSize-small">Textinput is anonymous but visible for students and your lecturer.</p>
+          <button class="button submit" type="submit">Go</button>
         </div>
 
       </form>
@@ -145,19 +149,19 @@
 <style lang="scss">
   @import '~styles/vars';
 
+  .inputEmoji:last-child { margin-right: 0 !important; }
+
   .illustration {
     transform: translate3d(0, -100vh, 0);
     animation: slideDown 1200ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    width: 100%;
   }
 
   .inner {
     position: relative;
     max-width: 600px;
-    min-width: 400px;
     padding: $scale-2-1 0 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    margin: 0 $scale-2-1;
 
     transform: scale(0);
     opacity: 0;
@@ -166,9 +170,10 @@
   }
 
   .form {
+    width: 100%;
 
     &_input {
-      min-width: 100%;
+      width: 100%;
 
       &:focus {
         background-color: $color-base-lighter-7;
@@ -177,14 +182,15 @@
 
     &_footer {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: $scale-2-1;
+      width: 100%;
+      margin-top: $scale;
 
-      &_actions {
-        .button {
-          display: inline-block;
-          margin-left: $scale-2-1; }
+      &_text { flex: 5; }
+
+      button {
+        flex: 1;
+        width: 20px;
+        margin-left: $scale-2-1;
       }
     }
   }

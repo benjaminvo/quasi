@@ -47,6 +47,7 @@
       position: absolute;
       top: $scale-5-1;
       right: $scale-5-1;
+      z-index: 1;
     }
   }
 
