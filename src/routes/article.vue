@@ -40,10 +40,9 @@
             <h6 class="margin-top-4-1 margin-bottom-2-1 color-base-lighter-2 fontWeight-bold">Details</h6>
             <ul class="list-unstyled color-base-lighter-2">
               <li class="margin-bottom fontSize-small">{{ article.author }} ({{ article.year }})</li>
-              <li class="margin-bottom fontSize-small">{{ pagesTotal }} pages ({{ article.pageFrom }} - {{ article.pageTo }})</li>
+              <li class="margin-bottom fontSize-small">{{ pagesTotal }} pages ({{ article.pageFrom }}-{{ article.pageTo }})</li>
+              <li v-if="article.chapter" class="margin-bottom-1-2 fontSize-small">Chapter {{ article.chapter }}</li>
               <li v-if="article.citedBy" class="margin-bottom-1-2 fontSize-small">Cited by {{ article.citedBy }}</li>
-              <li class="margin-bottom fontSize-small">{{ article.journal }}</li>
-              <li class="margin-bottom fontSize-small">{{ article.publisher }}</li>
             </ul>
 
             <h6 class="margin-top-4-1 margin-bottom-2-1 color-base-lighter-2 fontWeight-bold">Table of Contents</h6>
@@ -153,6 +152,7 @@
     },
     computed: {
       pagesTotal() { return parseInt(this.article.pageTo, 10) - parseInt(this.article.pageFrom, 10) },
+      pagesTotal() { return parseInt(this.article.pageTo, 10) - parseInt(this.article.pageFrom, 10) + 1 }, // + 1 to include last page
       articleFinished() { return this.article.finishedBy ? this.article.finishedBy[this.currentUser.uid] : null }
     },
     created() {
