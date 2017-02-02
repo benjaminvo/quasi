@@ -32,8 +32,8 @@
 
         <div class="form_footer">
           <div class="form_footer_checkbox">
-            <input type="checkbox" id="hideName" v-model="notificationAnonymous" />
-            <label class="margin-left-1-2 color-base-lighter-3 fontSize-small" for="hideName">Hide my name</label>
+            <input type="checkbox" id="hideName" v-model="userAnonymous" />
+            <label class="margin-left-1-2 color-base-lighter-3 fontSize-small" for="hideName">Hide my name in notifications</label>
           </div>
           <button class="button submit" type="submit">Post</button>
         </div>
@@ -62,7 +62,7 @@
         article: {},
         encouragements: ['Good job', 'Way to go', 'Great job', 'Excellent', 'High five'],
         contribution: null,
-        notificationAnonymous: false
+        userAnonymous: null
       }
     },
     computed: {
@@ -83,10 +83,14 @@
     },
     created() {
       this.setArticle()
+      this.setAnonymousState()
     },
     methods: {
       setArticle() {
         this.databaseRef.ref('articles/' + this.articleId).once('value', (snapshot) => { this.article = snapshot.val() })
+      },
+      setAnonymousState() {
+        this.databaseRef.ref('users/' + this.currentUser.uid + '/anonymous').once('value', (snapshot) => { this.userAnonymous = snapshot.val() })
       },
       toggleReaction(id) {
         const idIndex = this.userReactions.indexOf(id)
@@ -112,7 +116,7 @@
             this.databaseRef.ref(articleContributionsPath + snapshot.key).set(true)
 
             // Add notification about added contribution to notifications node on database
-            this.notification('contributionAdded', this.articleId, this.article.title, this.currentUser.uid, this.currentUser.displayName, null, this.notificationAnonymous)
+            this.notification('contributionAdded', this.articleId, this.article.title, this.currentUser.uid, this.currentUser.displayName, null, this.userAnonymous)
           })
 
         }
@@ -142,6 +146,9 @@
 
           }
         }
+
+        // Set anonymity for user
+        this.databaseRef.ref('users/' + this.currentUser.uid + '/anonymous').set(this.userAnonymous)
 
         this.$emit('close')
       }

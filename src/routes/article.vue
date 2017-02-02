@@ -94,6 +94,7 @@
 
               <contribution-block
                 :currentUser="currentUser"
+                :userAnonymous="userAnonymous"
                 :databaseRef="databaseRef"
                 :contributions="articleContributions"
                 :article="article"
@@ -155,7 +156,8 @@
         modalsVisible: {
           articleFinished: false,
         },
-        dataLoaded: null
+        dataLoaded: null,
+        userAnonymous: null
       }
     },
     computed: {
@@ -169,6 +171,7 @@
     mounted() {
       this.particlesInit()
       this.setArticle()
+      this.setAnonymousState()
     },
     beforeDestroy() {
       this.databaseRef.ref('articles').off()
@@ -185,6 +188,9 @@
           const data = snapshot.val()
           for ( let article in data ) { if ( article === this.$route.params.articleId ) this.article = data[article] }
         })
+      },
+      setAnonymousState() {
+        this.databaseRef.ref('users/' + this.currentUser.uid + '/anonymous').once('value', (snapshot) => { this.userAnonymous = snapshot.val() })
       },
       fetchOtherData() {
         this.articleCourses = this.fetchDataRelatedToData('courses', this.article.courses)

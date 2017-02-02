@@ -3,7 +3,7 @@ import { notification } from 'utils/notification'
 export const toggleArticleFinished = {
   mixins: [notification],
   methods: {
-    toggleArticleFinished(articleId, articleTitle, userId, userName, modalToShow) {
+    toggleArticleFinished(articleId, articleTitle, userId, userName, modalToShow, anonymous = null) {
       const articleFinishedByPath = 'articles/' + articleId + '/finishedBy/' + userId
       const articleFinishedPath = 'users/' + userId + '/articlesFinished/' + articleId
 
@@ -15,7 +15,7 @@ export const toggleArticleFinished = {
 
           if ( modalToShow ) this.modalsVisible[modalToShow] = true
 
-          this.notification('articleFinished', articleId, articleTitle, userId, userName)
+          this.notification('articleFinished', articleId, articleTitle, userId, userName, null, anonymous)
 
         } else {
           this.databaseRef.ref(articleFinishedPath).set(false)

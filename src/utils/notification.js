@@ -11,12 +11,11 @@ export const notification = {
         },
         user: {
           id: userId,
-          name: userName
+          name: anonymous ? 'Someone' : userName.split(' ')[0]
         }
       }
 
       if ( emoji ) notification['emoji'] = emoji
-      if ( anonymous ) notification['anonymous'] = anonymous
 
       this.databaseRef.ref('notifications').push(notification)
 

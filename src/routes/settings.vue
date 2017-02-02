@@ -20,6 +20,12 @@
           tag="button"
           class="button submit fadeIn">Go to weekly overview</router-link>
 
+
+        <div class="display-flex alignItems-center justifyContent-center margin-top-6-1 padding-top-4-1 border-top border-lightGrey" style="width: 50%;">
+          <input type="checkbox" id="hideName" v-model="userAnonymous" v-on:change="toggleAnonymous" />
+          <label class="margin-left-1-2" for="hideName">Hide my name in notifications</label>
+        </div>
+
       </div>
 
     </grid-block>
@@ -43,6 +49,7 @@
     data() {
       return {
         user: {},
+        userAnonymous: null,
         courses: {}
       }
     },
@@ -55,12 +62,21 @@
       }
     },
     mounted() {
-      this.databaseRef.ref( 'users/' + this.currentUser.uid ).on( 'value', (snapshot) => { this.user = snapshot.val() })
+      this.databaseRef.ref( 'users/' + this.currentUser.uid ).on( 'value', (snapshot) => {
+        const user = snapshot.val()
+        this.user = user
+        this.userAnonymous = user.anonymous ? user.anonymous : null
+      })
       this.databaseRef.ref( 'courses' ).on( 'value', (snapshot) => { this.courses = snapshot.val() })
     },
     beforeDestroy() {
       this.databaseRef.ref('users').off()
       this.databaseRef.ref('courses').off()
+    },
+    methods: {
+      toggleAnonymous() {
+        this.databaseRef.ref('users/' + this.currentUser.uid + '/anonymous').set(this.userAnonymous)
+      }
     }
   }
 </script>

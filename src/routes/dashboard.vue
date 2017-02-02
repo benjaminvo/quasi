@@ -231,7 +231,7 @@
         this.clickedArticleId = e.currentTarget.parentNode.parentNode.id
         let articleTitle = null
         this.databaseRef.ref('articles/' + this.clickedArticleId).once('value', (snapshot) => { articleTitle = snapshot.val().title })
-        this.toggleArticleFinished(this.clickedArticleId, articleTitle, this.currentUser.uid, this.currentUser.displayName, 'articleFinished')
+        this.toggleArticleFinished(this.clickedArticleId, articleTitle, this.currentUser.uid, this.currentUser.displayName, 'articleFinished', this.user.anonymous)
       },
       createDayblocks() {
 
