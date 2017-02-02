@@ -68,11 +68,11 @@
   }
 
   .inputEmoji_input:checked + label {
-    background-color: $color-base-darker-4;
+    background-color: $color-primary;
     color: white;
 
     &:hover {
-      background-color: $color-base-darker-3;
+      background-color: $color-primary-darker-1;
     }
   }
 
