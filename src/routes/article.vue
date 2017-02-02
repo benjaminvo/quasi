@@ -61,25 +61,29 @@
           <!-- Right column -->
           <div class="article_introduction span-9 card card-2">
 
-            <h2 class="margin-bottom-4-1">Reading guide</h2>
-            <ul class="margin-bottom-8-1 list-unstyled">
-              <li v-for="(item, key, index) in article.guide" v-if="key !== 'concepts'" class="margin-bottom">
-                <h4 class="margin-bottom-1-2">{{ item.title }}</h4>
-                <p class="margin-bottom-3-1">{{ item.text }}</p>
-              </li>
-            </ul>
+            <div class="article_introduction_upper">
 
-            <h4 class="margin-bottom-2-1">Concepts</h4>
-            <ul class="list-unstyled">
-              <li v-for="(item, index) in articleConcepts" class="concept">
-                <a :href="item.wikiLink" target="_blank" class="h6 margin-bottom-1-2">{{ item.name }}</a>
-                <p class="margin-bottom">{{ item.description }}</p>
-              </li>
-            </ul>
+              <h2 class="margin-bottom-4-1">Reading guide</h2>
+              <ul class="margin-bottom-6-1 list-unstyled guide">
+                <li v-for="(item, key, index) in article.guide" v-if="key !== 'concepts'" class="margin-bottom">
+                  <h4 class="margin-bottom-1-2">{{ item.title }}</h4>
+                  <p class="margin-bottom-3-1">{{ item.text }}</p>
+                </li>
+              </ul>
+
+              <h4 class="margin-bottom-2-1">Concepts</h4>
+              <ul class="list-unstyled">
+                <li v-for="(item, index) in articleConcepts" class="concept">
+                  <a :href="item.wikiLink" target="_blank" class="h6 margin-bottom-1-2">{{ item.name }}</a>
+                  <p class="margin-bottom">{{ item.description }}</p>
+                </li>
+              </ul>
+
+            </div>
 
             <div class="article_introduction_lower">
 
-              <h2 class="display-inlineBlock margin-bottom">Student thoughts</h2>
+              <h2 class="display-inlineBlock margin-bottom-3-1">Student thoughts</h2>
 
               <div class="float-right">
                 <div class="display-inlineBlock color-base-lighter-3 margin-left-2-1"
@@ -222,29 +226,40 @@
       border-top: 1px solid #f1f1f1;
       margin-top: -112px;
       background: white;
-      padding: $scale-5-1 $scale-6-1 $scale-4-1 !important;
       overflow: hidden;
+      padding: 0;
 
       @include breakpoint('tablet') {
         margin-top: -$scale-6-1;
         margin-left: 0;
         margin-bottom: $scale-4-1;
-        padding: $scale-4-1 !important;
+      }
+
+      &_upper {
+        padding: $scale-7-1 $scale-8-1 $scale-4-1 !important;
+
+        @include breakpoint('desktop') {
+          padding: $scale-4-1 $scale-4-1 $scale-2-1 !important;
+        }
+
+        .guide p {
+          font-size: 16px !important;
+          line-height: 1.6;
+
+          @include breakpoint('desktop') {
+            font-size: 14px !important;
+            line-height: 1.5;
+          }
+        }
       }
 
       &_lower {
+        padding: $scale-6-1 $scale-8-1 $scale-3-1 !important;
         background: $color-base-lighter-7;
         border-top: 1px solid $color-base-lighter-6;
-        padding: inherit;
-        margin-top: $scale-6-1;
-        margin-left: -$scale-6-1;
-        margin-bottom: -$scale-6-1;
-        width: calc(100% + #{$scale-12-1});
-        display: block;
 
-        @include breakpoint('tablet') {
-          margin-left: -$scale-4-1;
-          width: calc(100% + #{$scale-8-1});
+        @include breakpoint('desktop') {
+          padding: $scale-4-1 $scale-4-1 $scale !important;
         }
       }
     }
@@ -253,8 +268,8 @@
   .concept {
     margin-bottom: $scale-2-1;
     border-left: 3px solid $color-primary;
-    margin-left: -$scale-6-1;
-    padding-left: $scale-6-1 - 3px;
+    margin-left: -$scale-8-1;
+    padding-left: $scale-8-1 - 3px;
   }
 
 </style>

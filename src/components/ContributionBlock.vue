@@ -127,10 +127,17 @@
   @import '~styles/vars';
 
   .contribution {
-    width: calc( 100% + #{$scale-12-1} );
-    padding: $scale-3-1 $scale-6-1 $scale-4-1;
-    margin-left: -$scale-6-1;
+    padding: $scale-3-1 0 $scale-4-1;
     border-top: 1px solid $color-base-lighter-6;
+
+    &:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    &:last-child {
+      padding-bottom: $scale-4-1;
+    }
   }
 
 </style>
