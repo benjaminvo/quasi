@@ -11,7 +11,7 @@ export const notification = {
         },
         user: {
           id: userId,
-          name: anonymous ? 'Someone' : userName.split(' ')[0]
+          name: anonymous ? 'Someone' : userName
         }
       }
 
