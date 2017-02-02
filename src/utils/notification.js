@@ -1,6 +1,6 @@
 export const notification = {
   methods: {
-    notification(type, articleId, articleTitle, userId, userName, emoji = null) {
+    notification(type, articleId, articleTitle, userId, userName, emoji = null, anonymous = null) {
 
       const notification = {
         type: type,
@@ -16,6 +16,7 @@ export const notification = {
       }
 
       if ( emoji ) notification['emoji'] = emoji
+      if ( anonymous ) notification['anonymous'] = anonymous
 
       this.databaseRef.ref('notifications').push(notification)
 

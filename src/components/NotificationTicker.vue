@@ -8,7 +8,7 @@
 
           <!-- WHO -->
           {{ notification.user.id === currentUser.uid ? 'You' :
-             user.anonymous ? 'Someone' : notification.user.name.split(' ')[0] }}
+             notification.anonymous === true ? 'Someone' : notification.user.name.split(' ')[0] }}
 
           <!-- EVENT -->
           {{ notification.type === 'articleFinished' ? 'finished' :
