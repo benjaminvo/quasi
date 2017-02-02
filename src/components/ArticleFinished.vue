@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrap">
 
     <img src="~assets/checkmark-on-blue.svg" class="illustration" />
 
@@ -10,9 +10,9 @@
       <form v-on:submit.prevent="handleSubmit" class="form margin-top-3-1">
 
         <p class="textAlign-center">Any positive reactions?</p>
-        <div class="margin-top-4-1 margin-bottom-6-1 display-flex justifyContent-center">
+        <div class="margin-top-2-1 margin-bottom-6-1 display-flex justifyContent-center flexDirection-column-tablet">
           <input-emoji
-            class="margin-right-2-1"
+            class="margin-right-2-1 margin-top-2-1"
             v-for="(reaction, key, index) in article.reactions"
             :id="key"
             :label="reaction.symbol"
@@ -161,6 +161,11 @@
 
   .inputEmoji:last-child { margin-right: 0 !important; }
 
+  .wrap {
+    max-width: 600px;
+    margin: 0 $scale-2-1;
+  }
+
   .illustration {
     transform: translate3d(0, -100vh, 0);
     animation: slideDown 1200ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
@@ -169,9 +174,8 @@
 
   .inner {
     position: relative;
-    max-width: 600px;
-    padding: $scale-2-1 0 0;
-    margin: 0 $scale-2-1;
+    width: 100%;
+    padding-top: $scale-2-1;
 
     transform: scale(0);
     opacity: 0;
