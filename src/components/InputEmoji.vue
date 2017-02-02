@@ -12,7 +12,7 @@
       v-on:change="emitId" />
 
     <label class="inputEmoji_label" :for="id">
-      <img :src="symbolPath" :title="value" width="24" height="24" class="display-inlineBlock margin-right" />
+      <img :src="symbolPath" :title="value" width="24" height="24" class="emoji display-inlineBlock margin-right" />
       <p class="display-inlineBlock whiteSpace-noWrap margin-right-1-2">{{ value }}</p>
     </label>
 
@@ -49,10 +49,21 @@
       cursor: pointer;
       background: $color-base-lighter-6;
       border-radius: 18px;
-      transition: background-color 150ms ease-out;
+      transition: background-color 130ms ease;
       padding: 6px 9px;
 
-      &:hover { background-color: $color-base-lighter-7; }
+      .emoji {
+        transform: scale(1);
+        transition: all 130ms ease;
+      }
+
+      &:hover {
+        background-color: $color-base-lighter-4;
+
+        .emoji {
+          transform: scale(1.18) rotate(-8deg);
+        }
+      }
     }
   }
 
@@ -60,7 +71,9 @@
     background-color: $color-base-darker-4;
     color: white;
 
-    &:hover { background-color: $color-base-darker-3; }
+    &:hover {
+      background-color: $color-base-darker-3;
+    }
   }
 
 </style>
