@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrap">
 
     <img src="~assets/checkmark-on-blue.svg" class="illustration" />
 
@@ -10,9 +10,9 @@
       <form v-on:submit.prevent="handleSubmit" class="form margin-top-3-1">
 
         <p class="textAlign-center">Any positive reactions?</p>
-        <div class="margin-top-4-1 margin-bottom-6-1 display-flex justifyContent-center">
+        <div class="margin-top-2-1 margin-bottom-6-1 display-flex justifyContent-center flexDirection-column-tablet">
           <input-emoji
-            class="margin-right-2-1"
+            class="margin-right-2-1 margin-top-2-1"
             v-for="(reaction, key, index) in article.reactions"
             :id="key"
             :label="reaction.symbol"
@@ -32,8 +32,8 @@
 
         <div class="form_footer">
           <div class="form_footer_checkbox">
-            <input type="checkbox" id="hideName" v-model="notificationAnonymous" />
-            <label class="margin-left-1-2 color-base-lighter-3 fontSize-small" for="hideName">Hide my name</label>
+            <input type="checkbox" id="hideName" v-model="userAnonymous" />
+            <label class="margin-left-1-2 color-base-lighter-3 fontSize-small" for="hideName">Hide my name in notifications</label>
           </div>
           <button class="button submit" type="submit">Post</button>
         </div>
@@ -62,7 +62,7 @@
         article: {},
         encouragements: ['Good job', 'Way to go', 'Great job', 'Excellent', 'High five'],
         contribution: null,
-        notificationAnonymous: false
+        userAnonymous: null
       }
     },
     computed: {
@@ -83,10 +83,14 @@
     },
     created() {
       this.setArticle()
+      this.setAnonymousState()
     },
     methods: {
       setArticle() {
         this.databaseRef.ref('articles/' + this.articleId).once('value', (snapshot) => { this.article = snapshot.val() })
+      },
+      setAnonymousState() {
+        this.databaseRef.ref('users/' + this.currentUser.uid + '/anonymous').once('value', (snapshot) => { this.userAnonymous = snapshot.val() })
       },
       toggleReaction(id) {
         const idIndex = this.userReactions.indexOf(id)
@@ -112,7 +116,7 @@
             this.databaseRef.ref(articleContributionsPath + snapshot.key).set(true)
 
             // Add notification about added contribution to notifications node on database
-            this.notification('contributionAdded', this.articleId, this.article.title, this.currentUser.uid, this.currentUser.displayName, null, this.notificationAnonymous)
+            this.notification('contributionAdded', this.articleId, this.article.title, this.currentUser.uid, this.currentUser.displayName, null, this.userAnonymous)
           })
 
         }
@@ -143,6 +147,9 @@
           }
         }
 
+        // Set anonymity for user
+        this.databaseRef.ref('users/' + this.currentUser.uid + '/anonymous').set(this.userAnonymous)
+
         this.$emit('close')
       }
     }
@@ -154,6 +161,11 @@
 
   .inputEmoji:last-child { margin-right: 0 !important; }
 
+  .wrap {
+    max-width: 600px;
+    margin: 0 $scale-2-1;
+  }
+
   .illustration {
     transform: translate3d(0, -100vh, 0);
     animation: slideDown 1200ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
@@ -162,9 +174,8 @@
 
   .inner {
     position: relative;
-    max-width: 600px;
-    padding: $scale-2-1 0 0;
-    margin: 0 $scale-2-1;
+    width: 100%;
+    padding-top: $scale-2-1;
 
     transform: scale(0);
     opacity: 0;

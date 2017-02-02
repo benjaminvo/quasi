@@ -44,6 +44,7 @@
     props: {
       currentUser: Object,
       databaseRef: Object,
+      userAnonymous: Boolean,
       contributions: Array,
       article: Object
     },
@@ -72,7 +73,7 @@
             this.databaseRef.ref('articles/' + this.$route.params.articleId + '/contributions/' + newContributionId).set(true)
 
             // Add notification about added contribution to notifications node on database
-            this.notification('contributionAdded', this.$route.params.articleId, this.article.title, this.currentUser.uid, this.currentUser.displayName)
+            this.notification('contributionAdded', this.$route.params.articleId, this.article.title, this.currentUser.uid, this.currentUser.displayName, null, this.userAnonymous)
           })}
 
         this.contribution = ''
