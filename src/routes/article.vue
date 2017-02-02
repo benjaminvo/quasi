@@ -14,7 +14,7 @@
       <!-- Article header -->
       <grid-block columns="12">
 
-        <div class="span-12 margin-bottom-12-1">
+        <div class="span-10 margin-bottom-12-1">
           <!-- Article/chapter title -->
           <h1 class="margin-none-bottom">{{ article.title }}</h1>
 
