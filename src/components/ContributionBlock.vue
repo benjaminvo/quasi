@@ -2,13 +2,14 @@
   <div class="contributionBlock">
 
     <form v-on:submit.prevent="handleContributionSubmit" class="margin-bottom-4-1">
-      <label for="contributionInput">Any thoughts on the text? Frustrations, aha-moments etc.</label>
-      <div class="display-flex margin-top">
+      <label for="contributionInput">Anything you'd like to share about the text?</label>
+
+      <div class="display-flex margin-top-2-1">
         <input
           id="contributionInput"
           class="withButton padding-2-1 width-full backgroundColor-white border border-nearWhite"
           v-model="contribution"
-          type="text">
+          type="text" placeholder="Tips, questions, frustrations, etc.">
         <button class="button withInput submit" type="submit">Post</button>
       </div>
     </form>
@@ -126,10 +127,17 @@
   @import '~styles/vars';
 
   .contribution {
-    width: calc( 100% + #{$scale-12-1} );
-    padding: $scale-3-1 $scale-6-1 $scale-4-1;
-    margin-left: -$scale-6-1;
+    padding: $scale-3-1 0 $scale-4-1;
     border-top: 1px solid $color-base-lighter-6;
+
+    &:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    &:last-child {
+      padding-bottom: $scale-4-1;
+    }
   }
 
 </style>
