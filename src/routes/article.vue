@@ -36,7 +36,7 @@
               <toggle-checkmark
                 small
                 class="margin-right-2-1"
-                :click="toggleArticleFinished.bind(this, this.$route.params.articleId, article.title, currentUser.uid, currentUser.displayName, 'articleFinished')"
+                :click="toggleArticleFinished.bind(this, this.$route.params.articleId, article.title, currentUser.uid, currentUser.displayName, 'articleFinished', this.userAnonymous)"
                 :checked="article.finishedBy ? article.finishedBy[currentUser.uid] : null" />
               <p class="display-inlineBlock fontSize-small color-dark" v-for="(course, index) in this.articleCourses">Due {{ course.weekday }}</p>
             </div>

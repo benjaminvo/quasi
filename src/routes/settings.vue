@@ -23,7 +23,7 @@
 
         <div class="display-flex alignItems-center justifyContent-center margin-top-6-1 padding-top-4-1 border-top border-lightGrey" style="width: 50%;">
           <input type="checkbox" id="hideName" v-model="userAnonymous" v-on:change="toggleAnonymous" />
-          <label class="margin-left-1-2" for="hideName">Hide my name in notifications</label>
+          <label class="margin-left-2-1" for="hideName">Hide my name in notifications</label>
         </div>
 
       </div>
