@@ -67,7 +67,7 @@
               <ul class="margin-bottom-6-1 list-unstyled guide">
                 <li v-for="(item, key, index) in article.guide" v-if="key !== 'concepts'" class="margin-bottom">
                   <h4 class="margin-bottom-1-2">{{ item.title }}</h4>
-                  <p class="margin-bottom-3-1">{{ item.text }}</p>
+                  <p class="guide_text margin-bottom-3-1">{{ item.text }}</p>
                 </li>
               </ul>
 
@@ -245,6 +245,7 @@
         .guide p {
           font-size: 16px !important;
           line-height: 1.6;
+          max-width: 55ch; // 1ch = width of glyph '0', so this is approx. the wished for 65 chars per line
 
           @include breakpoint('desktop') {
             font-size: 14px !important;
