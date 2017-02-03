@@ -3,7 +3,7 @@ export const fetchDataRelatedToData = {
     fetchDataRelatedToData(databaseEndpoint, dataIdsToMatch, includeKeysAsIds) {
 
       let finalDataArray = []
-      this.databaseRef.ref(databaseEndpoint).on('value', (snapshot) => {
+      this.databaseRef.ref(databaseEndpoint).once('value', (snapshot) => {
         const data = snapshot.val()
         for (let dataKey in data) {
           for (let dataId in dataIdsToMatch) {
