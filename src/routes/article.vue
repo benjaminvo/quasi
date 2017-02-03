@@ -16,7 +16,7 @@
 
         <div class="span-10 margin-bottom-12-1">
           <!-- Article/chapter title -->
-          <h1 class="margin-none-bottom">{{ article.title }}</h1>
+          <h1 class="margin-none-bottom" :style="{ fontSize: titleSize ? titleSize + 'px' : null }">{{ article.title }}</h1>
 
           <!-- Subtitle: "Chapter number"/"Book part" in "Book title" -->
           <h5 v-if="article.book" class="color-base margin-top-2-1 margin-none-bottom">
@@ -165,9 +165,18 @@
       }
     },
     computed: {
-      pagesTotal() { return parseInt(this.article.pageTo, 10) - parseInt(this.article.pageFrom, 10) },
       pagesTotal() { return parseInt(this.article.pageTo, 10) - parseInt(this.article.pageFrom, 10) + 1 }, // + 1 to include last page
-      articleFinished() { return this.article.finishedBy ? this.article.finishedBy[this.currentUser.uid] : null }
+      articleFinished() { return this.article.finishedBy ? this.article.finishedBy[this.currentUser.uid] : null },
+      titleSize() {
+        const title = this.article ? this.article.title : null
+        let titleSize = null
+        if ( title ) {
+          if ( title.length < 16 ) titleSize = 72
+          else if ( title.length < 36 ) titleSize = 48
+          else titleSize = 36
+        }
+        return titleSize
+      },
     },
     created() {
       window.Intercom( 'update' )
