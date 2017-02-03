@@ -45,8 +45,8 @@
             <ul class="list-unstyled color-base-lighter-2">
               <li class="margin-bottom fontSize-small">{{ article.author }} ({{ article.year }})</li>
               <li class="margin-bottom fontSize-small">{{ pagesTotal }} pages ({{ article.pageFrom }}-{{ article.pageTo }})</li>
-              <li v-if="article.chapter" class="margin-bottom-1-2 fontSize-small">Chapter {{ article.chapter }}</li>
-              <li v-if="article.citedBy" class="margin-bottom-1-2 fontSize-small">Cited by {{ article.citedBy }}</li>
+              <li v-if="article.chapter" class="margin-bottom fontSize-small">Chapter {{ article.chapter }}</li>
+              <li v-if="article.citedBy" class="margin-bottom fontSize-small">Cited by {{ article.citedBy }}</li>
             </ul>
 
             <div v-if="article.tableOfContents">
@@ -63,11 +63,11 @@
 
             <div class="article_introduction_upper">
 
-              <h2 class="margin-bottom-4-1">Reading guide</h2>
+              <h2 class="margin-bottom-3-1">Reading guide</h2>
               <ul class="margin-bottom-6-1 list-unstyled guide">
-                <li v-for="(item, key, index) in article.guide" v-if="key !== 'concepts'" class="margin-bottom">
-                  <h4 class="margin-bottom-1-2">{{ item.title }}</h4>
-                  <p class="guide_text margin-bottom-3-1">{{ item.text }}</p>
+                <li v-for="(item, key, index) in article.guide" class="margin-bottom">
+                  <h4 class="margin-bottom-2-1" v-if="key === 'keepEyeOn'">Hold øje med</h4>
+                  <p class="guide_text margin-bottom-6-1">{{ item }}</p>
                 </li>
               </ul>
 

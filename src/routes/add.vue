@@ -87,16 +87,12 @@
           <h4 class="margin-top-2-1 margin-bottom">Guide</h4>
           <div class="display-flex">
             <div class="flex-1">
-              <h6 class="margin-bottom">What</h6>
-              <textarea v-model="article.guide.what.text" type="text" placeholder="Text"></textarea>
+              <h6 class="margin-bottom">About</h6>
+              <textarea v-model="article.guide.about" type="text" placeholder="Text"></textarea>
             </div>
             <div class="margin-left-2-1 flex-1">
-              <h6 class="margin-bottom">Where</h6>
-              <textarea v-model="article.guide.where.text" type="text" placeholder="Text"></textarea>
-            </div>
-            <div class="margin-left-2-1 flex-1">
-              <h6 class="margin-bottom">Why</h6>
-              <textarea v-model="article.guide.why.text" type="text" placeholder="Text"></textarea>
+              <h6 class="margin-bottom">Keep eye on</h6>
+              <textarea v-model="article.guide.keepEyeOn" type="text" placeholder="Text"></textarea>
             </div>
           </div>
 
@@ -119,7 +115,7 @@
         <h4 class="subtitle">Assign article to course</h4>
         <form v-on:submit.prevent="assignDataToData(assignArticleToCourse.articleId, 'articles', assignArticleToCourse.courseId, 'courses')">
           <label for="article">Article ID:</label>
-          <select class="margin-right-2-1" name="article" v-model="assignArticleToCourse.articleId">
+          <select class="margin-right-2-1" style="width: 200px;" name="article" v-model="assignArticleToCourse.articleId">
             <option v-for="(article, index) in articles" :value="article.id">{{ article.title }} ({{ article.author }})</option>
           </select>
           <label for="course">Course ID:</label>
@@ -155,7 +151,7 @@
             <option v-for="(concept, index) in concepts" :value="concept.id">{{ concept.name }}</option>
           </select>
           <label for="course">Article ID:</label>
-          <select class="margin-right-2-1" name="article" v-model="assignConceptToArticle.articleId">
+          <select class="margin-right-2-1" style="width: 200px;" name="article" v-model="assignConceptToArticle.articleId">
             <option v-for="(article, index) in articles" :value="article.id">{{ article.title }} ({{ article.author }})</option>
           </select>
           <button type="submit">Assign concept</button>
@@ -224,15 +220,8 @@
             },
           },
           guide: {
-            what: {
-              text: null
-            },
-            where: {
-              text: null
-            },
-            why: {
-              text: null
-            }
+            about: null,
+            keepEyeOn: null
           },
           tableOfContents: {
             chapter01: null,
