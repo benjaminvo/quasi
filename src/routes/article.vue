@@ -71,7 +71,7 @@
                 </div>
               </div>
 
-              <h3 class="margin-bottom-2-1">Concepts</h3>
+              <h3 class="margin-bottom-2-1">Centrale begreber</h3>
               <ul class="list-unstyled">
                 <li v-for="(item, index) in articleConcepts" class="concept">
                   <a :href="item.wikiLink" target="_blank" class="h6 margin-bottom-1-2">{{ item.name }}</a>
