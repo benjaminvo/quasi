@@ -45,7 +45,7 @@
       currentUser: Object,
       databaseRef: Object,
       userAnonymous: Boolean,
-      contributions: Array,
+      contributions: Object,
       article: Object
     },
     data() {
@@ -55,7 +55,14 @@
       }
     },
     computed: {
-      contributionsReversed() { return this.contributions.reverse() }
+      contributionsReversed() {
+        let contributionsArray = []
+        for ( let contributionKey in this.contributions ) {
+          this.contributions[contributionKey].id = contributionKey
+          contributionsArray.push( this.contributions[contributionKey] )
+        }
+        return contributionsArray.reverse()
+      }
     },
     methods: {
       handleContributionSubmit() {

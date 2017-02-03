@@ -101,8 +101,7 @@
                 :userAnonymous="userAnonymous"
                 :databaseRef="databaseRef"
                 :contributions="articleContributions"
-                :article="article"
-                v-on:agreesChanged="setArticle" />
+                :article="article" />
 
             </div>
 
@@ -114,9 +113,9 @@
       <modal
         opaque
         v-if="modalsVisible.articleFinished"
-        v-on:close="close('articleFinished')">
+        v-on:close="modalsVisible.articleFinished = false">
         <article-finished
-          v-on:close="close('articleFinished')"
+          v-on:close="modalsVisible.articleFinished = false"
           :currentUser="currentUser"
           :databaseRef="databaseRef"
           :articleId="this.$route.params.articleId" />
@@ -156,7 +155,7 @@
         article: {},
         articleCourses: [],
         articleConcepts: [],
-        articleContributions: [],
+        articleContributions: {},
         modalsVisible: {
           articleFinished: false,
         },
@@ -183,25 +182,27 @@
     },
     mounted() {
       this.particlesInit()
-      this.setArticle()
+      this.setArticleListener()
+      this.setContributionsListener()
       this.setAnonymousState()
     },
     beforeDestroy() {
       this.databaseRef.ref('articles').off()
-      this.databaseRef.ref('courses').off()
-      this.databaseRef.ref('concepts').off()
       this.databaseRef.ref('contributions').off()
     },
     watch: {
-      '$route': 'setArticle',
+      '$route': 'setArticleListener',
       article: 'fetchOtherData'
     },
     methods: {
-      setArticle() {
+      setArticleListener() {
         this.databaseRef.ref('articles').on('value', (snapshot) => {
           const data = snapshot.val()
           for ( let article in data ) { if ( article === this.$route.params.articleId ) this.article = data[article] }
         })
+      },
+      setContributionsListener() {
+        this.databaseRef.ref('contributions').orderByChild('article').equalTo(this.$route.params.articleId).on('value', (snapshot) => { this.articleContributions = snapshot.val() })
       },
       setAnonymousState() {
         this.databaseRef.ref('users/' + this.currentUser.uid + '/anonymous').once('value', (snapshot) => { this.userAnonymous = snapshot.val() })
@@ -209,12 +210,7 @@
       fetchOtherData() {
         this.articleCourses = this.fetchDataRelatedToData('courses', this.article.courses)
         this.articleConcepts = this.fetchDataRelatedToData('concepts', this.article.concepts)
-        this.articleContributions = this.fetchDataRelatedToData('contributions', this.article.contributions, true)
         this.dataLoaded = true
-      },
-      close(modal) {
-        this.modalsVisible[modal] = false
-        this.setArticle()
       }
     }
   }
