@@ -63,15 +63,14 @@
 
             <div class="article_introduction_upper">
 
-              <h2 class="margin-bottom-5-1">Reading guide</h2>
-              <div class="margin-bottom-4-1 guide">
-                <div v-for="(item, key, index) in article.guide" class="margin-bottom-4-1">
-                  <h3 class="margin-bottom-3-1" v-if="key === 'keepEyeOn'">Hold øje med</h3>
-                  <div v-html="markdown(item)" />
-                </div>
+              <h2 class="margin-bottom-4-1">Reading guide</h2>
+
+              <div v-for="(item, key, index) in article.guide" class="guide margin-bottom-5-1">
+                <h3 class="margin-bottom-3-1" v-if="key === 'keepEyeOn'">Hold øje med</h3>
+                <div v-html="markdown(item)" />
               </div>
 
-              <h3 class="margin-bottom-3-1">Concepts</h3>
+              <h3 class="margin-bottom-4-1">Concepts</h3>
               <ul class="list-unstyled">
                 <li v-for="(item, index) in articleConcepts" class="concept">
                   <a :href="item.wikiLink" target="_blank" class="h6 margin-bottom-1-2">{{ item.name }}</a>
@@ -253,7 +252,7 @@
         .guide p {
           font-size: 16px !important;
           line-height: 1.6;
-          max-width: 68ch; // 1ch = width of glyph '0', so this is approx. the wished for 65 chars per line
+          max-width: 60ch; // 1ch = width of glyph '0', so this is approx. the wished for 65 chars per line
           margin-bottom: $scale-2-1;
 
           &:last-child { margin-bottom: 0; }
