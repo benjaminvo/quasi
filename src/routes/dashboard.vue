@@ -172,7 +172,7 @@
             return 'You’re doing well – and only 2 articles from finishing!'
             break
           case (articlesLeft > 2 && articlesLeft < articlesTotal - 1):
-            return 'You’ve finished ' + articlesFinished + ' articles and have ' + articlesLeft + ' more to go.'
+            return 'So far you’ve finished ' + articlesFinished + ' articles with ' + this.pagesRead + ' pages. ' + articlesLeft + ' articles to go!'
             break
           case (articlesLeft == articlesTotal - 1):
             return 'Good start! ' + articlesLeft + ' articles left and still more to learn.'
