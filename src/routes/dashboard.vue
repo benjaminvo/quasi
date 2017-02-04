@@ -132,8 +132,10 @@
           for ( let articlesCourseId in this.articles[article].courses ) {
             for ( let usersCourseId in this.user.courses ) {
               if ( this.user.courses[usersCourseId] === true ) {
-                if ( articlesCourseId === usersCourseId ) currentUsersArticlesArray.push( this.articles[article] )
-        }}}} return currentUsersArticlesArray
+                if ( articlesCourseId === usersCourseId ) {
+                  this.articles[article].id = article
+                  currentUsersArticlesArray.push( this.articles[article] )
+        }}}}} return currentUsersArticlesArray
       },
       notificationsArray() {
         let notificationsArray = []
@@ -142,6 +144,14 @@
       },
       allRead() {
         if ( this.currentUsersReadArticleIdsArray.length !== 0 ) return this.currentUsersArticlesArray.length - this.currentUsersReadArticleIdsArray.length === 0
+      },
+      pagesRead() {
+        let pagesRead = null
+        for (var i = 0; i < this.currentUsersArticlesArray.length; i++) {
+          for (var j = 0; j < this.currentUsersReadArticleIdsArray.length; j++) {
+            if ( this.currentUsersReadArticleIdsArray[j] === this.currentUsersArticlesArray[i].id ) {
+              pagesRead = pagesRead + ( this.currentUsersArticlesArray[i].pageTo - this.currentUsersArticlesArray[i].pageFrom + 1 )
+        }}} return pagesRead
       },
       motivationMessage() {
         const articlesTotal = this.currentUsersArticlesArray.length
