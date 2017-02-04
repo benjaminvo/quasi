@@ -32,34 +32,33 @@
           <!-- Left column -->
           <div class="article_details span-3">
 
-            <div class="display-flex alignItems-center margin-top margin-bottom-6-1 margin-none-tablet">
+            <div class="display-flex alignItems-center margin-bottom-7-1 margin-none-tablet">
               <toggle-checkmark
-                small
-                class="margin-right"
+                class="margin-right-2-1"
                 :click="toggleArticleFinished.bind(this, this.$route.params.articleId, article.title, currentUser.uid, currentUser.displayName, 'articleFinished', this.userAnonymous)"
                 :checked="article.finishedBy ? article.finishedBy[currentUser.uid] : null" />
-              <p class="display-inlineBlock fontSize-small color-dark" v-for="(course, index) in this.articleCourses">Due {{ course.weekday }}</p>
+              <p class="display-inlineBlock color-dark" v-for="(course, index) in this.articleCourses">Due {{ course.weekday }}</p>
             </div>
 
             <h6 class="margin-top-4-1 margin-bottom-2-1 color-base-lighter-2 fontWeight-bold">Details</h6>
             <ul class="list-unstyled color-base-lighter-2">
-              <li class="margin-bottom fontSize-small">{{ article.author }} ({{ article.year }})</li>
-              <li class="margin-bottom fontSize-small">{{ pagesTotal }} pages ({{ article.pageFrom }}-{{ article.pageTo }})</li>
-              <li v-if="article.chapter" class="margin-bottom fontSize-small">Chapter {{ article.chapter }}</li>
-              <li v-if="article.citedBy" class="margin-bottom fontSize-small">Cited by {{ article.citedBy }}</li>
+              <li class="margin-bottom">{{ article.author }} ({{ article.year }})</li>
+              <li class="margin-bottom">{{ pagesTotal }} pages ({{ article.pageFrom }}-{{ article.pageTo }})</li>
+              <li v-if="article.chapter" class="margin-bottom">Chapter {{ article.chapter }}</li>
+              <li v-if="article.citedBy" class="margin-bottom">Cited by {{ article.citedBy }}</li>
             </ul>
 
             <div v-if="article.tableOfContents">
               <h6 class="margin-top-4-1 margin-bottom-2-1 color-base-lighter-2 fontWeight-bold">Table of Contents</h6>
               <ul class="list-unstyled color-base-lighter-2">
-                <li v-for="(item, key, index) in article.tableOfContents" class="margin-bottom fontSize-small">{{ item }}</li>
+                <li v-for="(item, key, index) in article.tableOfContents" class="margin-bottom">{{ item }}</li>
               </ul>
             </div>
 
           </div>
 
           <!-- Right column -->
-          <div class="article_introduction span-9 card card-2">
+          <div class="article_introduction offset-1 span-8 card card-2">
 
             <div class="article_introduction_upper">
 
@@ -224,7 +223,7 @@
   .article {
 
     &_details,
-    &_introduction { margin-top: -$scale-12-1; }
+    &_introduction { margin-top: -$scale-13-1; }
 
     &_details {
       @include breakpoint('tablet') { margin-top: 0; }}
@@ -252,7 +251,7 @@
         .guide p {
           font-size: 16px !important;
           line-height: 1.6;
-          max-width: 60ch; // 1ch = width of glyph '0', so this is approx. the wished for 65 chars per line
+          //max-width: 60ch; // 1ch = width of glyph '0', so this is approx. the wished for 65 chars per line
           margin-bottom: $scale-2-1;
 
           &:last-child { margin-bottom: 0; }
