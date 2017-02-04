@@ -62,14 +62,14 @@
 
             <div class="article_introduction_upper">
 
-              <h2 class="margin-bottom-4-1">Reading guide</h2>
+              <h2 class="margin-bottom-3-1">Reading guide</h2>
 
               <div v-for="(item, key, index) in article.guide" class="guide margin-bottom-5-1">
-                <h3 class="margin-bottom-3-1" v-if="key === 'keepEyeOn'">Keep an eye on</h3>
+                <h3 class="margin-bottom-2-1" v-if="key === 'keepEyeOn'">Keep an eye on</h3>
                 <div v-html="markdown(item)" />
               </div>
 
-              <h3 class="margin-bottom-4-1">Key concepts</h3>
+              <h3 class="margin-bottom-3-1">Key concepts</h3>
               <ul class="list-unstyled">
                 <li v-for="(item, index) in articleConcepts" class="concept">
                   <a :href="item.wikiLink" target="_blank" class="h6 margin-bottom-1-2">{{ item.name }}</a>
