@@ -11,7 +11,7 @@
 
           <!-- EVENT -->
           {{ notification.type === 'articleFinished' ? 'finished' :
-             notification.type === 'contributionAdded' ? 'wrote a contribution to' : null }}
+             notification.type === 'contributionAdded' ? 'added a thought to to' : null }}
           <div v-if="notification.type === 'reactionAdded'" class="display-inlineBlock"> reacted with <span v-html="renderEmoji(notification.emoji)" />&nbsp; to </div>
 
           <!-- ARTICLE -->
