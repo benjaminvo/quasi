@@ -22,8 +22,7 @@
       </div>
 
       <div class="span-3 textAlign-right display-flex alignItems-center justifyContent-flexEnd">
-          <p class="h6 fontWeight-medium">Hi,&nbsp;</p>
-          <router-link tag="a" class="a h6 margin-right-2-1" :to="{ name: 'settings' }">{{ currentUser.displayName.substr(0, currentUser.displayName.indexOf(' ')) }} </router-link>
+          <router-link tag="a" class="a h6 margin-right-4-1" :to="{ name: 'settings' }">Settings</router-link>
           <a class="h6 fontWeight-semibold whiteSpace-noWrap" v-on:click="logout()">Sign out</a>
       </div>
 
