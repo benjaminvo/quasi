@@ -5,7 +5,8 @@
         <h5 class="margin-bottom-2-1">{{ day }}</h5>
       </div>
       <div class="span-8">
-        <h2 class="dayBlock_emptyText color-base-lighter-4" v-if="courses.length === 0">You're free</h2>
+        <h2 class="dayBlock_emptyText color-base-lighter-4" v-if="courses.length === 0">No readings</h2>
+
         <article-list
           v-for="(course, index) in courses"
           :currentUser="currentUser"
