@@ -248,16 +248,22 @@
           padding: $scale-4-1 $scale-4-1 $scale-2-1 !important;
         }
 
-        .guide p {
+        .guide p,
+        .guide a {
           font-size: 16px !important;
+
+          @include breakpoint('desktop') {
+            font-size: 14px !important;
+          }
+        }
+
+        .guide p {
           line-height: 1.6;
-          //max-width: 60ch; // 1ch = width of glyph '0', so this is approx. the wished for 65 chars per line
           margin-bottom: $scale-2-1;
 
           &:last-child { margin-bottom: 0; }
 
           @include breakpoint('desktop') {
-            font-size: 14px !important;
             line-height: 1.5;
           }
         }
