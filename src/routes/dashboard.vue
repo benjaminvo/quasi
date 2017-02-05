@@ -18,7 +18,8 @@
       <notification-ticker
         :currentUser="currentUser"
         :user="user"
-        :notifications="notificationsArray" />
+        :notifications="notificationsArray"
+        :userHasArticle="userHasArticle" />
 
       <day-block
         :currentUser="currentUser"
@@ -282,6 +283,13 @@
                   this.dayBlocks[dayBlock].courses[i].articles[dayblockArticleId] = this.articles[articleId] // Set the id to holde the full article object (instead of just 'true')
         }}}}}
         this.dataLoaded = true
+      },
+      userHasArticle(articleId) {
+        let userHasArticle = false
+        for ( let article in this.currentUsersArticlesArray ) {
+          if ( this.currentUsersArticlesArray[article].id === articleId ) userHasArticle = true
+        }
+        return userHasArticle
       }
     }
   }

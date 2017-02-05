@@ -4,7 +4,7 @@
 
       <ul class="span-8 offset-2 notificationTicker_list list-unstyled padding-bottom">
         <li class="margin-top color-base-lighter-3" v-if="notifications.length === 0">No recent activity...</li>
-        <li class="notification margin-bottom-3-1 display-block" v-else v-for="(notification, index) in notifications">
+        <li class="notification margin-bottom-3-1 display-block" v-for="(notification, index) in notifications" v-if="userHasArticle(notification.article.id)">
 
           <!-- WHO -->
           {{ notification.user.id === currentUser.uid ? 'You' : notification.user.name.split(' ')[0] }}
@@ -45,7 +45,8 @@
     props: {
       currentUser: Object,
       user: Object,
-      notifications: Array
+      notifications: Array,
+      userHasArticle: Function
     },
     data() {
       return {
