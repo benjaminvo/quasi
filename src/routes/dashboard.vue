@@ -219,14 +219,12 @@
         for ( let user in this.users ) if ( user === this.currentUser.uid ) this.user = this.users[user]
       },
       setTotalPages() {
-        if ( this.totalPages === 0 ) {
-          let totalPages = 0
-          for (let i = 0; i < this.currentUsersArticlesArray.length; i++) {
-            const articlePageNum = this.currentUsersArticlesArray[i].pageTo - this.currentUsersArticlesArray[i].pageFrom + 1
-            totalPages = totalPages + articlePageNum
-          }
-          this.totalPages = totalPages
+        let totalPages = 0
+        for (let i = 0; i < this.currentUsersArticlesArray.length; i++) {
+          const articlePageNum = this.currentUsersArticlesArray[i].pageTo - this.currentUsersArticlesArray[i].pageFrom + 1
+          totalPages = totalPages + articlePageNum
         }
+        this.totalPages = totalPages
       },
       fetchNotifications() {
         this.databaseRef.ref('notifications').limitToLast(5).once('value', (snapshot) => { this.notifications = snapshot.val() }) // Notice it's .once()
