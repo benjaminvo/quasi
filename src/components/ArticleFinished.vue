@@ -31,11 +31,11 @@
           rows="3"></textarea>
 
         <div class="form_footer">
+          <button class="button submit" type="submit">Post</button>
           <div class="form_footer_checkbox">
             <input type="checkbox" id="hideName" v-model="userAnonymous" />
             <label class="margin-left-1-2 color-base-lighter-3 fontSize-small" for="hideName">Hide my name in notifications</label>
           </div>
-          <button class="button submit" type="submit">Post</button>
         </div>
 
       </form>
@@ -204,7 +204,7 @@
       button {
         flex: 1;
         width: 20px;
-        margin-left: $scale-2-1;
+        margin-right: $scale-2-1;
       }
     }
   }
