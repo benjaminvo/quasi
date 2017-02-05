@@ -160,7 +160,7 @@
         const articlesLeft = articlesTotal - articlesFinished
 
         switch (true) {
-          case (articlesTotal == 0):
+          case (articlesTotal && articlesTotal == 0):
             return 'No articles to read this week! You’re off.'
             break
           case (articlesLeft == 0):
@@ -214,6 +214,7 @@
         this.databaseRef.ref('users/' + this.currentUser.uid + '/firstName').set(this.userFirstName)
         this.databaseRef.ref('users/' + this.currentUser.uid + '/lastName').set(this.userLastName)
       },
+      initUserCoursesOnDatabase() { this.databaseRef.ref('users/' + this.currentUser.uid + '/courses').set(true) },
       setUser() {
         for ( let user in this.users ) if ( user === this.currentUser.uid ) this.user = this.users[user]
       },
@@ -231,7 +232,10 @@
         this.databaseRef.ref('notifications').limitToLast(5).once('value', (snapshot) => { this.notifications = snapshot.val() }) // Notice it's .once()
       },
       decideIfAssignCoursesModalShouldShow() {
-        if ( this.currentUsersCourseIdsArray.length === 0 ) this.modalsVisible.assignCourses = true // Show course assign modal on load if user has no courses
+        if ( this.currentUsersCourseIdsArray.length === 0 ) {
+          this.modalsVisible.assignCourses = true // Show course assign modal on load if user has no courses
+          this.initUserCoursesOnDatabase() // And initialize the /courses node on the user, so that first click on a course actually triggers it to 'true'
+        }
       },
       completeInitialAssignCourses() {
         this.modalsVisible.assignCourses = false
