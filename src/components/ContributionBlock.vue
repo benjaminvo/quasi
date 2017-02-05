@@ -25,9 +25,18 @@
             <span v-else @click="incrementAgrees">Agree</span>
           </button>
           <p class="color-base-lighter-2 fontSize-xxsmall">
-            {{ !contribution.agrees || contribution.agrees === 0 || contribution.agrees === 1 && contribution.agreedBy[currentUser.uid] ? 'Like no one else' : null }}
-            {{ contribution.agrees > 0 && !contribution.agreedBy[currentUser.uid] ? 'Like ' + contribution.agrees + ' other' + (contribution.agrees > 1 ? 's' : '') : null }}
-            {{ contribution.agrees > 1 && contribution.agreedBy[currentUser.uid] ? 'Said you and ' + (contribution.agrees - 1) + ' other' + (contribution.agrees > 2 ? 's' : '') : null }}
+            <!-- No yet -->
+            {{ !contribution.agrees || contribution.agrees === 0 ? 'Be the first to agree' : null }}
+            <!-- Only you -->
+            {{ contribution.agrees === 1 && contribution.agreedBy[currentUser.uid] ? 'You’ve aggred': null }}
+            <!-- One other -->
+            {{ contribution.agrees === 1 && !contribution.agreedBy[currentUser.uid] ? '1 has agreed': null }}
+            <!-- More than one other -->
+            {{ contribution.agrees > 1 && !contribution.agreedBy[currentUser.uid] ? contribution.agrees + ' have agreed' : null }}
+            <!-- One other and you -->
+            {{ contribution.agrees === 2 && contribution.agreedBy[currentUser.uid] ? 'You and 1 other have agreed' : null }}
+            <!-- Two or more others and you -->
+            {{ contribution.agrees > 2 && contribution.agreedBy[currentUser.uid] ? 'You and ' + (contribution.agrees - 1) + ' others have agreed' : null }}
           </p>
         </div>
       </li>
