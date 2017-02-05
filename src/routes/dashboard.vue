@@ -192,7 +192,7 @@
       this.databaseRef.ref('users').on('value', (snapshot) => { this.users = snapshot.val() })
       this.databaseRef.ref('courses').on('value', (snapshot) => { this.courses = snapshot.val() })
       this.databaseRef.ref('articles').on('value', (snapshot) => { this.articles = snapshot.val() })
-      this.databaseRef.ref('notifications').limitToLast(5).on('value', (snapshot) => { this.notifications = snapshot.val() })
+      this.databaseRef.ref('notifications').limitToLast(25).on('value', (snapshot) => { this.notifications = snapshot.val() })
       this.notificationsRefetchInterval = setInterval( this.fetchNotifications, 30000 ) // Refetch every half minute to update 'X minutes ago'
     },
     beforeDestroy() {
