@@ -28,7 +28,7 @@
             <!-- No yet -->
             {{ !contribution.agrees || contribution.agrees === 0 ? 'Be the first to agree' : null }}
             <!-- Only you -->
-            {{ contribution.agrees === 1 && contribution.agreedBy[currentUser.uid] ? 'You’ve aggred': null }}
+            {{ contribution.agrees === 1 && contribution.agreedBy[currentUser.uid] ? 'You’ve agreed': null }}
             <!-- One other -->
             {{ contribution.agrees === 1 && !contribution.agreedBy[currentUser.uid] ? '1 has agreed': null }}
             <!-- More than one other -->
