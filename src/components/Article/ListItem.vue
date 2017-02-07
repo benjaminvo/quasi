@@ -30,11 +30,11 @@
         </div>
         <div v-if="interestingCount > 0" class="display-flex alignItems-center margin-left">
           <span class="margin-right-1-2" :class="{ 'color-primary': interestingReactedByCurrentUser }">{{ interestingCount }}</span>
-          <img src="/dist/emoji_interesting.svg" title="Understandable" width="12" />
+          <img src="/dist/emoji_interesting.svg" title="Interesting" width="12" />
         </div>
         <div v-if="understandableCount > 0" class="display-flex alignItems-center margin-left">
           <span class="margin-right-1-2" :class="{ 'color-primary': understandableReactedByCurrentUser }">{{ understandableCount }}</span>
-          <img src="/dist/emoji_understandable.svg" title="Interesting" width="12" />
+          <img src="/dist/emoji_understandable.svg" title="Understandable" width="12" />
         </div>
       </div>
     </div>
